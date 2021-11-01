@@ -1,0 +1,28 @@
+name: app
+description: App for comparing weather from different locations. Based on data received from OpenWeather API.
+publish_to: 'none'
+
+version: 0.0.1+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+
+flutter_intl:
+  enabled: true
+  
