@@ -59,16 +59,6 @@ class S {
       args: [],
     );
   }
-
-  /// `Weather App`
-  String get appName2 {
-    return Intl.message(
-      'Weather App',
-      name: 'appName2',
-      desc: '',
-      args: [],
-    );
-  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
