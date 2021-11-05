@@ -1,0 +1,11 @@
+include: package:lint/analysis_options.yaml
+
+analyzer:
+  exclude: [lib/generated/**]
+
+linter:
+  rules:
+    avoid_bool_literals_in_conditional_expressions: false
+    avoid_classes_with_only_static_members: false
+    avoid_positional_boolean_parameters: false
+    prefer_single_quotes: true

@@ -17,11 +17,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  lint: ^1.7.2
 
 flutter:
   uses-material-design: true
-  generate: true
-
+#  generate: true
 
 flutter_intl:
   enabled: true
