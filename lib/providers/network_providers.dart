@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // TODO set up dio parameters
 final dioProvider = Provider<Dio>((ref) => Dio());
 
-final weatherProvider = Provider<WeatherRepository>(
+final weatherRepositoryProvider = Provider<WeatherRepository>(
   (ref) {
     final Environment environment = ref.watch(environmentProvider);
 
