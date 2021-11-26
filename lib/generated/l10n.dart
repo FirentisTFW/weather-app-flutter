@@ -59,6 +59,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Oops, something went wrong`
+  String get defaultErrorTitle {
+    return Intl.message(
+      'Oops, something went wrong',
+      name: 'defaultErrorTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occured while fetching data.`
+  String get defaultErrorMessage {
+    return Intl.message(
+      'An error occured while fetching data.',
+      name: 'defaultErrorMessage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

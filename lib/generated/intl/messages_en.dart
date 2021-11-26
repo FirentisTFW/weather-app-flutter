@@ -22,6 +22,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "appName": MessageLookupByLibrary.simpleMessage("Weather App")
+        "appName": MessageLookupByLibrary.simpleMessage("Weather App"),
+        "defaultErrorMessage": MessageLookupByLibrary.simpleMessage(
+            "An error occured while fetching data."),
+        "defaultErrorTitle":
+            MessageLookupByLibrary.simpleMessage("Oops, something went wrong")
       };
 }
