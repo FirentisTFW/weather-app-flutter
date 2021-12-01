@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
-class AppLocales {
+abstract class AppLocales {
+  const AppLocales._();
+
   static const Locale english = Locale.fromSubtags(
     countryCode: 'EN',
     languageCode: 'en',
@@ -9,6 +11,4 @@ class AppLocales {
     countryCode: 'PL',
     languageCode: 'pl',
   );
-
-  const AppLocales._();
 }
