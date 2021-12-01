@@ -1,5 +1,6 @@
 {
   "appName": "Weather App",
   "defaultErrorTitle": "Oops, something went wrong",
-  "defaultErrorMessage": "An error occured while fetching data."
+  "defaultErrorMessage": "An error occured while fetching data.",
+  "tryAgain": "Try again"
 }

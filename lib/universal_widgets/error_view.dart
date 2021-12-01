@@ -1,5 +1,7 @@
+import 'package:app/generated/l10n.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/styles/app_text_styles.dart';
+import 'package:app/universal_widgets/action_button.dart';
 import 'package:flutter/material.dart';
 
 class ErrorView extends StatelessWidget {
@@ -22,12 +24,14 @@ class ErrorView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const Spacer(),
           _buildTitle(),
           const SizedBox(
             height: 30.0,
           ),
           _buildMessage(),
-          _buildButton(),
+          const Spacer(),
+          _buildButton(context),
         ],
       ),
     );
@@ -49,8 +53,10 @@ class ErrorView extends StatelessWidget {
     );
   }
 
-  Widget _buildButton() {
-    // TODO Implement
-    return Container();
+  Widget _buildButton(BuildContext context) {
+    return ActionButton(
+      onPressed: onButtonPressed,
+      title: buttonTitle ?? S.of(context).tryAgain,
+    );
   }
 }

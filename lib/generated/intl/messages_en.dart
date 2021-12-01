@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "defaultErrorMessage": MessageLookupByLibrary.simpleMessage(
             "An error occured while fetching data."),
         "defaultErrorTitle":
-            MessageLookupByLibrary.simpleMessage("Oops, something went wrong")
+            MessageLookupByLibrary.simpleMessage("Oops, something went wrong"),
+        "tryAgain": MessageLookupByLibrary.simpleMessage("Try again")
       };
 }
