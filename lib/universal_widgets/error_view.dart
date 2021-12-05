@@ -19,20 +19,22 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: AppDimensions.defaultPaddingAll,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Spacer(),
-          _buildTitle(),
-          const SizedBox(
-            height: 30.0,
-          ),
-          _buildMessage(),
-          const Spacer(),
-          _buildButton(context),
-        ],
+    return SafeArea(
+      child: Padding(
+        padding: AppDimensions.defaultPaddingAll,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Spacer(),
+            _buildTitle(),
+            const SizedBox(
+              height: 30.0,
+            ),
+            _buildMessage(),
+            const Spacer(),
+            _buildButton(context),
+          ],
+        ),
       ),
     );
   }
