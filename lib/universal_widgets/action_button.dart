@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:app/styles/app_decorations.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/styles/app_text_styles.dart';
+import 'package:app/universal_widgets/adaptive_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,41 +20,14 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget child;
-    if (Platform.isIOS) {
-      child = _buildCupertinoButton();
-    } else {
-      child = _buildMaterialButton();
-    }
     return Container(
       height: height,
       width: double.infinity,
       decoration: decoration ?? AppDecorations.actionButton(),
-      child: child,
-    );
-  }
-
-  Widget _buildCupertinoButton() {
-    return CupertinoButton(
-      onPressed: onPressed,
-      padding: EdgeInsets.zero,
-      child: _buildButtonChild(),
-    );
-  }
-
-  Widget _buildMaterialButton() {
-    final BorderRadiusGeometry? borderRadius = decoration?.borderRadius ?? AppDecorations.actionButton().borderRadius;
-    return MaterialButton(
-      height: height,
-      elevation: 0.0,
-      onPressed: onPressed,
-      padding: EdgeInsets.zero,
-      shape: borderRadius != null
-          ? RoundedRectangleBorder(
-              borderRadius: borderRadius,
-            )
-          : null,
-      child: _buildButtonChild(),
+      child: AdaptiveButton(
+        onPressed: onPressed,
+        child: _buildButtonChild(),
+      ),
     );
   }
 
