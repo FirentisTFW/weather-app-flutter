@@ -1,4 +1,6 @@
+import 'package:app/commons/collections.dart';
 import 'package:app/errors/app_error_factory.dart';
+import 'package:app/extensions/list_extensions.dart';
 import 'package:app/networking/models/current_weather.dart';
 import 'package:app/networking/models/daily_forecast.dart';
 import 'package:app/networking/models/location_weather_data.dart';
@@ -20,7 +22,7 @@ class HomeView extends StatelessWidget {
       body: Center(
         child: Consumer(
           builder: (context, ref, __) {
-            final AsyncValue<LocationWeatherData> response = ref.watch(homeProvider);
+            final AsyncValue<CollectionOf2<LocationWeatherData>> response = ref.watch(homeProvider);
             return response.when(
               data: (weatherData) => _buildLoadedBody(weatherData),
               error: (error, __) => _buildErrorBody(context, error),
@@ -42,7 +44,7 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _buildLoadedBody(LocationWeatherData weatherData) {
+  Widget _buildLoadedBody(CollectionOf2<LocationWeatherData> weatherData) {
     return Padding(
       padding: AppDimensions.defaultPaddingAll,
       child: SingleChildScrollView(
@@ -55,33 +57,35 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _buildLocationtWeatherForecastCells(LocationWeatherData weatherData) {
+  Widget _buildLocationtWeatherForecastCells(CollectionOf2<LocationWeatherData> weatherData) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: _buildLocationWeatherForecastCell(weatherData.item1),
+        ),
+        Expanded(
+          child: _buildLocationWeatherForecastCell(weatherData.item2),
+        ),
+      ].separatedBy(
+        const SizedBox(
+          width: 10.0,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLocationWeatherForecastCell(LocationWeatherData weatherData) {
     final CurrentWeather? currentWeather = weatherData.currentWeather;
     final List<DailyForecast>? forecast = weatherData.dailyForecast;
-    return Row(
-      children: [
-        if (currentWeather != null && forecast != null) ...[
-          Expanded(
-            child: LocationWeatherForecastCell(
-              currentWeather: currentWeather,
-              forecast: forecast,
-              // TODO Remove mocks
-              locationName: 'Poznań',
-            ),
-          ),
-          const SizedBox(
-            width: 10.0,
-          ),
-          Expanded(
-            child: LocationWeatherForecastCell(
-              currentWeather: currentWeather,
-              forecast: forecast,
-              // TODO Remove mocks
-              locationName: 'Malaga',
-            ),
-          ),
-        ]
-      ],
+
+    if (currentWeather == null || forecast == null) {
+      return const SizedBox.shrink();
+    }
+    return LocationWeatherForecastCell(
+      currentWeather: currentWeather,
+      forecast: forecast,
+      // TODO Remove mocks
+      locationName: 'Poznań',
     );
   }
 }
