@@ -5,6 +5,7 @@ import 'package:app/networking/models/daily_forecast.dart';
 import 'package:app/networking/models/forecast_temperature.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/universal_widgets/app_cached_network_image.dart';
+import 'package:app/utils/temperature_utiils.dart';
 import 'package:flutter/material.dart';
 
 class SimpleDailyForecastCell extends StatelessWidget {
@@ -55,12 +56,13 @@ class SimpleDailyForecastCell extends StatelessWidget {
   }
 
   Widget _buildTemperature() {
-    // TODO Move to util
     final ForecastTemperature? temperature = forecast.temperature;
-    final int? dayTemperature = (temperature?.day)?.toInt();
-    final int? nightTemperature = (temperature?.night)?.toInt();
+    final String temperatureDisplay = TemperatureUtils.provideDayAndNightTemperature(
+      day: temperature?.day,
+      night: temperature?.night,
+    );
     return Text(
-      '$dayTemperature/$nightTemperature°C',
+      temperatureDisplay,
       style: const TextStyle(
         color: AppColors.black,
         fontSize: 12.0,
