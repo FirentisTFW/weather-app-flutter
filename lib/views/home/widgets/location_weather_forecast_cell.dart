@@ -3,6 +3,7 @@ import 'package:app/networking/endpoints.dart';
 import 'package:app/networking/models/current_weather.dart';
 import 'package:app/networking/models/daily_forecast.dart';
 import 'package:app/styles/app_colors.dart';
+import 'package:app/styles/app_decorations.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/styles/app_text_styles.dart';
 import 'package:app/universal_widgets/adaptive_button.dart';
@@ -25,17 +26,7 @@ class LocationWeatherForecastCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return AdaptiveButton(
       height: AppDimensions.locationWeatherForecastCellHeight,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24.0),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 10.0,
-            color: AppColors.grey.withOpacity(0.1),
-            spreadRadius: 0.1,
-          ),
-        ],
-        color: AppColors.white,
-      ),
+      decoration: AppDecorations.defaultCell(),
       onPressed: () {
         // TODO Implement - show data for this location
       },

@@ -10,4 +10,18 @@ abstract class AppDecorations {
       color: AppColors.blue,
     );
   }
+
+  static BoxDecoration defaultCell() {
+    return BoxDecoration(
+      borderRadius: BorderRadius.circular(24.0),
+      boxShadow: [
+        BoxShadow(
+          blurRadius: 10.0,
+          color: AppColors.grey.withOpacity(0.1),
+          spreadRadius: 0.1,
+        ),
+      ],
+      color: AppColors.white,
+    );
+  }
 }
