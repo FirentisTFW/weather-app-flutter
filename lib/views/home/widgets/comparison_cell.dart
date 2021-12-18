@@ -4,6 +4,8 @@ import 'package:app/data/models/single_location_data.dart';
 import 'package:app/extensions/list_extensions.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_decorations.dart';
+import 'package:app/styles/app_text_styles.dart';
+import 'package:app/views/home/comparison_factory.dart';
 import 'package:flutter/material.dart';
 
 class ComparisonCell extends StatelessWidget {
@@ -25,10 +27,10 @@ class ComparisonCell extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _buildTitle(),
+          _buildTitle(context),
           _buildLocationsData(),
           _buildSeparator(),
-          _buildComparisonText(),
+          _buildComparisonText(context),
         ].separatedBy(
           const SizedBox(
             height: 6.0,
@@ -38,15 +40,10 @@ class ComparisonCell extends StatelessWidget {
     );
   }
 
-  Widget _buildTitle() {
-    return const Text(
-      // TODO Remove mocks - get data based on comparisonObject
-      'Current temperature',
-      style: TextStyle(
-        color: AppColors.black,
-        fontSize: 14.0,
-        fontWeight: FontWeight.w500,
-      ),
+  Widget _buildTitle(BuildContext context) {
+    return Text(
+      ComparisonFactory.provideComparisonTitle(context, comparisonObject),
+      style: AppTextStyles.header(),
     );
   }
 
@@ -55,17 +52,29 @@ class ComparisonCell extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _buildLocationData(data.item1),
-        _buildLocationData(data.item2),
+        _buildLocationData(
+          data.item2,
+          dataFirst: true,
+        ),
       ],
     );
   }
 
-  Widget _buildLocationData(SingleLocationData data) {
+  Widget _buildLocationData(
+    SingleLocationData data, {
+    bool dataFirst = false,
+  }) {
     return Row(
+      textDirection: dataFirst ? TextDirection.rtl : TextDirection.ltr,
       children: <Widget>[
-        // TODO Add styles
-        Text(data.locationName),
-        Text(data.data),
+        Text(
+          data.locationName,
+          style: AppTextStyles.text(),
+        ),
+        Text(
+          data.dataDisplay,
+          style: AppTextStyles.header(),
+        ),
       ].separatedBy(
         const SizedBox(
           width: 4.0,
@@ -82,14 +91,14 @@ class ComparisonCell extends StatelessWidget {
     );
   }
 
-  Widget _buildComparisonText() {
-    return const Text(
-      // TODO Remove mocks - get data based on comparisonObject
-      '11 degrees cooler in Poznań',
-      style: TextStyle(
-        color: AppColors.black,
-        fontSize: 14.0,
+  Widget _buildComparisonText(BuildContext context) {
+    return Text(
+      ComparisonFactory.provideComparisonDescription(
+        context,
+        comparisonObject: comparisonObject,
+        data: data,
       ),
+      style: AppTextStyles.text(),
     );
   }
 }

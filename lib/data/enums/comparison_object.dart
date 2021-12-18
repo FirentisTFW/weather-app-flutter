@@ -1,6 +1,8 @@
-// TODO Add more comparison objects
 enum ComparisonObject {
   currentTemperature,
+  dayLength,
+  dayTemperature,
+  nightTemperature,
   sunrise,
   sunset,
 }

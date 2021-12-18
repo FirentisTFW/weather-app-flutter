@@ -2,5 +2,11 @@
   "appName": "Weather App",
   "defaultErrorTitle": "Oops, something went wrong",
   "defaultErrorMessage": "An error occured while fetching data.",
-  "tryAgain": "Try again"
+  "tryAgain": "Try again",
+  "comparisonCurrentTemperature": "Current temperature",
+  "comparisonDayTemperature": "Day temperature",
+  "comparisonNightTemperature": "Night temperature",
+  "comparisonSunrise": "Sunrise",
+  "comparisonSunset": "Sunset",
+  "comparisonDayLength": "Długość dnia"
 }

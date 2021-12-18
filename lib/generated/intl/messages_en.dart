@@ -23,6 +23,16 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appName": MessageLookupByLibrary.simpleMessage("Weather App"),
+        "comparisonCurrentTemperature":
+            MessageLookupByLibrary.simpleMessage("Current temperature"),
+        "comparisonDayLength":
+            MessageLookupByLibrary.simpleMessage("Długość dnia"),
+        "comparisonDayTemperature":
+            MessageLookupByLibrary.simpleMessage("Day temperature"),
+        "comparisonNightTemperature":
+            MessageLookupByLibrary.simpleMessage("Night temperature"),
+        "comparisonSunrise": MessageLookupByLibrary.simpleMessage("Sunrise"),
+        "comparisonSunset": MessageLookupByLibrary.simpleMessage("Sunset"),
         "defaultErrorMessage": MessageLookupByLibrary.simpleMessage(
             "An error occured while fetching data."),
         "defaultErrorTitle":

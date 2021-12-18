@@ -108,15 +108,17 @@ class HomeView extends StatelessWidget {
   Widget _buildComparisonCells(CollectionOf2<LocationWeatherData> weatherData) {
     return ListView.separated(
       // TODO Remove mocks
-      itemBuilder: (_, __) => const ComparisonCell(
+      itemBuilder: (_, __) => ComparisonCell(
         comparisonObject: ComparisonObject.currentTemperature,
         data: CollectionOf2(
           SingleLocationData(
-            data: '5',
+            data: weatherData.item1.currentWeather?.temperature,
+            dataDisplay: '5°C',
             locationName: 'Poznań',
           ),
           SingleLocationData(
-            data: '16',
+            data: weatherData.item2.currentWeather?.temperature,
+            dataDisplay: '16°C',
             locationName: 'Malaga',
           ),
         ),

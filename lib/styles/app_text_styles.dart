@@ -16,6 +16,14 @@ abstract class AppTextStyles {
     );
   }
 
+  static TextStyle header() {
+    return const TextStyle(
+      color: AppColors.black,
+      fontSize: 15.0,
+      fontWeight: FontWeight.w500,
+    );
+  }
+
   static TextStyle text() {
     return const TextStyle(
       color: AppColors.black,

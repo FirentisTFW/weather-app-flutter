@@ -89,6 +89,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Current temperature`
+  String get comparisonCurrentTemperature {
+    return Intl.message(
+      'Current temperature',
+      name: 'comparisonCurrentTemperature',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Day temperature`
+  String get comparisonDayTemperature {
+    return Intl.message(
+      'Day temperature',
+      name: 'comparisonDayTemperature',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Night temperature`
+  String get comparisonNightTemperature {
+    return Intl.message(
+      'Night temperature',
+      name: 'comparisonNightTemperature',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sunrise`
+  String get comparisonSunrise {
+    return Intl.message(
+      'Sunrise',
+      name: 'comparisonSunrise',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sunset`
+  String get comparisonSunset {
+    return Intl.message(
+      'Sunset',
+      name: 'comparisonSunset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Długość dnia`
+  String get comparisonDayLength {
+    return Intl.message(
+      'Długość dnia',
+      name: 'comparisonDayLength',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
