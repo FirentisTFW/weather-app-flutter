@@ -8,5 +8,11 @@
   "comparisonNightTemperature": "Night temperature",
   "comparisonSunrise": "Sunrise",
   "comparisonSunset": "Sunset",
-  "comparisonDayLength": "Długość dnia"
+  "comparisonDayLength": "Długość dnia",
+  "temperatureComparisonKeywordNegative": "cooler",
+  "temperatureComparisonKeywordPositive": "warmer",
+  "timeComparisonKeywordForDurationNegative": "shorter",
+  "timeComparisonKeywordForDurationPositive": "longer",
+  "timeComparisonKeywordForTimestampNegative": "sooner",
+  "timeComparisonKeywordForTimestampPositive": "later"
 }

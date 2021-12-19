@@ -1,4 +1,6 @@
 import 'package:app/data/models/difference.dart';
+import 'package:app/generated/l10n.dart';
+import 'package:flutter/widgets.dart';
 
 abstract class TemperatureUtils {
   const TemperatureUtils._();
@@ -16,12 +18,11 @@ abstract class TemperatureUtils {
     ].join();
   }
 
-  static String provideComparisonKeyword(TemperatureDifference difference) {
-    // TODO Remove hardcoded strings
+  static String provideComparisonKeyword(BuildContext context, TemperatureDifference difference) {
     if (difference.data.isNegative) {
-      return 'cooler';
+      return S.of(context).temperatureComparisonKeywordNegative;
     }
-    return 'warmer';
+    return S.of(context).temperatureComparisonKeywordPositive;
   }
 
   static String provideDayAndNightTemperature({

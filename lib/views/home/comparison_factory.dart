@@ -23,12 +23,12 @@ abstract class ComparisonFactory {
     final String comparisonKeyword;
     if (difference is SecondsDifference) {
       if (comparisonObject == ComparisonObject.dayLength) {
-        comparisonKeyword = TimeUtils.provideComparisonKeywordForDuration(difference);
+        comparisonKeyword = TimeUtils.provideComparisonKeywordForDuration(context, difference);
       } else {
-        comparisonKeyword = TimeUtils.provideComparisonKeywordForTimestamp(difference);
+        comparisonKeyword = TimeUtils.provideComparisonKeywordForTimestamp(context, difference);
       }
     } else if (difference is TemperatureDifference) {
-      comparisonKeyword = TemperatureUtils.provideComparisonKeyword(difference);
+      comparisonKeyword = TemperatureUtils.provideComparisonKeyword(context, difference);
     } else {
       comparisonKeyword = '';
     }

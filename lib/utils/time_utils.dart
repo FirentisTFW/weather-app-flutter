@@ -1,4 +1,6 @@
 import 'package:app/data/models/difference.dart';
+import 'package:app/generated/l10n.dart';
+import 'package:flutter/widgets.dart';
 
 abstract class TimeUtils {
   const TimeUtils._();
@@ -6,23 +8,20 @@ abstract class TimeUtils {
   static String provideTimeDifferenceDisplay({
     required int minutesDifference,
   }) {
-    // TODO Implement
     return '';
   }
 
-  static String provideComparisonKeywordForDuration(SecondsDifference difference) {
-    // TODO Remove hardcoded strings
+  static String provideComparisonKeywordForDuration(BuildContext context, SecondsDifference difference) {
     if (difference.data.isNegative) {
-      return 'shorter';
+      return S.of(context).timeComparisonKeywordForDurationNegative;
     }
-    return 'longer';
+    return S.of(context).timeComparisonKeywordForDurationPositive;
   }
 
-  static String provideComparisonKeywordForTimestamp(SecondsDifference difference) {
-    // TODO Remove hardcoded strings
+  static String provideComparisonKeywordForTimestamp(BuildContext context, SecondsDifference difference) {
     if (difference.data.isNegative) {
-      return 'sooner';
+      return S.of(context).timeComparisonKeywordForTimestampNegative;
     }
-    return 'later';
+    return S.of(context).timeComparisonKeywordForTimestampPositive;
   }
 }

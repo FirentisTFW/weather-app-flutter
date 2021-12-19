@@ -37,6 +37,18 @@ class MessageLookup extends MessageLookupByLibrary {
             "An error occured while fetching data."),
         "defaultErrorTitle":
             MessageLookupByLibrary.simpleMessage("Oops, something went wrong"),
+        "temperatureComparisonKeywordNegative":
+            MessageLookupByLibrary.simpleMessage("cooler"),
+        "temperatureComparisonKeywordPositive":
+            MessageLookupByLibrary.simpleMessage("warmer"),
+        "timeComparisonKeywordForDurationNegative":
+            MessageLookupByLibrary.simpleMessage("shorter"),
+        "timeComparisonKeywordForDurationPositive":
+            MessageLookupByLibrary.simpleMessage("longer"),
+        "timeComparisonKeywordForTimestampNegative":
+            MessageLookupByLibrary.simpleMessage("sooner"),
+        "timeComparisonKeywordForTimestampPositive":
+            MessageLookupByLibrary.simpleMessage("later"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("Try again")
       };
 }

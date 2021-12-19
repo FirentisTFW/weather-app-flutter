@@ -149,6 +149,66 @@ class S {
       args: [],
     );
   }
+
+  /// `cooler`
+  String get temperatureComparisonKeywordNegative {
+    return Intl.message(
+      'cooler',
+      name: 'temperatureComparisonKeywordNegative',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `warmer`
+  String get temperatureComparisonKeywordPositive {
+    return Intl.message(
+      'warmer',
+      name: 'temperatureComparisonKeywordPositive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `shorter`
+  String get timeComparisonKeywordForDurationNegative {
+    return Intl.message(
+      'shorter',
+      name: 'timeComparisonKeywordForDurationNegative',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `longer`
+  String get timeComparisonKeywordForDurationPositive {
+    return Intl.message(
+      'longer',
+      name: 'timeComparisonKeywordForDurationPositive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `sooner`
+  String get timeComparisonKeywordForTimestampNegative {
+    return Intl.message(
+      'sooner',
+      name: 'timeComparisonKeywordForTimestampNegative',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `later`
+  String get timeComparisonKeywordForTimestampPositive {
+    return Intl.message(
+      'later',
+      name: 'timeComparisonKeywordForTimestampPositive',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
