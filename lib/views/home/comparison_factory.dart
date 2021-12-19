@@ -87,7 +87,7 @@ abstract class ComparisonFactory {
   static String _provideDifferenceDisplay(Difference difference) {
     if (difference is SecondsDifference) {
       return TimeUtils.provideTimeDifferenceDisplay(
-        minutesDifference: difference.data,
+        secondsDifference: difference.data.abs(),
       );
     } else if (difference is TemperatureDifference) {
       return TemperatureUtils.formatTemperature(difference.data.abs().round());

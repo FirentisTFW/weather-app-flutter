@@ -6,9 +6,22 @@ abstract class TimeUtils {
   const TimeUtils._();
 
   static String provideTimeDifferenceDisplay({
-    required int minutesDifference,
+    required int secondsDifference,
   }) {
-    return '';
+    const secondsInMinute = 60;
+    const minutesInHour = 60;
+    const secondsInHour = 3600;
+
+    final int hours = (secondsDifference / secondsInHour).floor();
+    final int minutes = (secondsDifference / secondsInMinute).floor() % minutesInHour;
+
+    final String hoursKeyword = hours == 1 ? 'hour' : 'hours';
+    final String minutesKeyword = minutes == 1 ? 'minute' : 'minutes';
+
+    if (hours > 0) {
+      return '$hours $hoursKeyword $minutes $minutesKeyword';
+    }
+    return '$minutes $minutesKeyword';
   }
 
   static String provideComparisonKeywordForDuration(BuildContext context, SecondsDifference difference) {
