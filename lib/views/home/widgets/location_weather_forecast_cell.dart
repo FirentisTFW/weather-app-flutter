@@ -113,7 +113,7 @@ class LocationWeatherForecastCell extends StatelessWidget {
 
   Widget _buildCurrentTemperature() {
     return Text(
-      currentWeather.temperature?.toInt().toString() ?? '',
+      currentWeather.temperature?.round().toString() ?? '',
       style: const TextStyle(
         color: AppColors.black,
         fontSize: 28.0,

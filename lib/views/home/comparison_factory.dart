@@ -3,6 +3,8 @@ import 'package:app/data/enums/comparison_object.dart';
 import 'package:app/data/models/difference.dart';
 import 'package:app/data/models/single_location_data.dart';
 import 'package:app/generated/l10n.dart';
+import 'package:app/utils/temperature_utiils.dart';
+import 'package:app/utils/time_utils.dart';
 import 'package:flutter/widgets.dart';
 
 abstract class ComparisonFactory {
@@ -13,28 +15,30 @@ abstract class ComparisonFactory {
     required ComparisonObject comparisonObject,
     required CollectionOf2<SingleLocationData> data,
   }) {
-    // 1 Calculate the difference between locations
     final Difference? difference = _calculateDataDifference(comparisonObject, data);
-    if (difference == null) {
-      return '';
-    }
+    if (difference == null) return '';
 
-    // 2 Get difference display (i.e. 83 -> '1 hour 23 minutes', 11 -> '11 degrees')
+    final String differenceDisplay = _provideDifferenceDisplay(difference);
 
-    // 3 Get comparison keyword (1st warmer/cooler than 2nd)
+    final String comparisonKeyword;
     if (difference is SecondsDifference) {
       if (comparisonObject == ComparisonObject.dayLength) {
-        // get comparison keyword based on time (longer/shorter)
+        comparisonKeyword = TimeUtils.provideComparisonKeywordForDuration(difference);
       } else {
-        // get comparison keyword based on time (sooner/later)
+        comparisonKeyword = TimeUtils.provideComparisonKeywordForTimestamp(difference);
       }
     } else if (difference is TemperatureDifference) {
-      // get comparison keyword based on temperature (cooler/warmer)
+      comparisonKeyword = TemperatureUtils.provideComparisonKeyword(difference);
+    } else {
+      comparisonKeyword = '';
     }
 
-    // 4 Combine location names, difference display and keyword into one string
-
-    return '';
+    return [
+      differenceDisplay,
+      comparisonKeyword,
+      'in',
+      data.item1.locationName,
+    ].join(' ');
   }
 
   static String provideComparisonTitle(
@@ -78,5 +82,16 @@ abstract class ComparisonFactory {
     } catch (_) {
       return null;
     }
+  }
+
+  static String _provideDifferenceDisplay(Difference difference) {
+    if (difference is SecondsDifference) {
+      return TimeUtils.provideTimeDifferenceDisplay(
+        minutesDifference: difference.data,
+      );
+    } else if (difference is TemperatureDifference) {
+      return TemperatureUtils.formatTemperature(difference.data.abs().round());
+    }
+    return '';
   }
 }
