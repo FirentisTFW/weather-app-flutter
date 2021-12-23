@@ -5,7 +5,7 @@ import 'package:app/extensions/list_extensions.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_decorations.dart';
 import 'package:app/styles/app_text_styles.dart';
-import 'package:app/views/home/comparison_factory.dart';
+import 'package:app/utils/comparison_utils.dart';
 import 'package:flutter/material.dart';
 
 class ComparisonCell extends StatelessWidget {
@@ -42,7 +42,7 @@ class ComparisonCell extends StatelessWidget {
 
   Widget _buildTitle(BuildContext context) {
     return Text(
-      ComparisonFactory.provideComparisonTitle(context, comparisonObject),
+      ComparisonUtils.provideComparisonTitle(context, comparisonObject),
       style: AppTextStyles.header(),
     );
   }
@@ -93,7 +93,7 @@ class ComparisonCell extends StatelessWidget {
 
   Widget _buildComparisonText(BuildContext context) {
     return Text(
-      ComparisonFactory.provideComparisonDescription(
+      ComparisonUtils.provideComparisonDescription(
         context,
         comparisonObject: comparisonObject,
         data: data,

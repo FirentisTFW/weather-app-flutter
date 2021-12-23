@@ -3,12 +3,12 @@ import 'package:app/commons/collections.dart';
 import 'package:app/data/enums/comparison_object.dart';
 import 'package:app/data/models/single_location_data.dart';
 import 'package:app/generated/l10n.dart';
-import 'package:app/views/home/comparison_factory.dart';
+import 'package:app/utils/comparison_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'helpers/widget_test_helpers.dart';
+import '../helpers/widget_test_helpers.dart';
 
 void main() {
   const Widget materialApp = MaterialApp(
@@ -21,7 +21,7 @@ void main() {
     ],
     home: TestPlaceholder(),
   );
-  group('ComparisonFactoryTest -', () {
+  group('ComparisonUtilsTest -', () {
     // NOTE These tests are widget tests although they don't test widgets behavior.
     // Pumping widget is only necessary for localizations tests.
     group('provideComparisonDescription -', () {
@@ -29,7 +29,7 @@ void main() {
         testWidgets('Negative difference', (WidgetTester tester) async {
           await tester.pumpWidget(materialApp);
           await tester.pumpAndSettle(); // Wait for localization delegates to complete
-          final String result = ComparisonFactory.provideComparisonDescription(
+          final String result = ComparisonUtils.provideComparisonDescription(
             tester.context,
             comparisonObject: ComparisonObject.currentTemperature,
             data: const CollectionOf2(
@@ -50,7 +50,7 @@ void main() {
         testWidgets('Positive difference', (WidgetTester tester) async {
           await tester.pumpWidget(materialApp);
           await tester.pumpAndSettle(); // Wait for localization delegates to complete
-          final String result = ComparisonFactory.provideComparisonDescription(
+          final String result = ComparisonUtils.provideComparisonDescription(
             tester.context,
             comparisonObject: ComparisonObject.currentTemperature,
             data: const CollectionOf2(
@@ -75,7 +75,7 @@ void main() {
           testWidgets('Negative timestamp difference', (WidgetTester tester) async {
             await tester.pumpWidget(materialApp);
             await tester.pumpAndSettle(); // Wait for localization delegates to complete
-            final String result = ComparisonFactory.provideComparisonDescription(
+            final String result = ComparisonUtils.provideComparisonDescription(
               tester.context,
               comparisonObject: ComparisonObject.sunrise,
               data: const CollectionOf2(
@@ -96,7 +96,7 @@ void main() {
           testWidgets('Positive timestamp difference', (WidgetTester tester) async {
             await tester.pumpWidget(materialApp);
             await tester.pumpAndSettle(); // Wait for localization delegates to complete
-            final String result = ComparisonFactory.provideComparisonDescription(
+            final String result = ComparisonUtils.provideComparisonDescription(
               tester.context,
               comparisonObject: ComparisonObject.sunrise,
               data: const CollectionOf2(
@@ -120,7 +120,7 @@ void main() {
           testWidgets('Negative duration difference', (WidgetTester tester) async {
             await tester.pumpWidget(materialApp);
             await tester.pumpAndSettle(); // Wait for localization delegates to complete
-            final String result = ComparisonFactory.provideComparisonDescription(
+            final String result = ComparisonUtils.provideComparisonDescription(
               tester.context,
               comparisonObject: ComparisonObject.dayLength,
               data: const CollectionOf2(
@@ -141,7 +141,7 @@ void main() {
           testWidgets('Positive duration difference', (WidgetTester tester) async {
             await tester.pumpWidget(materialApp);
             await tester.pumpAndSettle(); // Wait for localization delegates to complete
-            final String result = ComparisonFactory.provideComparisonDescription(
+            final String result = ComparisonUtils.provideComparisonDescription(
               tester.context,
               comparisonObject: ComparisonObject.dayLength,
               data: const CollectionOf2(

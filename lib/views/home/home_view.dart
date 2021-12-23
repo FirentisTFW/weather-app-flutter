@@ -1,6 +1,5 @@
 import 'package:app/commons/collections.dart';
 import 'package:app/data/enums/comparison_object.dart';
-import 'package:app/data/models/single_location_data.dart';
 import 'package:app/errors/app_error_factory.dart';
 import 'package:app/extensions/list_extensions.dart';
 import 'package:app/networking/models/current_weather.dart';
@@ -9,6 +8,8 @@ import 'package:app/networking/models/location_weather_data.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/universal_widgets/app_progress_indicator.dart';
 import 'package:app/universal_widgets/error_view.dart';
+import 'package:app/utils/comparison_utils.dart';
+import 'package:app/views/home/comparison_factory.dart';
 import 'package:app/views/home/home_providers.dart';
 import 'package:app/views/home/widgets/comparison_cell.dart';
 import 'package:app/views/home/widgets/location_weather_forecast_cell.dart';
@@ -107,23 +108,17 @@ class HomeView extends StatelessWidget {
 
   Widget _buildComparisonCells(CollectionOf2<LocationWeatherData> weatherData) {
     return ListView.separated(
-      // TODO Remove mocks
-      itemBuilder: (_, __) => ComparisonCell(
-        comparisonObject: ComparisonObject.currentTemperature,
-        data: CollectionOf2(
-          SingleLocationData(
-            data: weatherData.item1.currentWeather?.temperature,
-            dataDisplay: '5°C',
-            locationName: 'Poznań',
+      itemBuilder: (_, index) {
+        final ComparisonObject comparisonObject = ComparisonUtils.provideComparisonObjectForIndex(index);
+        return ComparisonCell(
+          comparisonObject: comparisonObject,
+          data: ComparisonFactory.prepareWeatherDataForComparison(
+            comparisonObject: comparisonObject,
+            weatherData: weatherData,
           ),
-          SingleLocationData(
-            data: weatherData.item2.currentWeather?.temperature,
-            dataDisplay: '16°C',
-            locationName: 'Malaga',
-          ),
-        ),
-      ),
-      itemCount: 6,
+        );
+      },
+      itemCount: ComparisonUtils.comparisonObjectCount,
       padding: EdgeInsets.zero,
       physics: const NeverScrollableScrollPhysics(),
       separatorBuilder: (_, __) => const SizedBox(
