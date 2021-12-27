@@ -1,5 +1,5 @@
 import 'package:app/commons/mocks.dart';
-import 'package:app/networking/models/location_weather_data.dart';
+import 'package:app/data/models/location_weather_data.dart';
 import 'package:app/repositories/weather/weather_repository.dart';
 
 class FakeWeatherRepository implements WeatherRepository {

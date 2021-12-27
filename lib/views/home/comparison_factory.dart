@@ -1,8 +1,8 @@
 import 'package:app/commons/collections.dart';
 import 'package:app/data/enums/comparison_object.dart';
 import 'package:app/data/models/location_single_data.dart';
+import 'package:app/data/models/location_weather_data.dart';
 import 'package:app/networking/models/current_weather.dart';
-import 'package:app/networking/models/location_weather_data.dart';
 import 'package:app/utils/temperature_utiils.dart';
 import 'package:app/utils/time_utils.dart';
 import 'package:intl/intl.dart';
@@ -40,7 +40,6 @@ abstract class ComparisonFactory {
     final double firstTemperature = weatherData.item1.currentWeather!.temperature!;
     final double secondTemperature = weatherData.item2.currentWeather!.temperature!;
 
-    // TODO  remove mocks in location name
     return CollectionOf2(
       LocationSingleData(
         data: firstTemperature,
@@ -64,7 +63,6 @@ abstract class ComparisonFactory {
     final int firstDayLength = firstWeather.sunset! - firstWeather.sunrise!;
     final int secondDayLength = secondWeather.sunset! - secondWeather.sunrise!;
 
-    // TODO  remove mocks in location name
     return CollectionOf2(
       LocationSingleData(
         data: firstDayLength,
@@ -89,7 +87,6 @@ abstract class ComparisonFactory {
     final double firstTemperature = weatherData.item1.dailyForecast!.first.temperature!.day!;
     final double secondTemperature = weatherData.item2.dailyForecast!.first.temperature!.day!;
 
-    // TODO  remove mocks in location name
     return CollectionOf2(
       LocationSingleData(
         data: firstTemperature,
@@ -110,7 +107,6 @@ abstract class ComparisonFactory {
     final double firstTemperature = weatherData.item1.dailyForecast!.first.temperature!.night!;
     final double secondTemperature = weatherData.item2.dailyForecast!.first.temperature!.night!;
 
-    // TODO  remove mocks in location name
     return CollectionOf2(
       LocationSingleData(
         data: firstTemperature,
@@ -132,8 +128,6 @@ abstract class ComparisonFactory {
 
     final int firstSunrise = weatherData.item1.currentWeather!.sunrise!;
     final int secondSunrise = weatherData.item2.currentWeather!.sunrise!;
-
-    // TODO  remove mocks in location name
 
     return CollectionOf2(
       LocationSingleData(
@@ -158,8 +152,6 @@ abstract class ComparisonFactory {
 
     final int firstSunset = weatherData.item1.currentWeather!.sunset!;
     final int secondSunset = weatherData.item2.currentWeather!.sunset!;
-
-    // TODO  remove mocks in location name
 
     return CollectionOf2(
       LocationSingleData(

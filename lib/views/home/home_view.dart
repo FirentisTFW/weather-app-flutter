@@ -1,11 +1,11 @@
 import 'package:app/commons/collections.dart';
 import 'package:app/data/enums/comparison_object.dart';
 import 'package:app/data/models/location_single_data.dart';
+import 'package:app/data/models/location_weather_data.dart';
 import 'package:app/errors/app_error_factory.dart';
 import 'package:app/extensions/list_extensions.dart';
 import 'package:app/networking/models/current_weather.dart';
 import 'package:app/networking/models/daily_forecast.dart';
-import 'package:app/networking/models/location_weather_data.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/universal_widgets/app_progress_indicator.dart';
 import 'package:app/universal_widgets/error_view.dart';
@@ -102,7 +102,6 @@ class HomeView extends StatelessWidget {
     return LocationWeatherForecastCell(
       currentWeather: currentWeather,
       forecast: forecast,
-      // TODO Remove mocks
       locationName: weatherData.locationName,
     );
   }

@@ -1,4 +1,4 @@
-import 'package:app/networking/models/location_weather_data.dart';
+import 'package:app/data/models/location_weather_data.dart';
 
 abstract class WeatherRepository {
   const WeatherRepository();

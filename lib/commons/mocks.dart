@@ -1,10 +1,10 @@
 import 'dart:math';
 
+import 'package:app/data/models/location_weather_data.dart';
 import 'package:app/networking/models/current_weather.dart';
 import 'package:app/networking/models/daily_forecast.dart';
 import 'package:app/networking/models/forecast_temperature.dart';
 import 'package:app/networking/models/hourly_forecast.dart';
-import 'package:app/networking/models/location_weather_data.dart';
 import 'package:app/networking/models/weather_condition.dart';
 import 'package:app/networking/models/weather_data.dart';
 import 'package:app/utils/random_data_utils.dart';
