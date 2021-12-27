@@ -5,8 +5,9 @@ import 'package:flutter/widgets.dart';
 abstract class TimeUtils {
   const TimeUtils._();
 
-  static String provideTimeDifferenceDisplay({
+  static String provideTimeDisplayFromSeconds({
     required int secondsDifference,
+    bool useFullDescription = false,
   }) {
     const secondsInMinute = 60;
     const minutesInHour = 60;
@@ -15,8 +16,17 @@ abstract class TimeUtils {
     final int hours = (secondsDifference / secondsInHour).floor();
     final int minutes = (secondsDifference / secondsInMinute).floor() % minutesInHour;
 
-    final String hoursKeyword = hours == 1 ? 'hour' : 'hours';
-    final String minutesKeyword = minutes == 1 ? 'minute' : 'minutes';
+    // TODO Move strings to intl
+    final String hoursKeyword = !useFullDescription
+        ? 'h'
+        : hours == 1
+            ? 'hour'
+            : 'hours';
+    final String minutesKeyword = !useFullDescription
+        ? 'm'
+        : minutes == 1
+            ? 'minute'
+            : 'minutes';
 
     if (hours > 0) {
       return '$hours $hoursKeyword $minutes $minutesKeyword';

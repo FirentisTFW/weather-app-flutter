@@ -26,7 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "comparisonCurrentTemperature":
             MessageLookupByLibrary.simpleMessage("Current temperature"),
         "comparisonDayLength":
-            MessageLookupByLibrary.simpleMessage("Długość dnia"),
+            MessageLookupByLibrary.simpleMessage("Day length"),
         "comparisonDayTemperature":
             MessageLookupByLibrary.simpleMessage("Day temperature"),
         "comparisonNightTemperature":

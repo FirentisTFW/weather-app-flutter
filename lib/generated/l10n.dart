@@ -140,10 +140,10 @@ class S {
     );
   }
 
-  /// `Długość dnia`
+  /// `Day length`
   String get comparisonDayLength {
     return Intl.message(
-      'Długość dnia',
+      'Day length',
       name: 'comparisonDayLength',
       desc: '',
       args: [],

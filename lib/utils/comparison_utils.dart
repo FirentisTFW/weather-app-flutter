@@ -104,7 +104,7 @@ abstract class ComparisonUtils {
 
   static String _provideDifferenceDisplay(Difference difference) {
     if (difference is SecondsDifference) {
-      return TimeUtils.provideTimeDifferenceDisplay(
+      return TimeUtils.provideTimeDisplayFromSeconds(
         secondsDifference: difference.data.abs(),
       );
     } else if (difference is TemperatureDifference) {
