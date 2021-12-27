@@ -37,10 +37,15 @@ class MessageLookup extends MessageLookupByLibrary {
             "An error occured while fetching data."),
         "defaultErrorTitle":
             MessageLookupByLibrary.simpleMessage("Oops, something went wrong"),
+        "fridayShort": MessageLookupByLibrary.simpleMessage("Fri"),
+        "mondayShort": MessageLookupByLibrary.simpleMessage("Mon"),
+        "saturdayShort": MessageLookupByLibrary.simpleMessage("Sat"),
+        "sundayShort": MessageLookupByLibrary.simpleMessage("Sun"),
         "temperatureComparisonKeywordNegative":
             MessageLookupByLibrary.simpleMessage("cooler"),
         "temperatureComparisonKeywordPositive":
             MessageLookupByLibrary.simpleMessage("warmer"),
+        "thursdayShort": MessageLookupByLibrary.simpleMessage("Thu"),
         "timeComparisonKeywordForDurationNegative":
             MessageLookupByLibrary.simpleMessage("shorter"),
         "timeComparisonKeywordForDurationPositive":
@@ -49,6 +54,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("sooner"),
         "timeComparisonKeywordForTimestampPositive":
             MessageLookupByLibrary.simpleMessage("later"),
-        "tryAgain": MessageLookupByLibrary.simpleMessage("Try again")
+        "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
+        "tuesdayShort": MessageLookupByLibrary.simpleMessage("Tue"),
+        "wednesdayShort": MessageLookupByLibrary.simpleMessage("Wed")
       };
 }

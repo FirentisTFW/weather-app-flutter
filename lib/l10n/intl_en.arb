@@ -14,5 +14,12 @@
   "timeComparisonKeywordForDurationNegative": "shorter",
   "timeComparisonKeywordForDurationPositive": "longer",
   "timeComparisonKeywordForTimestampNegative": "sooner",
-  "timeComparisonKeywordForTimestampPositive": "later"
+  "timeComparisonKeywordForTimestampPositive": "later",
+  "mondayShort": "Mon",
+  "tuesdayShort": "Tue",
+  "wednesdayShort": "Wed",
+  "thursdayShort": "Thu",
+  "fridayShort": "Fri",
+  "saturdayShort": "Sat",
+  "sundayShort": "Sun"
 }

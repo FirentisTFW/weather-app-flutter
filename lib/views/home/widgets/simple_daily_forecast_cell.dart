@@ -1,10 +1,9 @@
-import 'dart:math';
-
 import 'package:app/networking/endpoints.dart';
 import 'package:app/networking/models/daily_forecast.dart';
 import 'package:app/networking/models/forecast_temperature.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/universal_widgets/app_cached_network_image.dart';
+import 'package:app/utils/date_utils.dart' as du;
 import 'package:app/utils/temperature_utiils.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +22,7 @@ class SimpleDailyForecastCell extends StatelessWidget {
         const SizedBox(
           width: 4.0,
         ),
-        _buildDayOfTheWeek(),
+        _buildDayOfTheWeek(context),
         const Spacer(),
         _buildTemperature(),
         const SizedBox(
@@ -43,10 +42,12 @@ class SimpleDailyForecastCell extends StatelessWidget {
     );
   }
 
-  Widget _buildDayOfTheWeek() {
-    // TODO Remove mocks
+  Widget _buildDayOfTheWeek(BuildContext context) {
     return Text(
-      Random().nextBool() ? 'Mon' : 'Tue',
+      du.DateUtils.provideWeekdayBasedOnTime(
+        context,
+        timeInSeconds: forecast.date,
+      ),
       style: const TextStyle(
         color: AppColors.black,
         fontSize: 12.0,

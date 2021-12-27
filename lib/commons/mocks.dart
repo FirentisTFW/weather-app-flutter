@@ -91,7 +91,14 @@ abstract class Mocks {
               title: sunny ? 'Clear' : 'Clouds',
             ),
           ],
-          date: DateTime(2021, 11, 27).millisecondsSinceEpoch,
+          date: DateTime.now()
+                  .add(
+                    Duration(
+                      days: i,
+                    ),
+                  )
+                  .millisecondsSinceEpoch ~/
+              1000,
           humidity: 48,
           pressure: 1010,
           sunrise: 1637996883,
