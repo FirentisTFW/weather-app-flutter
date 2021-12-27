@@ -1,7 +1,7 @@
 import 'package:app/commons/collections.dart';
 import 'package:app/data/enums/comparison_object.dart';
 import 'package:app/data/models/difference.dart';
-import 'package:app/data/models/single_location_data.dart';
+import 'package:app/data/models/location_single_data.dart';
 import 'package:app/generated/l10n.dart';
 import 'package:app/utils/temperature_utiils.dart';
 import 'package:app/utils/time_utils.dart';
@@ -12,9 +12,9 @@ abstract class ComparisonUtils {
 
   static const _comparisonObjects = [
     ComparisonObject.currentTemperature,
-    ComparisonObject.dayLength,
     ComparisonObject.dayTemperature,
     ComparisonObject.nightTemperature,
+    ComparisonObject.dayLength,
     ComparisonObject.sunrise,
     ComparisonObject.sunset,
   ];
@@ -24,7 +24,7 @@ abstract class ComparisonUtils {
   static String provideComparisonDescription(
     BuildContext context, {
     required ComparisonObject comparisonObject,
-    required CollectionOf2<SingleLocationData> data,
+    required CollectionOf2<LocationSingleData> data,
   }) {
     final Difference? difference = _calculateDataDifference(comparisonObject, data);
     if (difference == null) return '';
@@ -81,14 +81,13 @@ abstract class ComparisonUtils {
 
   static Difference? _calculateDataDifference(
     ComparisonObject comparisonObject,
-    CollectionOf2<SingleLocationData> data,
+    CollectionOf2<LocationSingleData> data,
   ) {
     try {
       switch (comparisonObject) {
         case ComparisonObject.currentTemperature:
         case ComparisonObject.dayTemperature:
         case ComparisonObject.nightTemperature:
-          // TODO
           final double difference = (data.item1.data as double) - (data.item2.data as double);
           return TemperatureDifference(difference);
         case ComparisonObject.dayLength:
@@ -106,6 +105,7 @@ abstract class ComparisonUtils {
     if (difference is SecondsDifference) {
       return TimeUtils.provideTimeDisplayFromSeconds(
         secondsDifference: difference.data.abs(),
+        useFullDescription: true,
       );
     } else if (difference is TemperatureDifference) {
       return TemperatureUtils.formatTemperature(difference.data.abs().round());

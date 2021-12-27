@@ -1,6 +1,6 @@
 import 'package:app/commons/collections.dart';
 import 'package:app/data/enums/comparison_object.dart';
-import 'package:app/data/models/single_location_data.dart';
+import 'package:app/data/models/location_single_data.dart';
 import 'package:app/errors/app_error_factory.dart';
 import 'package:app/extensions/list_extensions.dart';
 import 'package:app/networking/models/current_weather.dart';
@@ -103,7 +103,7 @@ class HomeView extends StatelessWidget {
       currentWeather: currentWeather,
       forecast: forecast,
       // TODO Remove mocks
-      locationName: 'Poznań',
+      locationName: weatherData.locationName,
     );
   }
 
@@ -111,7 +111,7 @@ class HomeView extends StatelessWidget {
     return ListView.separated(
       itemBuilder: (_, index) {
         final ComparisonObject comparisonObject = ComparisonUtils.provideComparisonObjectForIndex(index);
-        final CollectionOf2<SingleLocationData>? comparisonData = ComparisonFactory.prepareWeatherDataForComparison(
+        final CollectionOf2<LocationSingleData>? comparisonData = ComparisonFactory.prepareWeatherDataForComparison(
           comparisonObject: comparisonObject,
           weatherData: weatherData,
         );

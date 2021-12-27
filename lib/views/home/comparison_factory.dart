@@ -1,6 +1,6 @@
 import 'package:app/commons/collections.dart';
 import 'package:app/data/enums/comparison_object.dart';
-import 'package:app/data/models/single_location_data.dart';
+import 'package:app/data/models/location_single_data.dart';
 import 'package:app/networking/models/current_weather.dart';
 import 'package:app/networking/models/location_weather_data.dart';
 import 'package:app/utils/temperature_utiils.dart';
@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 abstract class ComparisonFactory {
   const ComparisonFactory._();
 
-  static CollectionOf2<SingleLocationData>? prepareWeatherDataForComparison({
+  static CollectionOf2<LocationSingleData>? prepareWeatherDataForComparison({
     required ComparisonObject comparisonObject,
     required CollectionOf2<LocationWeatherData> weatherData,
   }) {
@@ -34,7 +34,7 @@ abstract class ComparisonFactory {
     }
   }
 
-  static CollectionOf2<SingleLocationData> _prepareDataForCurrentTemperature(
+  static CollectionOf2<LocationSingleData> _prepareDataForCurrentTemperature(
     CollectionOf2<LocationWeatherData> weatherData,
   ) {
     final double firstTemperature = weatherData.item1.currentWeather!.temperature!;
@@ -42,20 +42,20 @@ abstract class ComparisonFactory {
 
     // TODO  remove mocks in location name
     return CollectionOf2(
-      SingleLocationData(
+      LocationSingleData(
         data: firstTemperature,
         dataDisplay: TemperatureUtils.formatTemperature(firstTemperature.round()),
-        locationName: 'Poznań',
+        locationName: weatherData.item1.locationName,
       ),
-      SingleLocationData(
+      LocationSingleData(
         data: secondTemperature,
         dataDisplay: TemperatureUtils.formatTemperature(secondTemperature.round()),
-        locationName: 'Malaga',
+        locationName: weatherData.item2.locationName,
       ),
     );
   }
 
-  static CollectionOf2<SingleLocationData> _prepareDataForDayLength(
+  static CollectionOf2<LocationSingleData> _prepareDataForDayLength(
     CollectionOf2<LocationWeatherData> weatherData,
   ) {
     final CurrentWeather firstWeather = weatherData.item1.currentWeather!;
@@ -66,24 +66,24 @@ abstract class ComparisonFactory {
 
     // TODO  remove mocks in location name
     return CollectionOf2(
-      SingleLocationData(
+      LocationSingleData(
         data: firstDayLength,
         dataDisplay: TimeUtils.provideTimeDisplayFromSeconds(
           secondsDifference: firstDayLength,
         ),
-        locationName: 'Poznań',
+        locationName: weatherData.item1.locationName,
       ),
-      SingleLocationData(
+      LocationSingleData(
         data: secondDayLength,
         dataDisplay: TimeUtils.provideTimeDisplayFromSeconds(
           secondsDifference: secondDayLength,
         ),
-        locationName: 'Malaga',
+        locationName: weatherData.item2.locationName,
       ),
     );
   }
 
-  static CollectionOf2<SingleLocationData>? _prepareDataForDayTemperature(
+  static CollectionOf2<LocationSingleData>? _prepareDataForDayTemperature(
     CollectionOf2<LocationWeatherData> weatherData,
   ) {
     final double firstTemperature = weatherData.item1.dailyForecast!.first.temperature!.day!;
@@ -91,20 +91,20 @@ abstract class ComparisonFactory {
 
     // TODO  remove mocks in location name
     return CollectionOf2(
-      SingleLocationData(
+      LocationSingleData(
         data: firstTemperature,
         dataDisplay: TemperatureUtils.formatTemperature(firstTemperature.round()),
-        locationName: 'Poznań',
+        locationName: weatherData.item1.locationName,
       ),
-      SingleLocationData(
+      LocationSingleData(
         data: secondTemperature,
         dataDisplay: TemperatureUtils.formatTemperature(secondTemperature.round()),
-        locationName: 'Malaga',
+        locationName: weatherData.item2.locationName,
       ),
     );
   }
 
-  static CollectionOf2<SingleLocationData>? _prepareDataForNightTemperature(
+  static CollectionOf2<LocationSingleData>? _prepareDataForNightTemperature(
     CollectionOf2<LocationWeatherData> weatherData,
   ) {
     final double firstTemperature = weatherData.item1.dailyForecast!.first.temperature!.night!;
@@ -112,20 +112,20 @@ abstract class ComparisonFactory {
 
     // TODO  remove mocks in location name
     return CollectionOf2(
-      SingleLocationData(
+      LocationSingleData(
         data: firstTemperature,
         dataDisplay: TemperatureUtils.formatTemperature(firstTemperature.round()),
-        locationName: 'Poznań',
+        locationName: weatherData.item1.locationName,
       ),
-      SingleLocationData(
+      LocationSingleData(
         data: secondTemperature,
         dataDisplay: TemperatureUtils.formatTemperature(secondTemperature.round()),
-        locationName: 'Malaga',
+        locationName: weatherData.item2.locationName,
       ),
     );
   }
 
-  static CollectionOf2<SingleLocationData> _prepareDataForSunrise(
+  static CollectionOf2<LocationSingleData> _prepareDataForSunrise(
     CollectionOf2<LocationWeatherData> weatherData,
   ) {
     const int milisecondsInSecond = 1000;
@@ -136,22 +136,22 @@ abstract class ComparisonFactory {
     // TODO  remove mocks in location name
 
     return CollectionOf2(
-      SingleLocationData(
+      LocationSingleData(
         data: firstSunrise,
         dataDisplay:
             DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(firstSunrise * milisecondsInSecond)),
-        locationName: 'Poznań',
+        locationName: weatherData.item1.locationName,
       ),
-      SingleLocationData(
+      LocationSingleData(
         data: secondSunrise,
         dataDisplay:
             DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(secondSunrise * milisecondsInSecond)),
-        locationName: 'Malaga',
+        locationName: weatherData.item2.locationName,
       ),
     );
   }
 
-  static CollectionOf2<SingleLocationData> _prepareDataForSunset(
+  static CollectionOf2<LocationSingleData> _prepareDataForSunset(
     CollectionOf2<LocationWeatherData> weatherData,
   ) {
     const int milisecondsInSecond = 1000;
@@ -162,16 +162,16 @@ abstract class ComparisonFactory {
     // TODO  remove mocks in location name
 
     return CollectionOf2(
-      SingleLocationData(
+      LocationSingleData(
         data: firstSunset,
         dataDisplay: DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(firstSunset * milisecondsInSecond)),
-        locationName: 'Poznań',
+        locationName: weatherData.item1.locationName,
       ),
-      SingleLocationData(
+      LocationSingleData(
         data: secondSunset,
         dataDisplay:
             DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(secondSunset * milisecondsInSecond)),
-        locationName: 'Malaga',
+        locationName: weatherData.item2.locationName,
       ),
     );
   }

@@ -1,13 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'location_weather_data.dart';
+part of 'weather_data.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-LocationWeatherData _$LocationWeatherDataFromJson(Map<String, dynamic> json) =>
-    LocationWeatherData(
+WeatherData _$WeatherDataFromJson(Map<String, dynamic> json) => WeatherData(
       currentWeather: json['current'] == null
           ? null
           : CurrentWeather.fromJson(json['current'] as Map<String, dynamic>),

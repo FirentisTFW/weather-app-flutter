@@ -1,6 +1,6 @@
 import 'package:app/commons/collections.dart';
 import 'package:app/data/enums/comparison_object.dart';
-import 'package:app/data/models/single_location_data.dart';
+import 'package:app/data/models/location_single_data.dart';
 import 'package:app/extensions/list_extensions.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_decorations.dart';
@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 
 class ComparisonCell extends StatelessWidget {
   final ComparisonObject comparisonObject;
-  final CollectionOf2<SingleLocationData> data;
+  final CollectionOf2<LocationSingleData> data;
 
   const ComparisonCell({
     required this.comparisonObject,
@@ -61,7 +61,7 @@ class ComparisonCell extends StatelessWidget {
   }
 
   Widget _buildLocationData(
-    SingleLocationData data, {
+    LocationSingleData data, {
     bool dataFirst = false,
   }) {
     return Row(

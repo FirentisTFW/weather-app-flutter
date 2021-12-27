@@ -6,6 +6,7 @@ import 'package:app/networking/models/forecast_temperature.dart';
 import 'package:app/networking/models/hourly_forecast.dart';
 import 'package:app/networking/models/location_weather_data.dart';
 import 'package:app/networking/models/weather_condition.dart';
+import 'package:app/networking/models/weather_data.dart';
 import 'package:app/utils/random_data_utils.dart';
 
 abstract class Mocks {
@@ -39,12 +40,15 @@ abstract class Mocks {
   );
 
   static final locationWeatherData = LocationWeatherData(
-    currentWeather: currentWeather,
-    dailyForecast: dailyForecast,
-    hourlyForecast: hourlyForecast,
-    latitude: 36.7202,
-    longitude: -4.4203,
-    timezoneOffset: 3600,
+    locationName: 'Poznań',
+    weatherData: WeatherData(
+      currentWeather: currentWeather,
+      dailyForecast: dailyForecast,
+      hourlyForecast: hourlyForecast,
+      latitude: 36.7202,
+      longitude: -4.4203,
+      timezoneOffset: 3600,
+    ),
   );
 
   static List<HourlyForecast> _prepareHourlyForecast({

@@ -1,7 +1,7 @@
 import 'package:app/commons/app_locales.dart';
 import 'package:app/commons/collections.dart';
 import 'package:app/data/enums/comparison_object.dart';
-import 'package:app/data/models/single_location_data.dart';
+import 'package:app/data/models/location_single_data.dart';
 import 'package:app/generated/l10n.dart';
 import 'package:app/utils/comparison_utils.dart';
 import 'package:flutter/material.dart';
@@ -33,12 +33,12 @@ void main() {
             tester.context,
             comparisonObject: ComparisonObject.currentTemperature,
             data: const CollectionOf2(
-              SingleLocationData(
+              LocationSingleData(
                 data: 10.0,
                 dataDisplay: '',
                 locationName: 'Poznań',
               ),
-              SingleLocationData(
+              LocationSingleData(
                 data: 20.0,
                 dataDisplay: '',
                 locationName: 'Malaga',
@@ -54,12 +54,12 @@ void main() {
             tester.context,
             comparisonObject: ComparisonObject.currentTemperature,
             data: const CollectionOf2(
-              SingleLocationData(
+              LocationSingleData(
                 data: 32.1,
                 dataDisplay: '',
                 locationName: 'Poznań',
               ),
-              SingleLocationData(
+              LocationSingleData(
                 data: 30.7,
                 dataDisplay: '',
                 locationName: 'Malaga',
@@ -79,12 +79,12 @@ void main() {
               tester.context,
               comparisonObject: ComparisonObject.sunrise,
               data: const CollectionOf2(
-                SingleLocationData(
+                LocationSingleData(
                   data: 1639897153, // 06:59:13
                   dataDisplay: '',
                   locationName: 'Poznań',
                 ),
-                SingleLocationData(
+                LocationSingleData(
                   data: 1639898730, // 07:25:30
                   dataDisplay: '',
                   locationName: 'Malaga',
@@ -100,12 +100,12 @@ void main() {
               tester.context,
               comparisonObject: ComparisonObject.sunrise,
               data: const CollectionOf2(
-                SingleLocationData(
+                LocationSingleData(
                   data: 1639898730, // 07:25:30
                   dataDisplay: '',
                   locationName: 'Poznań',
                 ),
-                SingleLocationData(
+                LocationSingleData(
                   data: 1639897153, // 06:59:13
                   dataDisplay: '',
                   locationName: 'Malaga',
@@ -124,12 +124,12 @@ void main() {
               tester.context,
               comparisonObject: ComparisonObject.dayLength,
               data: const CollectionOf2(
-                SingleLocationData(
+                LocationSingleData(
                   data: 27622, // 7h 40m 22s
                   dataDisplay: '',
                   locationName: 'Poznań',
                 ),
-                SingleLocationData(
+                LocationSingleData(
                   data: 34724, // 9h 38m 44s
                   dataDisplay: '',
                   locationName: 'Malaga',
@@ -145,12 +145,12 @@ void main() {
               tester.context,
               comparisonObject: ComparisonObject.dayLength,
               data: const CollectionOf2(
-                SingleLocationData(
+                LocationSingleData(
                   data: 34724, // 9h 38m 44s
                   dataDisplay: '',
                   locationName: 'Poznań',
                 ),
-                SingleLocationData(
+                LocationSingleData(
                   data: 27622, // 7h 40m 22s
                   dataDisplay: '',
                   locationName: 'Malaga',
