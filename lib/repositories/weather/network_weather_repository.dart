@@ -1,4 +1,5 @@
 import 'package:app/data/models/location_weather_data.dart';
+import 'package:app/data/models/named_location.dart';
 import 'package:app/repositories/weather/weather_repository.dart';
 import 'package:dio/dio.dart';
 
@@ -10,7 +11,9 @@ class NetworkWeatherRepository implements WeatherRepository {
   });
 
   @override
-  Future<LocationWeatherData> getCurrentWeatherAndForecast() {
+  Future<LocationWeatherData> getCurrentWeatherAndForecast({
+    required NamedLocation location,
+  }) {
     // TODO implement getCurrentWeather
     throw UnimplementedError();
   }

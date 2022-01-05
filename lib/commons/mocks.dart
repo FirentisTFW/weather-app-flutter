@@ -31,6 +31,25 @@ abstract class Mocks {
     windSpeed: 3.13,
   );
 
+  static const currentWeather2 = CurrentWeather(
+    conditions: [
+      WeatherCondition(
+        description: 'clear sky',
+        icon: '01d',
+        title: 'Clear',
+      ),
+    ],
+    humidity: 55,
+    feelsLike: 16.7,
+    pressure: 1010,
+    sunrise: 1637825965,
+    sunset: 1637865823,
+    temperature: 26.2,
+    uvIndex: 6.0,
+    windDegree: 248.0,
+    windSpeed: 3.13,
+  );
+
   static final List<DailyForecast> dailyForecast = _prepareDailyForecast(
     howManyDays: 5,
   );
@@ -43,6 +62,18 @@ abstract class Mocks {
     locationName: 'Poznań',
     weatherData: WeatherData(
       currentWeather: currentWeather,
+      dailyForecast: dailyForecast,
+      hourlyForecast: hourlyForecast,
+      latitude: 52.4095,
+      longitude: 16.9319,
+      timezoneOffset: 3600,
+    ),
+  );
+
+  static final locationWeatherData2 = LocationWeatherData(
+    locationName: 'Malaga',
+    weatherData: WeatherData(
+      currentWeather: currentWeather2,
       dailyForecast: dailyForecast,
       hourlyForecast: hourlyForecast,
       latitude: 36.7202,

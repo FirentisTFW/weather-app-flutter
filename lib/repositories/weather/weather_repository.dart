@@ -1,8 +1,10 @@
 import 'package:app/data/models/location_weather_data.dart';
+import 'package:app/data/models/named_location.dart';
 
 abstract class WeatherRepository {
   const WeatherRepository();
 
-  // TODO Add location parameter - where to get data from?
-  Future<LocationWeatherData> getCurrentWeatherAndForecast();
+  Future<LocationWeatherData> getCurrentWeatherAndForecast({
+    required NamedLocation location,
+  });
 }
