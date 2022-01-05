@@ -4,9 +4,13 @@ import 'package:app/data/models/location_single_data.dart';
 import 'package:app/data/models/location_weather_data.dart';
 import 'package:app/errors/app_error_factory.dart';
 import 'package:app/extensions/list_extensions.dart';
+import 'package:app/generated/l10n.dart';
 import 'package:app/networking/models/current_weather.dart';
 import 'package:app/networking/models/daily_forecast.dart';
+import 'package:app/routing.dart';
 import 'package:app/styles/app_dimensions.dart';
+import 'package:app/styles/app_text_styles.dart';
+import 'package:app/universal_widgets/adaptive_button.dart';
 import 'package:app/universal_widgets/app_progress_indicator.dart';
 import 'package:app/universal_widgets/error_view.dart';
 import 'package:app/utils/comparison_utils.dart';
@@ -24,16 +28,18 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFEEE),
-      body: Center(
-        child: Consumer(
-          builder: (context, ref, __) {
-            final AsyncValue<CollectionOf2<LocationWeatherData>> response = ref.watch(homeProvider);
-            return response.when(
-              data: (weatherData) => _buildLoadedBody(weatherData),
-              error: (error, __) => _buildErrorBody(context, error),
-              loading: () => const AppProgressIndicator(),
-            );
-          },
+      body: SafeArea(
+        child: Center(
+          child: Consumer(
+            builder: (context, ref, __) {
+              final AsyncValue<CollectionOf2<LocationWeatherData>> response = ref.watch(homeProvider);
+              return response.when(
+                data: (weatherData) => _buildLoadedBody(context, weatherData),
+                error: (error, __) => _buildErrorBody(context, error),
+                loading: () => const AppProgressIndicator(),
+              );
+            },
+          ),
         ),
       ),
     );
@@ -49,13 +55,13 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _buildLoadedBody(CollectionOf2<LocationWeatherData> weatherData) {
+  Widget _buildLoadedBody(BuildContext context, CollectionOf2<LocationWeatherData> weatherData) {
     return Padding(
       padding: AppDimensions.defaultPaddingAll,
       child: SingleChildScrollView(
         child: Column(
           children: [
-            _buildButtons(),
+            _buildButtons(context),
             _buildLocationtWeatherForecastCells(weatherData),
             _buildComparisonCells(weatherData),
           ].separatedBy(
@@ -68,10 +74,40 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _buildButtons() {
-    // TODO Implement
-    return const SizedBox(
-      height: 20.0,
+  Widget _buildButtons(BuildContext context) {
+    // TODO Add layout buttons
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        _buildSettingsIcon(context),
+        _buildLocationsButton(context),
+      ],
+    );
+  }
+
+  Widget _buildSettingsIcon(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, Routing.settings),
+      child: const Icon(
+        Icons.settings,
+        size: 32.0,
+      ),
+    );
+  }
+
+  Widget _buildLocationsButton(BuildContext context) {
+    return AdaptiveButton(
+      height: 40.0,
+      onPressed: () => Navigator.pushNamed(context, Routing.locationsList),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 4.0,
+        ),
+        child: Text(
+          S.of(context).homeManageLocationsButton,
+          style: AppTextStyles.header(),
+        ),
+      ),
     );
   }
 

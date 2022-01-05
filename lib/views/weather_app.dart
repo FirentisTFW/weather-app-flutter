@@ -1,5 +1,6 @@
 import 'package:app/commons/app_locales.dart';
 import 'package:app/generated/l10n.dart';
+import 'package:app/routing.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_text_styles.dart';
 import 'package:app/views/home/home_view.dart';
@@ -15,6 +16,7 @@ class WeatherApp extends StatelessWidget {
         ...GlobalMaterialLocalizations.delegates,
         S.delegate,
       ],
+      onGenerateRoute: (settings) => Routing.provideRoute(settings),
       onGenerateTitle: (context) => S.of(context).appName,
       supportedLocales: const [
         AppLocales.english,

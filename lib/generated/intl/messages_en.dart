@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "defaultErrorTitle":
             MessageLookupByLibrary.simpleMessage("Oops, something went wrong"),
         "fridayShort": MessageLookupByLibrary.simpleMessage("Fri"),
+        "homeManageLocationsButton":
+            MessageLookupByLibrary.simpleMessage("Manage locations"),
         "mondayShort": MessageLookupByLibrary.simpleMessage("Mon"),
         "saturdayShort": MessageLookupByLibrary.simpleMessage("Sat"),
         "sundayShort": MessageLookupByLibrary.simpleMessage("Sun"),

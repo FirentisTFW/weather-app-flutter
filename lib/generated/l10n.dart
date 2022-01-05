@@ -279,6 +279,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Manage locations`
+  String get homeManageLocationsButton {
+    return Intl.message(
+      'Manage locations',
+      name: 'homeManageLocationsButton',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
