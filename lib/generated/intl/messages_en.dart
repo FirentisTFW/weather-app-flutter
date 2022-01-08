@@ -40,6 +40,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "fridayShort": MessageLookupByLibrary.simpleMessage("Fri"),
         "homeManageLocationsButton":
             MessageLookupByLibrary.simpleMessage("Manage locations"),
+        "locationsListAppBarTitle":
+            MessageLookupByLibrary.simpleMessage("Manage locations"),
         "mondayShort": MessageLookupByLibrary.simpleMessage("Mon"),
         "saturdayShort": MessageLookupByLibrary.simpleMessage("Sat"),
         "sundayShort": MessageLookupByLibrary.simpleMessage("Sun"),

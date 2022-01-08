@@ -289,6 +289,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Manage locations`
+  String get locationsListAppBarTitle {
+    return Intl.message(
+      'Manage locations',
+      name: 'locationsListAppBarTitle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

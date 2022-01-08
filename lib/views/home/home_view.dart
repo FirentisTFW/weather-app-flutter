@@ -8,6 +8,7 @@ import 'package:app/generated/l10n.dart';
 import 'package:app/networking/models/current_weather.dart';
 import 'package:app/networking/models/daily_forecast.dart';
 import 'package:app/routing.dart';
+import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/styles/app_text_styles.dart';
 import 'package:app/universal_widgets/adaptive_button.dart';
@@ -27,7 +28,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFEEE),
+      backgroundColor: AppColors.lightYellow,
       body: SafeArea(
         child: Center(
           child: Consumer(

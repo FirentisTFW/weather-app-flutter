@@ -22,5 +22,6 @@
   "fridayShort": "Fri",
   "saturdayShort": "Sat",
   "sundayShort": "Sun",
-  "homeManageLocationsButton": "Manage locations"
+  "homeManageLocationsButton": "Manage locations",
+  "locationsListAppBarTitle": "Manage locations"
 }
