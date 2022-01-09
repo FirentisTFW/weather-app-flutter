@@ -10,6 +10,9 @@ class LocationsListAppBar extends StatelessWidget implements PreferredSizeWidget
   });
 
   @override
+  Size get preferredSize => const Size.fromHeight(64.0);
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -65,7 +68,4 @@ class LocationsListAppBar extends StatelessWidget implements PreferredSizeWidget
       ),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(64.0);
 }

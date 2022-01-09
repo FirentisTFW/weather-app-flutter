@@ -1,3 +1,4 @@
+import 'package:app/commons/mocks.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/views/locations_list/widgets/location_cell.dart';
@@ -25,8 +26,10 @@ class LocationsListView extends StatelessWidget {
     // TODO Remove mocks
     return ListView.separated(
       shrinkWrap: true,
-      itemBuilder: (_, index) => const LocationCell(),
-      itemCount: 4,
+      itemBuilder: (_, index) => LocationCell(
+        location: Mocks.locations[index],
+      ),
+      itemCount: Mocks.locations.length,
       padding: AppDimensions.defaultPaddingAll,
       separatorBuilder: (_, __) => const SizedBox(
         height: 10.0,

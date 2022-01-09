@@ -1,4 +1,6 @@
+import 'package:app/data/models/named_location.dart';
 import 'package:app/extensions/list_extensions.dart';
+import 'package:app/generated/l10n.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_decorations.dart';
 import 'package:app/styles/app_text_styles.dart';
@@ -6,11 +8,17 @@ import 'package:app/universal_widgets/app_checkbox.dart';
 import 'package:flutter/material.dart';
 
 class LocationCell extends StatelessWidget {
-  const LocationCell({
+  final NamedLocation location;
+  final ValueNotifier<bool> checkboxNotifier = ValueNotifier<bool>(false);
+
+  LocationCell({
+    required this.location,
     Key? key,
   }) : super(
           key: key,
-        );
+        ) {
+    checkboxNotifier.value = location.showOnHomeScreen;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +32,7 @@ class LocationCell extends StatelessWidget {
         children: [
           _buildLocationNameAndIcons(),
           _buildSeparator(),
-          _buildCoordinatesAndCheckbox(),
+          _buildCoordinatesAndCheckbox(context),
         ].separatedBy(
           const SizedBox(
             height: 8.0,
@@ -37,10 +45,9 @@ class LocationCell extends StatelessWidget {
   Widget _buildLocationNameAndIcons() {
     return Row(
       children: [
-        // TODO Remove mocks
-        const Text(
-          'Poznań',
-          style: TextStyle(
+        Text(
+          location.name,
+          style: const TextStyle(
             color: AppColors.black,
             fontSize: 17.0,
             fontWeight: FontWeight.w500,
@@ -89,26 +96,25 @@ class LocationCell extends StatelessWidget {
     );
   }
 
-  Widget _buildCoordinatesAndCheckbox() {
+  Widget _buildCoordinatesAndCheckbox(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildCoordinates(),
-        _buildCheckbox(),
+        _buildCoordinates(context),
+        _buildCheckbox(context),
       ],
     );
   }
 
-  Widget _buildCoordinates() {
-    // TODO Remove mocks
+  Widget _buildCoordinates(BuildContext context) {
     return Column(
       children: <Widget>[
         Text(
-          'Lat: 52.1234',
+          S.of(context).latitudeShortDisplay(location.latitudeDisplay),
           style: AppTextStyles.text(),
         ),
         Text(
-          'Lon: 16.3355',
+          S.of(context).longitudeShortDisplay(location.longitudeDisplay),
           style: AppTextStyles.text(),
         ),
       ].separatedBy(
@@ -119,15 +125,19 @@ class LocationCell extends StatelessWidget {
     );
   }
 
-  Widget _buildCheckbox() {
-    // TODO Add checkbox logic, remove mocks
+  Widget _buildCheckbox(BuildContext context) {
     return Column(
       children: <Widget>[
-        const AppCheckbox(),
-        const Text(
-          'Show on\nhome screen',
+        AppCheckbox(
+          valueNotifier: checkboxNotifier,
+          onChanged: (value) {
+            // TODO Add checkbox logic
+          },
+        ),
+        Text(
+          S.of(context).locationCellCheckbox,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             color: AppColors.black,
             fontSize: 12.0,
             fontWeight: FontWeight.w400,

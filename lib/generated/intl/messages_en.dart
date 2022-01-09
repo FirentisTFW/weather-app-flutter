@@ -20,6 +20,10 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(latitude) => "Lat: ${latitude}";
+
+  static String m1(longitude) => "Lon: ${longitude}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appName": MessageLookupByLibrary.simpleMessage("Weather App"),
@@ -40,8 +44,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "fridayShort": MessageLookupByLibrary.simpleMessage("Fri"),
         "homeManageLocationsButton":
             MessageLookupByLibrary.simpleMessage("Manage locations"),
+        "latitudeShortDisplay": m0,
+        "locationCellCheckbox":
+            MessageLookupByLibrary.simpleMessage("Show on\nhome screen"),
         "locationsListAppBarTitle":
             MessageLookupByLibrary.simpleMessage("Manage locations"),
+        "longitudeShortDisplay": m1,
         "mondayShort": MessageLookupByLibrary.simpleMessage("Mon"),
         "saturdayShort": MessageLookupByLibrary.simpleMessage("Sat"),
         "sundayShort": MessageLookupByLibrary.simpleMessage("Sun"),

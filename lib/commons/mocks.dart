@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:app/data/models/location_weather_data.dart';
+import 'package:app/data/models/named_location.dart';
 import 'package:app/networking/models/current_weather.dart';
 import 'package:app/networking/models/daily_forecast.dart';
 import 'package:app/networking/models/forecast_temperature.dart';
@@ -57,6 +58,21 @@ abstract class Mocks {
   static final List<HourlyForecast> hourlyForecast = _prepareHourlyForecast(
     howManyHours: 24,
   );
+
+  static const locations = [
+    NamedLocation(
+      latitude: 52.4095,
+      longitude: 16.9319,
+      name: 'Poznań',
+      showOnHomeScreen: true,
+    ),
+    NamedLocation(
+      latitude: 36.7202,
+      longitude: 4.4203,
+      name: 'Malaga',
+      showOnHomeScreen: false,
+    ),
+  ];
 
   static final locationWeatherData = LocationWeatherData(
     locationName: 'Poznań',

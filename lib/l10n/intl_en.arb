@@ -23,5 +23,8 @@
   "saturdayShort": "Sat",
   "sundayShort": "Sun",
   "homeManageLocationsButton": "Manage locations",
-  "locationsListAppBarTitle": "Manage locations"
+  "locationsListAppBarTitle": "Manage locations",
+  "latitudeShortDisplay": "Lat: {latitude}",
+  "longitudeShortDisplay": "Lon: {longitude}",
+  "locationCellCheckbox": "Show on\nhome screen"
 }

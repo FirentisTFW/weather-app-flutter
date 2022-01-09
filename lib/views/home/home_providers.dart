@@ -18,6 +18,7 @@ final homeProvider = FutureProvider<CollectionOf2<LocationWeatherData>>(
               latitude: 52.4095,
               longitude: 16.9319,
               name: 'Poznań',
+              showOnHomeScreen: true,
             ),
           )
           .then((value) => firstLocationData = value),
@@ -27,6 +28,7 @@ final homeProvider = FutureProvider<CollectionOf2<LocationWeatherData>>(
               latitude: 36.7202,
               longitude: 4.4203,
               name: 'Malaga',
+              showOnHomeScreen: true,
             ),
           )
           .then((value) => secondLocationData = value),

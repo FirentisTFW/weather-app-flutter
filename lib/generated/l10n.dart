@@ -299,6 +299,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Lat: {latitude}`
+  String latitudeShortDisplay(Object latitude) {
+    return Intl.message(
+      'Lat: $latitude',
+      name: 'latitudeShortDisplay',
+      desc: '',
+      args: [latitude],
+    );
+  }
+
+  /// `Lon: {longitude}`
+  String longitudeShortDisplay(Object longitude) {
+    return Intl.message(
+      'Lon: $longitude',
+      name: 'longitudeShortDisplay',
+      desc: '',
+      args: [longitude],
+    );
+  }
+
+  /// `Show on\nhome screen`
+  String get locationCellCheckbox {
+    return Intl.message(
+      'Show on\nhome screen',
+      name: 'locationCellCheckbox',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
