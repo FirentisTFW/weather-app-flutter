@@ -1,9 +1,10 @@
 import 'package:app/generated/l10n.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LocationsListAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final VoidCallback onAddIconPressed;
+class LocationsListAppBar extends ConsumerWidget implements PreferredSizeWidget {
+  final void Function(WidgetRef) onAddIconPressed;
 
   const LocationsListAppBar({
     required this.onAddIconPressed,
@@ -13,7 +14,7 @@ class LocationsListAppBar extends StatelessWidget implements PreferredSizeWidget
   Size get preferredSize => const Size.fromHeight(64.0);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 16.0,
@@ -32,17 +33,17 @@ class LocationsListAppBar extends StatelessWidget implements PreferredSizeWidget
         ],
         color: AppColors.white,
       ),
-      child: _buildBody(context),
+      child: _buildBody(context, ref),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody(BuildContext context, WidgetRef ref) {
     return SafeArea(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _buildTitle(context),
-          _buildAddIcon(),
+          _buildAddIcon(ref),
         ],
       ),
     );
@@ -59,9 +60,9 @@ class LocationsListAppBar extends StatelessWidget implements PreferredSizeWidget
     );
   }
 
-  Widget _buildAddIcon() {
+  Widget _buildAddIcon(WidgetRef ref) {
     return GestureDetector(
-      onTap: onAddIconPressed,
+      onTap: () => onAddIconPressed(ref),
       child: const Icon(
         Icons.add,
         size: 30.0,
