@@ -16,7 +16,7 @@ class CommonStorage {
     return (list as List).cast<NamedLocation>();
   }
 
-  Future<void> putLocation(NamedLocation location) async {
+  Future<void> addLocation(NamedLocation location) async {
     // TODO Consider try-catch and supplying custom local storage error messages that could be shown to the user
     final List<NamedLocation> existingLocations = await getLocations();
     (await locationsBox).put(

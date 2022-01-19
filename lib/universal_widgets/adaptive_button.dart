@@ -48,7 +48,7 @@ class AdaptiveButton extends StatelessWidget {
   Widget _buildMaterialButton() {
     final BorderRadiusGeometry? borderRadius = decoration?.borderRadius ?? AppDecorations.actionButton().borderRadius;
     return MaterialButton(
-      height: height,
+      height: height == double.infinity ? null : height,
       elevation: 0.0,
       onPressed: onPressed,
       padding: EdgeInsets.zero,

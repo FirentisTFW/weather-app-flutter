@@ -7,7 +7,7 @@ abstract class AppDecorations {
   static BoxDecoration actionButton() {
     return BoxDecoration(
       borderRadius: BorderRadius.circular(16.0),
-      color: AppColors.blue,
+      color: AppColors.lightBrown,
     );
   }
 
