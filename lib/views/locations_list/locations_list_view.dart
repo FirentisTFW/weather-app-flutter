@@ -1,6 +1,5 @@
-import 'package:app/commons/mocks.dart';
 import 'package:app/data/models/named_location.dart';
-import 'package:app/providers/storage_providers.dart';
+import 'package:app/routing.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/universal_widgets/app_progress_indicator.dart';
@@ -18,7 +17,7 @@ class LocationsListView extends StatelessWidget {
     // TODO handle error cases, remove mocks
     return Scaffold(
       appBar: LocationsListAppBar(
-        onAddIconPressed: (ref) => ref.read(storageProvider).putLocation(Mocks.locations[1]),
+        onAddIconPressed: () => Navigator.pushNamed(context, Routing.addLocation),
       ),
       backgroundColor: AppColors.lightYellow,
       body: Consumer(

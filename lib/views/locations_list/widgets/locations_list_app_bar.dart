@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LocationsListAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  final void Function(WidgetRef) onAddIconPressed;
+  final VoidCallback onAddIconPressed;
 
   const LocationsListAppBar({
     required this.onAddIconPressed,
@@ -62,7 +62,7 @@ class LocationsListAppBar extends ConsumerWidget implements PreferredSizeWidget 
 
   Widget _buildAddIcon(WidgetRef ref) {
     return GestureDetector(
-      onTap: () => onAddIconPressed(ref),
+      onTap: onAddIconPressed,
       child: const Icon(
         Icons.add,
         size: 30.0,
