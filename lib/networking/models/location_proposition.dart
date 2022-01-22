@@ -27,4 +27,9 @@ class LocationProposition {
   String get latitudeDisplay => latitude?.toStringAsFixed(4) ?? '';
 
   String get longitudeDisplay => longitude?.toStringAsFixed(4) ?? '';
+
+  String get stateAndCountyDisplay => [
+        state,
+        country,
+      ].where((element) => element != null).join(', ');
 }

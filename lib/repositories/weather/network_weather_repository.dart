@@ -14,7 +14,7 @@ class NetworkWeatherRepository implements WeatherRepository {
   Future<LocationWeatherData> getCurrentWeatherAndForecast({
     required NamedLocation location,
   }) {
-    // TODO implement getCurrentWeather
+    // TODO implement getCurrentWeatherAndForecast
     throw UnimplementedError();
   }
 }

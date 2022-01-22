@@ -1,3 +1,4 @@
+import 'package:app/commons/collections.dart';
 import 'package:app/data/models/named_location.dart';
 import 'package:app/storage/storage.dart';
 import 'package:app/storage/storage_keys.dart';
@@ -16,10 +17,17 @@ class CommonStorage {
     return (list as List).cast<NamedLocation>();
   }
 
+  Future<CollectionOf2<NamedLocation>> getHomeLocations() async {
+    final List<NamedLocation> allLocations = await getLocations();
+    final List<NamedLocation> homeLocations = allLocations.where((location) => location.showOnHomeScreen).toList();
+    // TODO Handle edge cases (one location)
+    return CollectionOf2<NamedLocation>(homeLocations.first, homeLocations[1]);
+  }
+
   Future<void> addLocation(NamedLocation location) async {
     // TODO Consider try-catch and supplying custom local storage error messages that could be shown to the user
     final List<NamedLocation> existingLocations = await getLocations();
-    (await locationsBox).put(
+    await (await locationsBox).put(
       StorageKeys.locationsListKey,
       [
         ...existingLocations,

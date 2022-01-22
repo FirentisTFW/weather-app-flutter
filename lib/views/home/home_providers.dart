@@ -7,6 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final homeProvider = FutureProvider<CollectionOf2<LocationWeatherData>>(
   (ref) async {
     final weatherRepository = ref.read(weatherRepositoryProvider);
+
+    // TODO Uncomment when storage is ready
+    // final storage = ref.read(storageProvider);
+    // final CollectionOf2<NamedLocation> homeLocations = await storage.getHomeLocations();
+
     late final LocationWeatherData firstLocationData;
     late final LocationWeatherData secondLocationData;
 
@@ -33,6 +38,20 @@ final homeProvider = FutureProvider<CollectionOf2<LocationWeatherData>>(
           )
           .then((value) => secondLocationData = value),
     ]);
+
+    // TODO Uncomment when storage is ready
+    // await Future.wait([
+    //   weatherRepository
+    //       .getCurrentWeatherAndForecast(
+    //         location: homeLocations.item1,
+    //       )
+    //       .then((value) => firstLocationData = value),
+    //   weatherRepository
+    //       .getCurrentWeatherAndForecast(
+    //         location: homeLocations.item2,
+    //       )
+    //       .then((value) => secondLocationData = value),
+    // ]);
 
     return CollectionOf2<LocationWeatherData>(
       firstLocationData,

@@ -8,5 +8,8 @@ abstract class AppDimensions {
   static const defaultPaddingHorizontal = EdgeInsets.symmetric(
     horizontal: 16.0,
   );
+  static const defaultPaddingVertical = EdgeInsets.symmetric(
+    vertical: 16.0,
+  );
   static const locationWeatherForecastCellHeight = 300.0;
 }

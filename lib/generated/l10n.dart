@@ -329,6 +329,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Search`
+  String get addLocationSearchButton {
+    return Intl.message(
+      'Search',
+      name: 'addLocationSearchButton',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

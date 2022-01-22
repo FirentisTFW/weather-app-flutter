@@ -1,21 +1,27 @@
 import 'package:app/commons/text_field_info.dart';
+import 'package:app/data/mappers/location_proposition_mappers.dart';
 import 'package:app/extensions/list_extensions.dart';
+import 'package:app/generated/l10n.dart';
 import 'package:app/networking/models/location_proposition.dart';
+import 'package:app/providers/storage_providers.dart';
 import 'package:app/styles/app_colors.dart';
+import 'package:app/styles/app_decorations.dart';
 import 'package:app/styles/app_dimensions.dart';
-import 'package:app/universal_widgets/action_button.dart';
+import 'package:app/styles/app_text_styles.dart';
+import 'package:app/universal_widgets/adaptive_button.dart';
 import 'package:app/universal_widgets/app_text_field.dart';
 import 'package:app/views/add_location/widgets/location_proposition_cell.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AddLocationView extends StatefulWidget {
+class AddLocationView extends ConsumerStatefulWidget {
   const AddLocationView();
 
   @override
-  State<AddLocationView> createState() => _AddLocationViewState();
+  ConsumerState<AddLocationView> createState() => _AddLocationViewState();
 }
 
-class _AddLocationViewState extends State<AddLocationView> {
+class _AddLocationViewState extends ConsumerState<AddLocationView> {
   late final TextFieldInfo _locationNameTextFieldInfo;
 
   @override
@@ -45,7 +51,6 @@ class _AddLocationViewState extends State<AddLocationView> {
           child: Column(
             children: [
               _buildTextField(),
-              _buildSearchButton(),
               Expanded(
                 child: _buildLocationsList(),
               ),
@@ -61,17 +66,39 @@ class _AddLocationViewState extends State<AddLocationView> {
   }
 
   Widget _buildTextField() {
-    return AppTextField(
-      textFieldInfo: _locationNameTextFieldInfo,
+    return Row(
+      children: [
+        Expanded(
+          child: AppTextField(
+            textFieldInfo: _locationNameTextFieldInfo,
+          ),
+        ),
+        _buildSearchButton(),
+      ].separatedBy(
+        const SizedBox(
+          width: 10.0,
+        ),
+      ),
     );
   }
 
   Widget _buildSearchButton() {
-    return ActionButton(
+    return AdaptiveButton(
+      height: 58.0,
+      decoration: AppDecorations.defaultCell().copyWith(
+        border: Border.all(),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
       onPressed: () {
-        // TODO Search locations
+        // TODO Send request to get locations based on query
+        // ref.read(storageProvider).addLocation(location);
       },
-      title: 'Search',
+      child: Text(
+        S.of(context).addLocationSearchButton,
+        style: AppTextStyles.actionButton().copyWith(
+          color: AppColors.black,
+        ),
+      ),
     );
   }
 
@@ -79,19 +106,27 @@ class _AddLocationViewState extends State<AddLocationView> {
     return ListView.separated(
       // TOOD Remove mocks
       shrinkWrap: true,
-      itemBuilder: (_, index) => const LocationPropositionCell(
-        locationProposition: LocationProposition(
+      itemBuilder: (_, index) => LocationPropositionCell(
+        locationProposition: const LocationProposition(
           country: 'PL',
           latitude: 51.9739233,
           longitude: 17.5011254,
           name: 'Jarocin',
           state: 'Greater Poland Voivodeship',
         ),
+        onPressed: _addLocation,
       ),
       itemCount: 4,
+      padding: AppDimensions.defaultPaddingVertical,
       separatorBuilder: (_, __) => const SizedBox(
-        height: 4.0,
+        height: 8.0,
       ),
     );
+  }
+
+  Future<void> _addLocation(LocationProposition locationProposition) async {
+    await ref.read(storageProvider).addLocation(locationProposition.mapToNamedLocation());
+
+    // TODO Show success dialog
   }
 }

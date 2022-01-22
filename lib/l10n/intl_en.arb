@@ -26,5 +26,6 @@
   "locationsListAppBarTitle": "Manage locations",
   "latitudeShortDisplay": "Lat: {latitude}",
   "longitudeShortDisplay": "Lon: {longitude}",
-  "locationCellCheckbox": "Show on\nhome screen"
+  "locationCellCheckbox": "Show on\nhome screen",
+  "addLocationSearchButton": "Search"
 }

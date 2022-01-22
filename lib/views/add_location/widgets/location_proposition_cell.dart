@@ -2,15 +2,18 @@ import 'package:app/extensions/list_extensions.dart';
 import 'package:app/generated/l10n.dart';
 import 'package:app/networking/models/location_proposition.dart';
 import 'package:app/styles/app_decorations.dart';
+import 'package:app/styles/app_dimensions.dart';
 import 'package:app/styles/app_text_styles.dart';
 import 'package:app/universal_widgets/adaptive_button.dart';
 import 'package:flutter/material.dart';
 
 class LocationPropositionCell extends StatelessWidget {
   final LocationProposition locationProposition;
+  final void Function(LocationProposition) onPressed;
 
   const LocationPropositionCell({
     required this.locationProposition,
+    required this.onPressed,
     Key? key,
   }) : super(
           key: key,
@@ -21,43 +24,39 @@ class LocationPropositionCell extends StatelessWidget {
     return AdaptiveButton(
       decoration: AppDecorations.defaultCell(),
       height: double.infinity,
-      onPressed: () {
-        // TODO Implement - save location to storage
-      },
+      onPressed: () => onPressed(locationProposition),
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(12.0),
+        padding: AppDimensions.defaultPaddingAll,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // TODO Remove mocks
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Name: ${locationProposition.name}',
-                  style: AppTextStyles.text(),
+                  locationProposition.name ?? '',
+                  style: AppTextStyles.header().copyWith(fontSize: 16.0),
                 ),
                 Text(S.of(context).latitudeShortDisplay(locationProposition.latitudeDisplay)),
               ],
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Country: ${locationProposition.country}',
-                  style: AppTextStyles.text(),
+                Flexible(
+                  child: Text(
+                    locationProposition.stateAndCountyDisplay,
+                    style: AppTextStyles.text(),
+                  ),
                 ),
-                Text(S.of(context).latitudeShortDisplay(locationProposition.longitudeDisplay)),
+                Text(S.of(context).longitudeShortDisplay(locationProposition.longitudeDisplay)),
               ],
-            ),
-            Text(
-              'State: ${locationProposition.state}',
-              style: AppTextStyles.text(),
             ),
           ].separatedBy(
             const SizedBox(
-              height: 2.0,
+              height: 6.0,
             ),
           ),
         ),

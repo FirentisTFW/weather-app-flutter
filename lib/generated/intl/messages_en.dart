@@ -26,6 +26,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addLocationSearchButton":
+            MessageLookupByLibrary.simpleMessage("Search"),
         "appName": MessageLookupByLibrary.simpleMessage("Weather App"),
         "comparisonCurrentTemperature":
             MessageLookupByLibrary.simpleMessage("Current temperature"),
