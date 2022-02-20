@@ -27,5 +27,9 @@
   "latitudeShortDisplay": "Lat: {latitude}",
   "longitudeShortDisplay": "Lon: {longitude}",
   "locationCellCheckbox": "Show on\nhome screen",
-  "addLocationSearchButton": "Search"
+  "addLocationSearchButton": "Search",
+  "locationsListEmpty": "You haven't added any locations yet.\nYou can add some by clicking the plus button in the top right corner.",
+  "addLocationInitial": "Search for locations",
+  "addLocationsNoLocationsFoundForQuery": "No locations found for \"{query}\".",
+  "addLocationInputLabel": "Location name"
 }

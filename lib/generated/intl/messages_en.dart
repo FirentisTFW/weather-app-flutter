@@ -20,14 +20,21 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(latitude) => "Lat: ${latitude}";
+  static String m0(query) => "No locations found for \"${query}\".";
 
-  static String m1(longitude) => "Lon: ${longitude}";
+  static String m1(latitude) => "Lat: ${latitude}";
+
+  static String m2(longitude) => "Lon: ${longitude}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addLocationInitial":
+            MessageLookupByLibrary.simpleMessage("Search for locations"),
+        "addLocationInputLabel":
+            MessageLookupByLibrary.simpleMessage("Location name"),
         "addLocationSearchButton":
             MessageLookupByLibrary.simpleMessage("Search"),
+        "addLocationsNoLocationsFoundForQuery": m0,
         "appName": MessageLookupByLibrary.simpleMessage("Weather App"),
         "comparisonCurrentTemperature":
             MessageLookupByLibrary.simpleMessage("Current temperature"),
@@ -46,12 +53,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "fridayShort": MessageLookupByLibrary.simpleMessage("Fri"),
         "homeManageLocationsButton":
             MessageLookupByLibrary.simpleMessage("Manage locations"),
-        "latitudeShortDisplay": m0,
+        "latitudeShortDisplay": m1,
         "locationCellCheckbox":
             MessageLookupByLibrary.simpleMessage("Show on\nhome screen"),
         "locationsListAppBarTitle":
             MessageLookupByLibrary.simpleMessage("Manage locations"),
-        "longitudeShortDisplay": m1,
+        "locationsListEmpty": MessageLookupByLibrary.simpleMessage(
+            "You haven\'t added any locations yet.\nYou can add some by clicking the plus button in the top right corner."),
+        "longitudeShortDisplay": m2,
         "mondayShort": MessageLookupByLibrary.simpleMessage("Mon"),
         "saturdayShort": MessageLookupByLibrary.simpleMessage("Sat"),
         "sundayShort": MessageLookupByLibrary.simpleMessage("Sun"),

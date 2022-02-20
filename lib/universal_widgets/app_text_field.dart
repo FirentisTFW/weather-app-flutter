@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 
 class AppTextField extends StatelessWidget {
   final TextFieldInfo textFieldInfo;
+  final String labelText;
 
   AppTextField({
     required this.textFieldInfo,
+    required this.labelText,
     Key? key,
   }) : super(
           key: key,
@@ -29,7 +31,7 @@ class AppTextField extends StatelessWidget {
           color: AppColors.black,
           fontSize: 16.0,
         ),
-        labelText: textFieldInfo.labelText,
+        labelText: labelText,
       ),
       focusNode: textFieldInfo.focusNode,
     );

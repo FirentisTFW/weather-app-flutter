@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class TextFieldInfo {
   final TextEditingController controller;
   final FocusNode focusNode;
-  final String labelText;
 
   const TextFieldInfo({
     required this.controller,
     required this.focusNode,
-    required this.labelText,
   });
+
+  String get text => controller.text;
 
   void dispose() {
     controller.dispose();

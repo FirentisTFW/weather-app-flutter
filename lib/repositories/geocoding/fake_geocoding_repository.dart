@@ -1,32 +1,18 @@
-import 'package:app/networking/models/location_proposition.dart';
+import 'package:app/commons/mocks.dart';
+import 'package:app/networking/models/geocoding_proposition.dart';
 import 'package:app/repositories/geocoding/geocoding_repository.dart';
 
 class FakeGeocodingRepository implements GeocodingRepository {
   const FakeGeocodingRepository();
 
   @override
-  Future<List<LocationProposition>> getLocationPropositionsBasedOnQuery({
+  Future<List<GeocodingProposition>> getGeocodingPropositionsBasedOnQuery({
     required String query,
   }) async {
     await _simulateDelay();
 
     if (query.contains('Jaro')) {
-      return const [
-        LocationProposition(
-          country: 'PL',
-          latitude: 51.9739233,
-          longitude: 17.5011254,
-          name: 'Jarocin',
-          state: 'Greater Poland Voivodeship',
-        ),
-        LocationProposition(
-          country: 'PL',
-          latitude: 52.887332,
-          longitude: 18.633242,
-          name: 'Jarocin',
-          state: 'Greater Poland Voivodeship',
-        ),
-      ];
+      return Mocks.geocodingPropositions;
     }
 
     return [];

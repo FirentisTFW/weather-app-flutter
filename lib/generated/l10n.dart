@@ -339,6 +339,46 @@ class S {
       args: [],
     );
   }
+
+  /// `You haven't added any locations yet.\nYou can add some by clicking the plus button in the top right corner.`
+  String get locationsListEmpty {
+    return Intl.message(
+      'You haven\'t added any locations yet.\nYou can add some by clicking the plus button in the top right corner.',
+      name: 'locationsListEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for locations`
+  String get addLocationInitial {
+    return Intl.message(
+      'Search for locations',
+      name: 'addLocationInitial',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No locations found for "{query}".`
+  String addLocationsNoLocationsFoundForQuery(Object query) {
+    return Intl.message(
+      'No locations found for "$query".',
+      name: 'addLocationsNoLocationsFoundForQuery',
+      desc: '',
+      args: [query],
+    );
+  }
+
+  /// `Location name`
+  String get addLocationInputLabel {
+    return Intl.message(
+      'Location name',
+      name: 'addLocationInputLabel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -5,6 +5,7 @@ import 'package:app/data/models/named_location.dart';
 import 'package:app/networking/models/current_weather.dart';
 import 'package:app/networking/models/daily_forecast.dart';
 import 'package:app/networking/models/forecast_temperature.dart';
+import 'package:app/networking/models/geocoding_proposition.dart';
 import 'package:app/networking/models/hourly_forecast.dart';
 import 'package:app/networking/models/weather_condition.dart';
 import 'package:app/networking/models/weather_data.dart';
@@ -58,6 +59,23 @@ abstract class Mocks {
   static final List<HourlyForecast> hourlyForecast = _prepareHourlyForecast(
     howManyHours: 24,
   );
+
+  static const geocodingPropositions = [
+    GeocodingProposition(
+      country: 'PL',
+      latitude: 51.9739233,
+      longitude: 17.5011254,
+      name: 'Jarocin',
+      state: 'Greater Poland Voivodeship',
+    ),
+    GeocodingProposition(
+      country: 'PL',
+      latitude: 52.887332,
+      longitude: 18.633242,
+      name: 'Jarocin',
+      state: 'Greater Poland Voivodeship',
+    ),
+  ];
 
   static const locations = [
     NamedLocation(

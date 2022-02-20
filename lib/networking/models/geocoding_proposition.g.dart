@@ -1,13 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'location_proposition.dart';
+part of 'geocoding_proposition.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-LocationProposition _$LocationPropositionFromJson(Map<String, dynamic> json) =>
-    LocationProposition(
+GeocodingProposition _$GeocodingPropositionFromJson(Map<String, dynamic> json) => GeocodingProposition(
       country: json['country'] as String?,
       latitude: (json['lat'] as num?)?.toDouble(),
       longitude: (json['lon'] as num?)?.toDouble(),

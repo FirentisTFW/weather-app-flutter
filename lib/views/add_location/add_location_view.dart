@@ -1,8 +1,8 @@
 import 'package:app/commons/text_field_info.dart';
-import 'package:app/data/mappers/location_proposition_mappers.dart';
+import 'package:app/data/mappers/geocoding_proposition_mappers.dart';
 import 'package:app/extensions/list_extensions.dart';
 import 'package:app/generated/l10n.dart';
-import 'package:app/networking/models/location_proposition.dart';
+import 'package:app/networking/models/geocoding_proposition.dart';
 import 'package:app/providers/storage_providers.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_decorations.dart';
@@ -10,6 +10,7 @@ import 'package:app/styles/app_dimensions.dart';
 import 'package:app/styles/app_text_styles.dart';
 import 'package:app/universal_widgets/adaptive_button.dart';
 import 'package:app/universal_widgets/app_text_field.dart';
+import 'package:app/views/add_location/add_location_providers.dart';
 import 'package:app/views/add_location/widgets/location_proposition_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,8 +31,6 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
     _locationNameTextFieldInfo = TextFieldInfo(
       controller: TextEditingController(),
       focusNode: FocusNode(),
-      // TODO move string to intl
-      labelText: 'Location name',
     );
   }
 
@@ -71,6 +70,7 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
         Expanded(
           child: AppTextField(
             textFieldInfo: _locationNameTextFieldInfo,
+            labelText: S.of(context).addLocationInputLabel,
           ),
         ),
         _buildSearchButton(),
@@ -89,10 +89,9 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
         border: Border.all(),
         borderRadius: BorderRadius.circular(8.0),
       ),
-      onPressed: () {
-        // TODO Send request to get locations based on query
-        // ref.read(storageProvider).addLocation(location);
-      },
+      onPressed: () => ref.read(geocodingProvider.notifier).getGeocodingPropositions(
+            query: _locationNameTextFieldInfo.text,
+          ),
       child: Text(
         S.of(context).addLocationSearchButton,
         style: AppTextStyles.actionButton().copyWith(
@@ -103,20 +102,25 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
   }
 
   Widget _buildLocationsList() {
+    final List<GeocodingProposition> propositions = ref.watch(geocodingProvider);
+
+    if (propositions.isEmpty) {
+      return _buildEmptyView();
+    }
+
     return ListView.separated(
-      // TOOD Remove mocks
       shrinkWrap: true,
-      itemBuilder: (_, index) => LocationPropositionCell(
-        locationProposition: const LocationProposition(
-          country: 'PL',
-          latitude: 51.9739233,
-          longitude: 17.5011254,
-          name: 'Jarocin',
-          state: 'Greater Poland Voivodeship',
+      itemBuilder: (_, index) => GeocodingPropositionCell(
+        geocodingProposition: GeocodingProposition(
+          country: propositions[index].country,
+          latitude: propositions[index].latitude,
+          longitude: propositions[index].longitude,
+          name: propositions[index].name,
+          state: propositions[index].state,
         ),
         onPressed: _addLocation,
       ),
-      itemCount: 4,
+      itemCount: propositions.length,
       padding: AppDimensions.defaultPaddingVertical,
       separatorBuilder: (_, __) => const SizedBox(
         height: 8.0,
@@ -124,8 +128,24 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
     );
   }
 
-  Future<void> _addLocation(LocationProposition locationProposition) async {
-    await ref.read(storageProvider).addLocation(locationProposition.mapToNamedLocation());
+  Widget _buildEmptyView() {
+    final String query = _locationNameTextFieldInfo.text;
+    final String text;
+    if (query.isEmpty) {
+      text = S.of(context).addLocationInitial;
+    } else {
+      text = S.of(context).addLocationsNoLocationsFoundForQuery(query);
+    }
+    return Center(
+      child: Text(
+        text,
+        style: AppTextStyles.information(),
+      ),
+    );
+  }
+
+  Future<void> _addLocation(GeocodingProposition geocodingProposition) async {
+    await ref.read(storageProvider).addLocation(geocodingProposition.mapToNamedLocation());
 
     // TODO Show success dialog
   }

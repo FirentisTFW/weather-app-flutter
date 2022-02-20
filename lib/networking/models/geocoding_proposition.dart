@@ -1,11 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'location_proposition.g.dart';
+part 'geocoding_proposition.g.dart';
 
 @JsonSerializable(
   createToJson: false,
 )
-class LocationProposition {
+class GeocodingProposition {
   final String? country;
   @JsonKey(name: 'lat')
   final double? latitude;
@@ -14,7 +14,7 @@ class LocationProposition {
   final String? name;
   final String? state;
 
-  const LocationProposition({
+  const GeocodingProposition({
     this.country,
     this.latitude,
     this.longitude,
@@ -22,7 +22,7 @@ class LocationProposition {
     this.state,
   });
 
-  factory LocationProposition.fromJson(Map<String, dynamic> json) => _$LocationPropositionFromJson(json);
+  factory GeocodingProposition.fromJson(Map<String, dynamic> json) => _$GeocodingPropositionFromJson(json);
 
   String get latitudeDisplay => latitude?.toStringAsFixed(4) ?? '';
 

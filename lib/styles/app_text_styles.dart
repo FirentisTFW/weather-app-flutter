@@ -24,6 +24,15 @@ abstract class AppTextStyles {
     );
   }
 
+  static TextStyle information() {
+    return const TextStyle(
+      color: AppColors.black,
+      fontSize: 15.0,
+      fontWeight: FontWeight.w400,
+      height: 1.3,
+    );
+  }
+
   static TextStyle text() {
     return const TextStyle(
       color: AppColors.black,

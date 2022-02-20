@@ -1,7 +1,7 @@
 import 'package:app/data/models/named_location.dart';
-import 'package:app/networking/models/location_proposition.dart';
+import 'package:app/networking/models/geocoding_proposition.dart';
 
-extension LocationPropositionMappers on LocationProposition {
+extension GeocodingPropositionMappers on GeocodingProposition {
   NamedLocation mapToNamedLocation() {
     return NamedLocation(
       latitude: latitude ?? 0.0,
