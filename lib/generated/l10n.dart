@@ -379,6 +379,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Ok`
+  String get ok {
+    return Intl.message(
+      'Ok',
+      name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Feature unavailable`
+  String get unavailableDialogTitle {
+    return Intl.message(
+      'Feature unavailable',
+      name: 'unavailableDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This feature is currently unavailable, it's under development.`
+  String get unavailableDialogMessage {
+    return Intl.message(
+      'This feature is currently unavailable, it\'s under development.',
+      name: 'unavailableDialogMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location added`
+  String get addLocationSuccessDialogTitle {
+    return Intl.message(
+      'Location added',
+      name: 'addLocationSuccessDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New location was added to your list - {locationName}`
+  String addLocationSuccessDialogMessage(Object locationName) {
+    return Intl.message(
+      'New location was added to your list - $locationName',
+      name: 'addLocationSuccessDialogMessage',
+      desc: '',
+      args: [locationName],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

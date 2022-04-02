@@ -20,11 +20,14 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(query) => "No locations found for \"${query}\".";
+  static String m0(locationName) =>
+      "New location was added to your list - ${locationName}";
 
-  static String m1(latitude) => "Lat: ${latitude}";
+  static String m1(query) => "No locations found for \"${query}\".";
 
-  static String m2(longitude) => "Lon: ${longitude}";
+  static String m2(latitude) => "Lat: ${latitude}";
+
+  static String m3(longitude) => "Lon: ${longitude}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -34,7 +37,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Location name"),
         "addLocationSearchButton":
             MessageLookupByLibrary.simpleMessage("Search"),
-        "addLocationsNoLocationsFoundForQuery": m0,
+        "addLocationSuccessDialogMessage": m0,
+        "addLocationSuccessDialogTitle":
+            MessageLookupByLibrary.simpleMessage("Location added"),
+        "addLocationsNoLocationsFoundForQuery": m1,
         "appName": MessageLookupByLibrary.simpleMessage("Weather App"),
         "comparisonCurrentTemperature":
             MessageLookupByLibrary.simpleMessage("Current temperature"),
@@ -53,15 +59,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "fridayShort": MessageLookupByLibrary.simpleMessage("Fri"),
         "homeManageLocationsButton":
             MessageLookupByLibrary.simpleMessage("Manage locations"),
-        "latitudeShortDisplay": m1,
+        "latitudeShortDisplay": m2,
         "locationCellCheckbox":
             MessageLookupByLibrary.simpleMessage("Show on\nhome screen"),
         "locationsListAppBarTitle":
             MessageLookupByLibrary.simpleMessage("Manage locations"),
         "locationsListEmpty": MessageLookupByLibrary.simpleMessage(
             "You haven\'t added any locations yet.\nYou can add some by clicking the plus button in the top right corner."),
-        "longitudeShortDisplay": m2,
+        "longitudeShortDisplay": m3,
         "mondayShort": MessageLookupByLibrary.simpleMessage("Mon"),
+        "ok": MessageLookupByLibrary.simpleMessage("Ok"),
         "saturdayShort": MessageLookupByLibrary.simpleMessage("Sat"),
         "sundayShort": MessageLookupByLibrary.simpleMessage("Sun"),
         "temperatureComparisonKeywordNegative":
@@ -79,6 +86,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("later"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
         "tuesdayShort": MessageLookupByLibrary.simpleMessage("Tue"),
+        "unavailableDialogMessage": MessageLookupByLibrary.simpleMessage(
+            "This feature is currently unavailable, it\'s under development."),
+        "unavailableDialogTitle":
+            MessageLookupByLibrary.simpleMessage("Feature unavailable"),
         "wednesdayShort": MessageLookupByLibrary.simpleMessage("Wed")
       };
 }
