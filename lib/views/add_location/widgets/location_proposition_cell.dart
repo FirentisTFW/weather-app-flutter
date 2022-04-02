@@ -28,37 +28,40 @@ class GeocodingPropositionCell extends StatelessWidget {
       child: Container(
         width: double.infinity,
         padding: AppDimensions.defaultPaddingAll,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Text(
                   geocodingProposition.name ?? '',
                   style: AppTextStyles.header().copyWith(fontSize: 16.0),
                 ),
-                Text(S.of(context).latitudeShortDisplay(geocodingProposition.latitudeDisplay)),
-              ],
+                Text(
+                  geocodingProposition.stateAndCountryDisplay,
+                  style: AppTextStyles.text(),
+                ),
+              ].separatedBy(
+                const SizedBox(
+                  height: 6.0,
+                ),
+              ),
             ),
-            Row(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: Text(
-                    geocodingProposition.stateAndCountyDisplay,
-                    style: AppTextStyles.text(),
-                  ),
-                ),
+              children: <Widget>[
+                Text(S.of(context).latitudeShortDisplay(geocodingProposition.latitudeDisplay)),
                 Text(S.of(context).longitudeShortDisplay(geocodingProposition.longitudeDisplay)),
-              ],
+              ].separatedBy(
+                const SizedBox(
+                  height: 6.0,
+                ),
+              ),
             ),
-          ].separatedBy(
-            const SizedBox(
-              height: 6.0,
-            ),
-          ),
+          ],
         ),
       ),
     );

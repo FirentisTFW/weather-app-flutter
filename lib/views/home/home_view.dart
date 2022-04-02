@@ -57,18 +57,16 @@ class HomeView extends StatelessWidget {
   }
 
   Widget _buildLoadedBody(BuildContext context, CollectionOf2<LocationWeatherData> weatherData) {
-    return Padding(
+    return SingleChildScrollView(
       padding: AppDimensions.defaultPaddingAll,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            _buildButtons(context),
-            _buildLocationtWeatherForecastCells(weatherData),
-            _buildComparisonCells(weatherData),
-          ].separatedBy(
-            const SizedBox(
-              height: 24.0,
-            ),
+      child: Column(
+        children: [
+          _buildButtons(context),
+          _buildLocationtWeatherForecastCells(weatherData),
+          _buildComparisonCells(weatherData),
+        ].separatedBy(
+          const SizedBox(
+            height: 24.0,
           ),
         ),
       ),
@@ -76,7 +74,7 @@ class HomeView extends StatelessWidget {
   }
 
   Widget _buildButtons(BuildContext context) {
-    // TODO Add layout buttons
+    // TODO Add layout buttons (horizontal/vertical alignment)
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

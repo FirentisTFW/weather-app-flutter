@@ -28,7 +28,7 @@ class GeocodingProposition {
 
   String get longitudeDisplay => longitude?.toStringAsFixed(4) ?? '';
 
-  String get stateAndCountyDisplay => [
+  String get stateAndCountryDisplay => [
         state,
         country,
       ].where((element) => element != null).join(', ');

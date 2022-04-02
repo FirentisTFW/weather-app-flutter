@@ -2,6 +2,7 @@ import 'package:app/commons/text_field_info.dart';
 import 'package:app/data/mappers/geocoding_proposition_mappers.dart';
 import 'package:app/extensions/list_extensions.dart';
 import 'package:app/generated/l10n.dart';
+import 'package:app/modals/dialog_factory.dart';
 import 'package:app/networking/models/geocoding_proposition.dart';
 import 'package:app/providers/storage_providers.dart';
 import 'package:app/styles/app_colors.dart';
@@ -46,7 +47,7 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
       backgroundColor: AppColors.lightYellow,
       body: SafeArea(
         child: Padding(
-          padding: AppDimensions.defaultPaddingAll,
+          padding: AppDimensions.defaultPaddingVertical,
           child: Column(
             children: [
               _buildTextField(),
@@ -65,18 +66,21 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
   }
 
   Widget _buildTextField() {
-    return Row(
-      children: [
-        Expanded(
-          child: AppTextField(
-            textFieldInfo: _locationNameTextFieldInfo,
-            labelText: S.of(context).addLocationInputLabel,
+    return Padding(
+      padding: AppDimensions.defaultPaddingHorizontal,
+      child: Row(
+        children: [
+          Expanded(
+            child: AppTextField(
+              textFieldInfo: _locationNameTextFieldInfo,
+              labelText: S.of(context).addLocationInputLabel,
+            ),
           ),
-        ),
-        _buildSearchButton(),
-      ].separatedBy(
-        const SizedBox(
-          width: 10.0,
+          _buildSearchButton(),
+        ].separatedBy(
+          const SizedBox(
+            width: 10.0,
+          ),
         ),
       ),
     );
@@ -109,7 +113,6 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
     }
 
     return ListView.separated(
-      shrinkWrap: true,
       itemBuilder: (_, index) => GeocodingPropositionCell(
         geocodingProposition: GeocodingProposition(
           country: propositions[index].country,
@@ -121,10 +124,11 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
         onPressed: _addLocation,
       ),
       itemCount: propositions.length,
-      padding: AppDimensions.defaultPaddingVertical,
+      padding: AppDimensions.defaultPaddingAll,
       separatorBuilder: (_, __) => const SizedBox(
         height: 8.0,
       ),
+      shrinkWrap: true,
     );
   }
 
@@ -144,9 +148,13 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
     );
   }
 
-  Future<void> _addLocation(GeocodingProposition geocodingProposition) async {
-    await ref.read(storageProvider).addLocation(geocodingProposition.mapToNamedLocation());
-
-    // TODO Show success dialog
+  void _addLocation(GeocodingProposition geocodingProposition) {
+    ref.read(storageProvider).addLocation(geocodingProposition.mapToNamedLocation()).then(
+          (_) => DialogFactory.showSimpleDialog(
+            context,
+            message: S.of(context).addLocationSuccessDialogMessage(geocodingProposition.name ?? ''),
+            title: S.of(context).addLocationSuccessDialogTitle,
+          ),
+        );
   }
 }

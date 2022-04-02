@@ -16,10 +16,7 @@ class LocationsListAppBar extends ConsumerWidget implements PreferredSizeWidget 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16.0,
-        vertical: 12.0,
-      ),
+      height: 100,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.vertical(
           bottom: Radius.circular(20.0),
@@ -32,6 +29,10 @@ class LocationsListAppBar extends ConsumerWidget implements PreferredSizeWidget 
           ),
         ],
         color: AppColors.white,
+      ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 12.0,
       ),
       child: _buildBody(context, ref),
     );
