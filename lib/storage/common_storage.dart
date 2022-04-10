@@ -11,19 +11,6 @@ class CommonStorage {
         storageKey: StorageKeys.locationsBoxKey,
       );
 
-  Future<List<NamedLocation>> getLocations() async {
-    // TODO Consider try-catch and supplying custom local storage error messages that could be shown to the user
-    final list = (await locationsBox).get(StorageKeys.locationsListKey) ?? [];
-    return (list as List).cast<NamedLocation>();
-  }
-
-  Future<CollectionOf2<NamedLocation>> getHomeLocations() async {
-    final List<NamedLocation> allLocations = await getLocations();
-    final List<NamedLocation> homeLocations = allLocations.where((location) => location.showOnHomeScreen).toList();
-    // TODO Handle edge cases (one location)
-    return CollectionOf2<NamedLocation>(homeLocations.first, homeLocations[1]);
-  }
-
   Future<void> addLocation(NamedLocation location) async {
     // TODO Consider try-catch and supplying custom local storage error messages that could be shown to the user
     final List<NamedLocation> existingLocations = await getLocations();
@@ -34,5 +21,28 @@ class CommonStorage {
         location,
       ],
     );
+  }
+
+  Future<void> deleteLocation(String locationId) async {
+    final List<NamedLocation> existingLocations = await getLocations();
+    final List<NamedLocation> updatedLocations =
+        existingLocations.where((location) => location.id != locationId).toList();
+    await (await locationsBox).put(
+      StorageKeys.locationsListKey,
+      updatedLocations,
+    );
+  }
+
+  Future<CollectionOf2<NamedLocation>> getHomeLocations() async {
+    final List<NamedLocation> allLocations = await getLocations();
+    final List<NamedLocation> homeLocations = allLocations.where((location) => location.showOnHomeScreen).toList();
+    // TODO Handle edge cases (one location)
+    return CollectionOf2<NamedLocation>(homeLocations.first, homeLocations[1]);
+  }
+
+  Future<List<NamedLocation>> getLocations() async {
+    // TODO Consider try-catch and supplying custom local storage error messages that could be shown to the user
+    final list = (await locationsBox).get(StorageKeys.locationsListKey) ?? [];
+    return (list as List).cast<NamedLocation>();
   }
 }

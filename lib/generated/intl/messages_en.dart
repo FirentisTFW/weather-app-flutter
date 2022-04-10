@@ -21,13 +21,16 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
   static String m0(locationName) =>
-      "New location was added to your list - ${locationName}";
+      "New location has been added to your list - ${locationName}.";
 
   static String m1(query) => "No locations found for \"${query}\".";
 
-  static String m2(latitude) => "Lat: ${latitude}";
+  static String m2(locationName) =>
+      "Are you sure you want to delete ${locationName} from locations list?";
 
-  static String m3(longitude) => "Lon: ${longitude}";
+  static String m3(latitude) => "Lat: ${latitude}";
+
+  static String m4(longitude) => "Lon: ${longitude}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -42,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Location added"),
         "addLocationsNoLocationsFoundForQuery": m1,
         "appName": MessageLookupByLibrary.simpleMessage("Weather App"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "comparisonCurrentTemperature":
             MessageLookupByLibrary.simpleMessage("Current temperature"),
         "comparisonDayLength":
@@ -56,17 +60,20 @@ class MessageLookup extends MessageLookupByLibrary {
             "An error occured while fetching data."),
         "defaultErrorTitle":
             MessageLookupByLibrary.simpleMessage("Oops, something went wrong"),
+        "deleteLocationDialogMessage": m2,
+        "deleteLocationDialogTitle":
+            MessageLookupByLibrary.simpleMessage("Delete location"),
         "fridayShort": MessageLookupByLibrary.simpleMessage("Fri"),
         "homeManageLocationsButton":
             MessageLookupByLibrary.simpleMessage("Manage locations"),
-        "latitudeShortDisplay": m2,
+        "latitudeShortDisplay": m3,
         "locationCellCheckbox":
             MessageLookupByLibrary.simpleMessage("Show on\nhome screen"),
         "locationsListAppBarTitle":
             MessageLookupByLibrary.simpleMessage("Manage locations"),
         "locationsListEmpty": MessageLookupByLibrary.simpleMessage(
             "You haven\'t added any locations yet.\nYou can add some by clicking the plus button in the top right corner."),
-        "longitudeShortDisplay": m3,
+        "longitudeShortDisplay": m4,
         "mondayShort": MessageLookupByLibrary.simpleMessage("Mon"),
         "ok": MessageLookupByLibrary.simpleMessage("Ok"),
         "saturdayShort": MessageLookupByLibrary.simpleMessage("Sat"),
@@ -90,6 +97,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "This feature is currently unavailable, it\'s under development."),
         "unavailableDialogTitle":
             MessageLookupByLibrary.simpleMessage("Feature unavailable"),
-        "wednesdayShort": MessageLookupByLibrary.simpleMessage("Wed")
+        "wednesdayShort": MessageLookupByLibrary.simpleMessage("Wed"),
+        "yes": MessageLookupByLibrary.simpleMessage("Yes")
       };
 }

@@ -12,7 +12,7 @@ import 'package:app/styles/app_text_styles.dart';
 import 'package:app/universal_widgets/adaptive_button.dart';
 import 'package:app/universal_widgets/app_text_field.dart';
 import 'package:app/views/add_location/add_location_providers.dart';
-import 'package:app/views/add_location/widgets/location_proposition_cell.dart';
+import 'package:app/views/add_location/widgets/geocoding_proposition_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

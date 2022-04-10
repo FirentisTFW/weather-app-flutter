@@ -44,28 +44,7 @@ abstract class DialogFactory {
     );
   }
 
-  static Widget _buildMessage(String? message) {
-    // TODO Style
-    return Text(message ?? '');
-  }
-
-  static Widget _buildTitle(String title) {
-    // TODO Style
-    return Text(title);
-  }
-
-  static List<Widget> _buildDefaultActions(BuildContext context) {
-    return [
-      _buildAction(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        text: S.of(context).ok,
-      ),
-    ];
-  }
-
-  static Widget _buildAction({
+  static Widget buildAction({
     required VoidCallback onPressed,
     required String text,
   }) {
@@ -86,5 +65,26 @@ abstract class DialogFactory {
       onPressed: onPressed,
       child: child,
     );
+  }
+
+  static Widget _buildMessage(String? message) {
+    // TODO Style
+    return Text(message ?? '');
+  }
+
+  static Widget _buildTitle(String title) {
+    // TODO Style
+    return Text(title);
+  }
+
+  static List<Widget> _buildDefaultActions(BuildContext context) {
+    return [
+      buildAction(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        text: S.of(context).ok,
+      ),
+    ];
   }
 }

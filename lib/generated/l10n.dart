@@ -420,11 +420,51 @@ class S {
     );
   }
 
-  /// `New location was added to your list - {locationName}`
+  /// `New location has been added to your list - {locationName}.`
   String addLocationSuccessDialogMessage(Object locationName) {
     return Intl.message(
-      'New location was added to your list - $locationName',
+      'New location has been added to your list - $locationName.',
       name: 'addLocationSuccessDialogMessage',
+      desc: '',
+      args: [locationName],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete location`
+  String get deleteLocationDialogTitle {
+    return Intl.message(
+      'Delete location',
+      name: 'deleteLocationDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete {locationName} from locations list?`
+  String deleteLocationDialogMessage(Object locationName) {
+    return Intl.message(
+      'Are you sure you want to delete $locationName from locations list?',
+      name: 'deleteLocationDialogMessage',
       desc: '',
       args: [locationName],
     );

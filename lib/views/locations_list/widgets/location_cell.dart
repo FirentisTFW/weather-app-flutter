@@ -7,17 +7,39 @@ import 'package:app/styles/app_text_styles.dart';
 import 'package:app/universal_widgets/app_checkbox.dart';
 import 'package:flutter/material.dart';
 
-class LocationCell extends StatelessWidget {
+class LocationCell extends StatefulWidget {
   final NamedLocation location;
-  final ValueNotifier<bool> checkboxNotifier = ValueNotifier<bool>(false);
+  final VoidCallback onDeletePressed;
+  final VoidCallback onEditPressed;
+  final void Function(bool) onSelectPressed;
 
-  LocationCell({
+  const LocationCell({
     required this.location,
+    required this.onDeletePressed,
+    required this.onEditPressed,
+    required this.onSelectPressed,
     Key? key,
   }) : super(
           key: key,
-        ) {
-    checkboxNotifier.value = location.showOnHomeScreen;
+        );
+
+  @override
+  State<LocationCell> createState() => _LocationCellState();
+}
+
+class _LocationCellState extends State<LocationCell> {
+  late final ValueNotifier<bool> _checkboxNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkboxNotifier = ValueNotifier<bool>(widget.location.showOnHomeScreen);
+  }
+
+  @override
+  void dispose() {
+    _checkboxNotifier.dispose();
+    super.dispose();
   }
 
   @override
@@ -46,7 +68,7 @@ class LocationCell extends StatelessWidget {
     return Row(
       children: [
         Text(
-          location.name,
+          widget.location.name,
           style: const TextStyle(
             color: AppColors.black,
             fontSize: 17.0,
@@ -62,9 +84,7 @@ class LocationCell extends StatelessWidget {
   List<Widget> _provideDeleteAndEditIcons() {
     return [
       GestureDetector(
-        onTap: () {
-          // TODO Implement - delete location
-        },
+        onTap: widget.onDeletePressed,
         child: const Icon(
           Icons.delete,
           size: 26.0,
@@ -74,9 +94,7 @@ class LocationCell extends StatelessWidget {
         width: 16.0,
       ),
       GestureDetector(
-        onTap: () {
-          // TODO Implement - edit location
-        },
+        onTap: widget.onEditPressed,
         child: const Icon(
           Icons.edit,
           size: 26.0,
@@ -110,11 +128,11 @@ class LocationCell extends StatelessWidget {
     return Column(
       children: <Widget>[
         Text(
-          S.of(context).latitudeShortDisplay(location.latitudeDisplay),
+          S.of(context).latitudeShortDisplay(widget.location.latitudeDisplay),
           style: AppTextStyles.text(),
         ),
         Text(
-          S.of(context).longitudeShortDisplay(location.longitudeDisplay),
+          S.of(context).longitudeShortDisplay(widget.location.longitudeDisplay),
           style: AppTextStyles.text(),
         ),
       ].separatedBy(
@@ -129,10 +147,8 @@ class LocationCell extends StatelessWidget {
     return Column(
       children: <Widget>[
         AppCheckbox(
-          valueNotifier: checkboxNotifier,
-          onChanged: (value) {
-            // TODO Add checkbox logic
-          },
+          valueNotifier: _checkboxNotifier,
+          onChanged: widget.onSelectPressed,
         ),
         Text(
           S.of(context).locationCellCheckbox,

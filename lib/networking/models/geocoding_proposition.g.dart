@@ -6,7 +6,9 @@ part of 'geocoding_proposition.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GeocodingProposition _$GeocodingPropositionFromJson(Map<String, dynamic> json) => GeocodingProposition(
+GeocodingProposition _$GeocodingPropositionFromJson(
+        Map<String, dynamic> json) =>
+    GeocodingProposition(
       country: json['country'] as String?,
       latitude: (json['lat'] as num?)?.toDouble(),
       longitude: (json['lon'] as num?)?.toDouble(),
