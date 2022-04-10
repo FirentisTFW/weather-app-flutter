@@ -79,12 +79,14 @@ abstract class Mocks {
 
   static const locations = [
     NamedLocation(
+      id: '0',
       latitude: 52.4095,
       longitude: 16.9319,
       name: 'Poznań',
       showOnHomeScreen: true,
     ),
     NamedLocation(
+      id: '1',
       latitude: 36.7202,
       longitude: 4.4203,
       name: 'Malaga',

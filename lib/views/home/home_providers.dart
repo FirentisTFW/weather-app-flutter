@@ -20,6 +20,7 @@ final homeProvider = FutureProvider<CollectionOf2<LocationWeatherData>>(
       weatherRepository
           .getCurrentWeatherAndForecast(
             location: const NamedLocation(
+              id: '0',
               latitude: 52.4095,
               longitude: 16.9319,
               name: 'Poznań',
@@ -30,6 +31,7 @@ final homeProvider = FutureProvider<CollectionOf2<LocationWeatherData>>(
       weatherRepository
           .getCurrentWeatherAndForecast(
             location: const NamedLocation(
+              id: '1',
               latitude: 36.7202,
               longitude: 4.4203,
               name: 'Malaga',

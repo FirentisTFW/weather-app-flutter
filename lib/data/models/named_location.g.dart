@@ -17,24 +17,27 @@ class NamedLocationAdapter extends TypeAdapter<NamedLocation> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return NamedLocation(
-      latitude: fields[0] as double,
-      longitude: fields[1] as double,
-      name: fields[2] as String,
-      showOnHomeScreen: fields[3] as bool,
+      id: fields[0] as String,
+      latitude: fields[1] as double,
+      longitude: fields[2] as double,
+      name: fields[3] as String,
+      showOnHomeScreen: fields[4] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, NamedLocation obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
-      ..write(obj.latitude)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.longitude)
+      ..write(obj.latitude)
       ..writeByte(2)
-      ..write(obj.name)
+      ..write(obj.longitude)
       ..writeByte(3)
+      ..write(obj.name)
+      ..writeByte(4)
       ..write(obj.showOnHomeScreen);
   }
 

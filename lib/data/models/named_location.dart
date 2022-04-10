@@ -5,15 +5,18 @@ part 'named_location.g.dart';
 @HiveType(typeId: 0)
 class NamedLocation {
   @HiveField(0)
-  final double latitude;
+  final String id;
   @HiveField(1)
-  final double longitude;
+  final double latitude;
   @HiveField(2)
-  final String name;
+  final double longitude;
   @HiveField(3)
+  final String name;
+  @HiveField(4)
   final bool showOnHomeScreen;
 
   const NamedLocation({
+    required this.id,
     required this.latitude,
     required this.longitude,
     required this.name,
