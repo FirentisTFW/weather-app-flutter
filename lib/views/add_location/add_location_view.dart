@@ -1,5 +1,6 @@
 import 'package:app/commons/text_field_info.dart';
 import 'package:app/data/mappers/geocoding_proposition_mappers.dart';
+import 'package:app/errors/app_error_factory.dart';
 import 'package:app/extensions/list_extensions.dart';
 import 'package:app/generated/l10n.dart';
 import 'package:app/modals/dialog_factory.dart';
@@ -10,8 +11,11 @@ import 'package:app/styles/app_decorations.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/styles/app_text_styles.dart';
 import 'package:app/universal_widgets/adaptive_button.dart';
+import 'package:app/universal_widgets/app_progress_indicator.dart';
 import 'package:app/universal_widgets/app_text_field.dart';
+import 'package:app/universal_widgets/error_view.dart';
 import 'package:app/views/add_location/add_location_providers.dart';
+import 'package:app/views/add_location/geocoding_fetch_state.dart';
 import 'package:app/views/add_location/widgets/geocoding_proposition_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -52,7 +56,7 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
             children: [
               _buildTextField(),
               Expanded(
-                child: _buildLocationsList(),
+                child: _buildLocationsSection(),
               ),
             ].separatedBy(
               const SizedBox(
@@ -105,30 +109,29 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
     );
   }
 
-  Widget _buildLocationsList() {
-    final List<GeocodingProposition> propositions = ref.watch(geocodingProvider);
+  Widget _buildLocationsSection() {
+    final GeocodingFetchState state = ref.watch(geocodingProvider);
 
-    if (propositions.isEmpty) {
-      return _buildEmptyView();
+    if (state is GeocodingFetchInProgress) {
+      return const AppProgressIndicator();
+    } else if (state is GeocodingFetchFailure) {
+      _buildErrorBody(context, state.error);
+    } else if (state is GeocodingFetchSuccess) {
+      if (state.locationPropositions.isEmpty) {
+        return _buildEmptyView();
+      }
+      return _buildLocationsList(state);
     }
+    return _buildEmptyView();
+  }
 
-    return ListView.separated(
-      itemBuilder: (_, index) => GeocodingPropositionCell(
-        geocodingProposition: GeocodingProposition(
-          country: propositions[index].country,
-          latitude: propositions[index].latitude,
-          longitude: propositions[index].longitude,
-          name: propositions[index].name,
-          state: propositions[index].state,
-        ),
-        onPressed: _addLocation,
-      ),
-      itemCount: propositions.length,
-      padding: AppDimensions.defaultPaddingAll,
-      separatorBuilder: (_, __) => const SizedBox(
-        height: 8.0,
-      ),
-      shrinkWrap: true,
+  Widget _buildErrorBody(BuildContext context, dynamic error) {
+    return ErrorView(
+      message: AppErrorFactory.provideMessage(context, error),
+      onButtonPressed: () {
+        // TODO Implement - refresh page
+      },
+      title: AppErrorFactory.provideTitle(context, error),
     );
   }
 
@@ -145,6 +148,30 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
         text,
         style: AppTextStyles.information(),
       ),
+    );
+  }
+
+  Widget _buildLocationsList(GeocodingFetchSuccess state) {
+    return ListView.separated(
+      itemBuilder: (_, index) {
+        final GeocodingProposition locationProposition = state.locationPropositions[index];
+        return GeocodingPropositionCell(
+          geocodingProposition: GeocodingProposition(
+            country: locationProposition.country,
+            latitude: locationProposition.latitude,
+            longitude: locationProposition.longitude,
+            name: locationProposition.name,
+            state: locationProposition.state,
+          ),
+          onPressed: _addLocation,
+        );
+      },
+      itemCount: state.locationPropositions.length,
+      padding: AppDimensions.defaultPaddingAll,
+      separatorBuilder: (_, __) => const SizedBox(
+        height: 8.0,
+      ),
+      shrinkWrap: true,
     );
   }
 
