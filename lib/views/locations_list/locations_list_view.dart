@@ -3,11 +3,14 @@ import 'package:app/generated/l10n.dart';
 import 'package:app/modals/dialog_factory.dart';
 import 'package:app/providers/storage_providers.dart';
 import 'package:app/routing.dart';
+import 'package:app/styles/app_animations.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/styles/app_text_styles.dart';
 import 'package:app/universal_widgets/app_progress_indicator.dart';
+import 'package:app/views/add_location/add_location_arguments.dart';
 import 'package:app/views/locations_list/location_list_providers.dart';
+import 'package:app/views/locations_list/locations_list_state.dart';
 import 'package:app/views/locations_list/widgets/location_cell.dart';
 import 'package:app/views/locations_list/widgets/locations_list_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -22,37 +25,55 @@ class LocationsListView extends ConsumerStatefulWidget {
 
 class _LocationsListViewState extends ConsumerState<LocationsListView> {
   @override
+  void initState() {
+    super.initState();
+    _getLocations();
+  }
+
+  void _getLocations() {
+    ref.read(locationsListProvider.notifier).getLocations();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // TODO handle error cases, remove mocks
     return Scaffold(
       appBar: LocationsListAppBar(
-        onAddIconPressed: () => Navigator.pushNamed(context, Routing.addLocation),
+        onAddIconPressed: () => Navigator.pushNamed(
+          context,
+          Routing.addLocation,
+          arguments: AddLocationArguments(
+            onLocationAdded: _getLocations,
+          ),
+        ),
       ),
       backgroundColor: AppColors.lightYellow,
-      body: Consumer(
-        builder: (context, ref, __) {
-          // TODO Make it reactive - react on changes in storage
-          final AsyncValue<List<NamedLocation>> response = ref.watch(locationsListProvider);
-          return response.when(
-            data: (locations) => _buildLocationsList(context, locations),
-            error: (error, __) {
-              // TODO Build error container
-              return const SizedBox.shrink();
-            },
-            loading: () => const AppProgressIndicator(),
-          );
-        },
-      ),
+      body: _buildLocationsSection(),
     );
   }
 
-  Widget _buildLocationsList(BuildContext context, List<NamedLocation> locations) {
-    if (locations.isEmpty) {
+  Widget _buildLocationsSection() {
+    final LocationsListState state = ref.watch(locationsListProvider);
+
+    final Widget child;
+    if (state is LocationsListFetchSuccess) {
+      child = _buildLocationsList(context, state);
+    } else {
+      child = const AppProgressIndicator();
+    }
+    return AnimatedSwitcher(
+      duration: AppAnimations.animatedSwitcherDuration,
+      child: child,
+    );
+  }
+
+  Widget _buildLocationsList(BuildContext context, LocationsListFetchSuccess state) {
+    if (state.locations.isEmpty) {
       return _buildEmptyView(context);
     }
     return ListView.separated(
       itemBuilder: (_, index) {
-        final NamedLocation location = locations[index];
+        final NamedLocation location = state.locations[index];
         return LocationCell(
           location: location,
           onDeletePressed: () => _onDeleteLocationPressed(location),
@@ -64,7 +85,7 @@ class _LocationsListViewState extends ConsumerState<LocationsListView> {
           },
         );
       },
-      itemCount: locations.length,
+      itemCount: state.locations.length,
       padding: AppDimensions.defaultPaddingAll,
       separatorBuilder: (_, __) => const SizedBox(
         height: 10.0,
@@ -92,14 +113,15 @@ class _LocationsListViewState extends ConsumerState<LocationsListView> {
       title: S.of(context).deleteLocationDialogTitle,
       actions: [
         DialogFactory.buildAction(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.pop(context),
           text: S.of(context).cancel,
         ),
         DialogFactory.buildAction(
-          onPressed: () {
-            // TODO Refresh view after deletion
-            ref.read(storageProvider).deleteLocation(location.id);
-            Navigator.of(context).pop();
+          onPressed: () async {
+            await ref.read(storageProvider).deleteLocation(location.id);
+            ref.read(locationsListProvider.notifier).getLocations();
+            // ignore: use_build_context_synchronously
+            Navigator.pop(context);
           },
           text: S.of(context).yes,
         ),

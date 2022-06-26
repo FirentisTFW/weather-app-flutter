@@ -81,7 +81,7 @@ abstract class DialogFactory {
     return [
       buildAction(
         onPressed: () {
-          Navigator.of(context).pop();
+          Navigator.pop(context);
         },
         text: S.of(context).ok,
       ),

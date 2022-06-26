@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TextFieldInfo {
-  final TextEditingController controller;
-  final FocusNode focusNode;
+  final TextEditingController controller = TextEditingController();
+  final FocusNode focusNode = FocusNode();
 
-  const TextFieldInfo({
-    required this.controller,
-    required this.focusNode,
-  });
+  TextFieldInfo();
 
   String get text => controller.text;
 

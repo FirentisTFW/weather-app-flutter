@@ -6,6 +6,7 @@ import 'package:app/generated/l10n.dart';
 import 'package:app/modals/dialog_factory.dart';
 import 'package:app/networking/models/geocoding_proposition.dart';
 import 'package:app/providers/storage_providers.dart';
+import 'package:app/styles/app_animations.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_decorations.dart';
 import 'package:app/styles/app_dimensions.dart';
@@ -14,6 +15,7 @@ import 'package:app/universal_widgets/adaptive_button.dart';
 import 'package:app/universal_widgets/app_progress_indicator.dart';
 import 'package:app/universal_widgets/app_text_field.dart';
 import 'package:app/universal_widgets/error_view.dart';
+import 'package:app/views/add_location/add_location_arguments.dart';
 import 'package:app/views/add_location/add_location_providers.dart';
 import 'package:app/views/add_location/geocoding_fetch_state.dart';
 import 'package:app/views/add_location/widgets/geocoding_proposition_cell.dart';
@@ -21,7 +23,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AddLocationView extends ConsumerStatefulWidget {
-  const AddLocationView();
+  final AddLocationArguments arguments;
+
+  const AddLocationView({
+    required this.arguments,
+  });
 
   @override
   ConsumerState<AddLocationView> createState() => _AddLocationViewState();
@@ -33,10 +39,7 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
   @override
   void initState() {
     super.initState();
-    _locationNameTextFieldInfo = TextFieldInfo(
-      controller: TextEditingController(),
-      focusNode: FocusNode(),
-    );
+    _locationNameTextFieldInfo = TextFieldInfo();
   }
 
   @override
@@ -112,17 +115,24 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
   Widget _buildLocationsSection() {
     final GeocodingFetchState state = ref.watch(geocodingProvider);
 
+    final Widget child;
     if (state is GeocodingFetchInProgress) {
-      return const AppProgressIndicator();
+      child = const AppProgressIndicator();
     } else if (state is GeocodingFetchFailure) {
-      _buildErrorBody(context, state.error);
+      child = _buildErrorBody(context, state.error);
     } else if (state is GeocodingFetchSuccess) {
       if (state.locationPropositions.isEmpty) {
-        return _buildEmptyView();
+        child = _buildEmptyView();
+      } else {
+        child = _buildLocationsList(state);
       }
-      return _buildLocationsList(state);
+    } else {
+      child = _buildEmptyView();
     }
-    return _buildEmptyView();
+    return AnimatedSwitcher(
+      duration: AppAnimations.animatedSwitcherDuration,
+      child: child,
+    );
   }
 
   Widget _buildErrorBody(BuildContext context, dynamic error) {
@@ -177,11 +187,14 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
 
   void _addLocation(GeocodingProposition geocodingProposition) {
     ref.read(storageProvider).addLocation(geocodingProposition.mapToNamedLocation()).then(
-          (_) => DialogFactory.showSimpleDialog(
-            context,
-            message: S.of(context).addLocationSuccessDialogMessage(geocodingProposition.name ?? ''),
-            title: S.of(context).addLocationSuccessDialogTitle,
-          ),
+      (_) {
+        widget.arguments.onLocationAdded();
+        DialogFactory.showSimpleDialog(
+          context,
+          message: S.of(context).addLocationSuccessDialogMessage(geocodingProposition.name ?? ''),
+          title: S.of(context).addLocationSuccessDialogTitle,
         );
+      },
+    );
   }
 }

@@ -23,6 +23,7 @@ class WeatherApp extends StatelessWidget {
       ],
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: AppColors.lightBrown,
           secondary: AppColors.lightBrown,
         ),
         cupertinoOverrideTheme: CupertinoTheme.of(context).copyWith(
