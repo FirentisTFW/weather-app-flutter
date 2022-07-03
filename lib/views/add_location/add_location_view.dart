@@ -114,8 +114,8 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
 
   Widget _buildLocationsSection() {
     final GeocodingFetchState state = ref.watch(geocodingProvider);
-
     final Widget child;
+
     if (state is GeocodingFetchInProgress) {
       child = const AppProgressIndicator();
     } else if (state is GeocodingFetchFailure) {

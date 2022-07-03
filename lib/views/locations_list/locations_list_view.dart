@@ -1,7 +1,6 @@
 import 'package:app/data/models/named_location.dart';
 import 'package:app/generated/l10n.dart';
 import 'package:app/modals/dialog_factory.dart';
-import 'package:app/providers/storage_providers.dart';
 import 'package:app/routing.dart';
 import 'package:app/styles/app_animations.dart';
 import 'package:app/styles/app_colors.dart';
@@ -36,7 +35,6 @@ class _LocationsListViewState extends ConsumerState<LocationsListView> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO handle error cases, remove mocks
     return Scaffold(
       appBar: LocationsListAppBar(
         onAddIconPressed: () => Navigator.pushNamed(
@@ -54,8 +52,8 @@ class _LocationsListViewState extends ConsumerState<LocationsListView> {
 
   Widget _buildLocationsSection() {
     final LocationsListState state = ref.watch(locationsListProvider);
-
     final Widget child;
+
     if (state is LocationsListFetchSuccess) {
       child = _buildLocationsList(context, state);
     } else {
@@ -80,9 +78,10 @@ class _LocationsListViewState extends ConsumerState<LocationsListView> {
           onEditPressed: () {
             // TODO Implement
           },
-          onSelectPressed: (isSelected) {
-            // TODO Implement
-          },
+          onSelectPressed: (isSelected) => _onSelectLocationPressed(
+            isSelected: isSelected,
+            location: location,
+          ),
         );
       },
       itemCount: state.locations.length,
@@ -117,15 +116,25 @@ class _LocationsListViewState extends ConsumerState<LocationsListView> {
           text: S.of(context).cancel,
         ),
         DialogFactory.buildAction(
-          onPressed: () async {
-            await ref.read(storageProvider).deleteLocation(location.id);
-            ref.read(locationsListProvider.notifier).getLocations();
-            // ignore: use_build_context_synchronously
+          onPressed: () {
+            ref.read(locationsListProvider.notifier).deleteLocation(location.id);
             Navigator.pop(context);
           },
           text: S.of(context).yes,
         ),
       ],
     );
+  }
+
+  void _onSelectLocationPressed({
+    required bool isSelected,
+    required NamedLocation location,
+  }) {
+    // TODO Check for currently selected locations (no more than 2)
+    if (isSelected) {
+      ref.read(locationsListProvider.notifier).selectLocation(location.id);
+    } else {
+      ref.read(locationsListProvider.notifier).unselectLocation(location.id);
+    }
   }
 }

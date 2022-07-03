@@ -45,4 +45,41 @@ class CommonStorage {
     final list = (await locationsBox).get(StorageKeys.locationsListKey) ?? [];
     return (list as List).cast<NamedLocation>();
   }
+
+  Future<void> selectLocation(String locationId) async {
+    _updateLocationShowOnHomeScreenProperty(
+      locationId: locationId,
+      showOnHomeScreen: true,
+    );
+  }
+
+  Future<void> unselectLocation(String locationId) async {
+    _updateLocationShowOnHomeScreenProperty(
+      locationId: locationId,
+      showOnHomeScreen: false,
+    );
+  }
+
+  Future<void> _updateLocationShowOnHomeScreenProperty({
+    required String locationId,
+    required bool showOnHomeScreen,
+  }) async {
+    final List<NamedLocation> existingLocations = await getLocations();
+    final NamedLocation locationToSelect = existingLocations.firstWhere((location) => location.id == locationId);
+    final int locationToSelectIndex = existingLocations.indexOf(locationToSelect);
+    final List<NamedLocation> updatedLocations = existingLocations
+      ..replaceRange(
+        locationToSelectIndex,
+        locationToSelectIndex + 1,
+        [
+          locationToSelect.copyWith(
+            showOnHomeScreen: showOnHomeScreen,
+          ),
+        ],
+      );
+    await (await locationsBox).put(
+      StorageKeys.locationsListKey,
+      updatedLocations,
+    );
+  }
 }

@@ -26,4 +26,19 @@ class LocationsListNotifier extends StateNotifier<LocationsListState> {
       locations: locations,
     );
   }
+
+  Future<void> deleteLocation(String locationId) async {
+    await storage.deleteLocation(locationId);
+    getLocations();
+  }
+
+  Future<void> selectLocation(String locationId) async {
+    await storage.selectLocation(locationId);
+    getLocations();
+  }
+
+  Future<void> unselectLocation(String locationId) async {
+    await storage.unselectLocation(locationId);
+    getLocations();
+  }
 }
