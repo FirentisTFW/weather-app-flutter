@@ -1,5 +1,6 @@
 import 'package:app/data/models/named_location.dart';
 import 'package:app/generated/l10n.dart';
+import 'package:app/modals/bottom_sheets/selected_locations_bottom_sheet.dart';
 import 'package:app/modals/dialog_factory.dart';
 import 'package:app/routing.dart';
 import 'package:app/styles/app_animations.dart';
@@ -33,8 +34,25 @@ class _LocationsListViewState extends ConsumerState<LocationsListView> {
     ref.read(locationsListProvider.notifier).getLocations();
   }
 
+  void _setUpListener() {
+    ref.listen<LocationsListState>(locationsListProvider, (_, state) {
+      if (state is LocationsListSelectLocationFailure) {
+        SelectedLocationsBottomSheet(
+          context,
+          locations: state.selectedLocations,
+          onLocationPressed: (id) {
+            ref.read(locationsListProvider.notifier).unselectLocation(id);
+            ref.read(locationsListProvider.notifier).selectLocation(state.newlySelectedLocationId);
+          },
+        ).show();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _setUpListener();
+
     return Scaffold(
       appBar: LocationsListAppBar(
         onAddIconPressed: () => Navigator.pushNamed(
@@ -130,7 +148,6 @@ class _LocationsListViewState extends ConsumerState<LocationsListView> {
     required bool isSelected,
     required NamedLocation location,
   }) {
-    // TODO Check for currently selected locations (no more than 2)
     if (isSelected) {
       ref.read(locationsListProvider.notifier).selectLocation(location.id);
     } else {

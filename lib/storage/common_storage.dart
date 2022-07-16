@@ -1,4 +1,3 @@
-import 'package:app/commons/collections.dart';
 import 'package:app/data/models/named_location.dart';
 import 'package:app/storage/storage.dart';
 import 'package:app/storage/storage_keys.dart';
@@ -33,11 +32,13 @@ class CommonStorage {
     );
   }
 
-  Future<CollectionOf2<NamedLocation>> getHomeLocations() async {
+  Future<List<NamedLocation>> getSelectedLocations() async {
     final List<NamedLocation> allLocations = await getLocations();
     final List<NamedLocation> homeLocations = allLocations.where((location) => location.showOnHomeScreen).toList();
-    // TODO Handle edge cases (one location)
-    return CollectionOf2<NamedLocation>(homeLocations.first, homeLocations[1]);
+    if (homeLocations.length < 2) {
+      return homeLocations;
+    }
+    return homeLocations.sublist(0, 2);
   }
 
   Future<List<NamedLocation>> getLocations() async {

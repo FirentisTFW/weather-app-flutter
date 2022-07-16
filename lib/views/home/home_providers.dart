@@ -10,7 +10,7 @@ final homeProvider = FutureProvider<CollectionOf2<LocationWeatherData>>(
 
     // TODO Uncomment when storage is ready
     // final storage = ref.read(storageProvider);
-    // final CollectionOf2<NamedLocation> homeLocations = await storage.getHomeLocations();
+    // final List<NamedLocation> homeLocations = await storage.getHomeLocations();
 
     late final LocationWeatherData firstLocationData;
     late final LocationWeatherData secondLocationData;

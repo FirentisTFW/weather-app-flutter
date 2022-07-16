@@ -33,8 +33,19 @@ class LocationsListNotifier extends StateNotifier<LocationsListState> {
   }
 
   Future<void> selectLocation(String locationId) async {
-    await storage.selectLocation(locationId);
-    getLocations();
+    final List<NamedLocation> selectedLocations = await storage.getSelectedLocations();
+    if (selectedLocations.length < 2) {
+      await storage.selectLocation(locationId);
+      getLocations();
+    } else {
+      final LocationsListState entryState = state;
+      if (entryState is! LocationsListFetchSuccess) return;
+      state = LocationsListSelectLocationFailure(
+        state: entryState,
+        newlySelectedLocationId: locationId,
+        selectedLocations: selectedLocations,
+      );
+    }
   }
 
   Future<void> unselectLocation(String locationId) async {

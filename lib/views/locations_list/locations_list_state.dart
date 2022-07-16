@@ -25,3 +25,23 @@ class LocationsListFetchSuccess extends LocationsListState {
         locations,
       ];
 }
+
+class LocationsListSelectLocationFailure extends LocationsListFetchSuccess {
+  final String newlySelectedLocationId;
+  final List<NamedLocation> selectedLocations;
+
+  LocationsListSelectLocationFailure({
+    required LocationsListFetchSuccess state,
+    required this.newlySelectedLocationId,
+    required this.selectedLocations,
+  }) : super(
+          locations: state.locations,
+        );
+
+  @override
+  List<Object?> get props => [
+        ...super.props,
+        newlySelectedLocationId,
+        selectedLocations,
+      ];
+}

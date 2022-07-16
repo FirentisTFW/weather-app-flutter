@@ -4,20 +4,23 @@ import 'package:app/generated/l10n.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_decorations.dart';
 import 'package:app/styles/app_text_styles.dart';
+import 'package:app/universal_widgets/adaptive_button.dart';
 import 'package:app/universal_widgets/app_checkbox.dart';
 import 'package:flutter/material.dart';
 
 class LocationCell extends StatefulWidget {
   final NamedLocation location;
-  final VoidCallback onDeletePressed;
-  final VoidCallback onEditPressed;
-  final void Function(bool) onSelectPressed;
+  final VoidCallback? onDeletePressed;
+  final VoidCallback? onEditPressed;
+  final VoidCallback? onPressed;
+  final void Function(bool)? onSelectPressed;
 
   const LocationCell({
     required this.location,
-    required this.onDeletePressed,
-    required this.onEditPressed,
-    required this.onSelectPressed,
+    this.onDeletePressed,
+    this.onEditPressed,
+    this.onPressed,
+    this.onSelectPressed,
     Key? key,
   }) : super(
           key: key,
@@ -44,8 +47,23 @@ class _LocationCellState extends State<LocationCell> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final VoidCallback? onPressed = widget.onPressed;
+    if (onPressed != null) {
+      return AdaptiveButton(
+        decoration: AppDecorations.defaultCell(),
+        height: double.infinity,
+        onPressed: onPressed,
+        child: _buildBody(),
+      );
+    }
+    return DecoratedBox(
       decoration: AppDecorations.defaultCell(),
+      child: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 20.0,
         vertical: 12.0,
@@ -75,8 +93,10 @@ class _LocationCellState extends State<LocationCell> {
             fontWeight: FontWeight.w500,
           ),
         ),
-        const Spacer(),
-        ..._provideDeleteAndEditIcons(),
+        if (widget.onDeletePressed != null && widget.onEditPressed != null) ...[
+          const Spacer(),
+          ..._provideDeleteAndEditIcons(),
+        ],
       ],
     );
   }
@@ -119,13 +139,14 @@ class _LocationCellState extends State<LocationCell> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _buildCoordinates(context),
-        _buildCheckbox(context),
+        if (widget.onSelectPressed != null) _buildCheckbox(context),
       ],
     );
   }
 
   Widget _buildCoordinates(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
           S.of(context).latitudeShortDisplay(widget.location.latitudeDisplay),
@@ -144,11 +165,13 @@ class _LocationCellState extends State<LocationCell> {
   }
 
   Widget _buildCheckbox(BuildContext context) {
+    final void Function(bool)? onSelectPressed = widget.onSelectPressed;
+    if (onSelectPressed == null) return const SizedBox.shrink();
     return Column(
       children: <Widget>[
         AppCheckbox(
-          valueNotifier: _checkboxNotifier,
-          onChanged: widget.onSelectPressed,
+          isSelected: widget.location.showOnHomeScreen,
+          onChanged: onSelectPressed,
         ),
         Text(
           S.of(context).locationCellCheckbox,
