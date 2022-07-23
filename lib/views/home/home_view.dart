@@ -8,6 +8,7 @@ import 'package:app/generated/l10n.dart';
 import 'package:app/networking/models/current_weather.dart';
 import 'package:app/networking/models/daily_forecast.dart';
 import 'package:app/routing.dart';
+import 'package:app/styles/app_animations.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/styles/app_text_styles.dart';
@@ -17,13 +18,25 @@ import 'package:app/universal_widgets/error_view.dart';
 import 'package:app/utils/comparison_utils.dart';
 import 'package:app/views/home/comparison_factory.dart';
 import 'package:app/views/home/home_providers.dart';
+import 'package:app/views/home/home_state.dart';
 import 'package:app/views/home/widgets/comparison_cell.dart';
 import 'package:app/views/home/widgets/location_weather_forecast_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends ConsumerStatefulWidget {
   const HomeView();
+
+  @override
+  ConsumerState<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends ConsumerState<HomeView> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(homeProvider.notifier).fetchLocationsWeatherData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,18 +44,27 @@ class HomeView extends StatelessWidget {
       backgroundColor: AppColors.lightYellow,
       body: SafeArea(
         child: Center(
-          child: Consumer(
-            builder: (context, ref, __) {
-              final AsyncValue<CollectionOf2<LocationWeatherData>> response = ref.watch(homeProvider);
-              return response.when(
-                data: (weatherData) => _buildLoadedBody(context, weatherData),
-                error: (error, __) => _buildErrorBody(context, error),
-                loading: () => const AppProgressIndicator(),
-              );
-            },
-          ),
+          child: _buildBody(),
         ),
       ),
+    );
+  }
+
+  Widget _buildBody() {
+    final HomeState state = ref.watch(homeProvider);
+    final Widget child;
+
+    if (state is HomeFetchFailure) {
+      child = _buildErrorBody(context, state.error);
+    } else if (state is HomeFetchSucces) {
+      child = _buildLoadedBody(context, state.weatherData);
+    } else {
+      child = const AppProgressIndicator();
+    }
+
+    return AnimatedSwitcher(
+      duration: AppAnimations.animatedSwitcherDuration,
+      child: child,
     );
   }
 
