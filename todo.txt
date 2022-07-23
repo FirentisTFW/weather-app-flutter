@@ -1,0 +1,9 @@
+TODO:
+
+1. Home screen - fetch data for real locations
+2. Implement editing selected location (only name?)
+3. Add unit tests for providers
+4. Settings page - units etc.
+5. Layout change - home screen (columns/rows)
+6. Custom app errors
+6. Dio interceptors
