@@ -11,7 +11,7 @@
             "name": "PROD",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main_pro.dart",
+            "program": "lib/main_prod.dart",
         }
     ]
 }
