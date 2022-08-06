@@ -1,3 +1,4 @@
+import 'package:app/networking/from_json_factory.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'geocoding_proposition.g.dart';
@@ -6,6 +7,8 @@ part 'geocoding_proposition.g.dart';
   createToJson: false,
 )
 class GeocodingProposition {
+  static const FromJsonFactory<GeocodingProposition> fromJsonFactory = _$GeocodingPropositionFromJson;
+
   final String? country;
   @JsonKey(name: 'lat')
   final double? latitude;

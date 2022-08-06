@@ -1,4 +1,5 @@
 import 'package:app/networking/endpoints.dart';
+import 'package:app/networking/json_parser.dart';
 import 'package:app/networking/models/geocoding_proposition.dart';
 import 'package:app/repositories/geocoding/geocoding_repository.dart';
 import 'package:dio/dio.dart';
@@ -22,8 +23,6 @@ class NetworkGeocodingRepository implements GeocodingRepository {
         'limit': 5,
       },
     );
-
-    // TODO Parse and return data
-    return [];
+    return JsonParser.parseListResponse<GeocodingProposition>(response);
   }
 }
