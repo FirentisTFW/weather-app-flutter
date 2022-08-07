@@ -11,7 +11,7 @@ extension ListExtensions<T> on List<T> {
       ).toList()
         ..removeLast();
 
-  List<T> surroundedBy(T separator) => expand(
+  List<T> surroundedAndSeparatedBy(T separator) => expand(
         (element) => [
           element,
           separator,

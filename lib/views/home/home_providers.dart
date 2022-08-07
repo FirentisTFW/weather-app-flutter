@@ -1,6 +1,7 @@
 import 'package:app/commons/collections.dart';
 import 'package:app/data/models/location_weather_data.dart';
 import 'package:app/data/models/named_location.dart';
+import 'package:app/networking/models/weather_data.dart';
 import 'package:app/providers/network_providers.dart';
 import 'package:app/providers/storage_providers.dart';
 import 'package:app/repositories/weather/weather_repository.dart';
@@ -33,8 +34,8 @@ class HomeNotifier extends StateNotifier<HomeState> {
       final List<NamedLocation> homeLocations = await storage.getSelectedLocations();
       // TODO Check if there are two selected locations. If not, emit state to show dialog
 
-      late final LocationWeatherData firstLocationData;
-      late final LocationWeatherData secondLocationData;
+      late final WeatherData firstLocationData;
+      late final WeatherData secondLocationData;
 
       await Future.wait([
         weatherRepository
@@ -51,8 +52,14 @@ class HomeNotifier extends StateNotifier<HomeState> {
 
       state = HomeFetchSucces(
         weatherData: CollectionOf2(
-          firstLocationData,
-          secondLocationData,
+          LocationWeatherData(
+            locationName: homeLocations.first.name,
+            weatherData: firstLocationData,
+          ),
+          LocationWeatherData(
+            locationName: homeLocations[1].name,
+            weatherData: secondLocationData,
+          ),
         ),
       );
     } catch (error) {

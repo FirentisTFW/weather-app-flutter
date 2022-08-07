@@ -14,7 +14,7 @@ import 'package:app/utils/random_data_utils.dart';
 abstract class Mocks {
   const Mocks._();
 
-  static const currentWeather = CurrentWeather(
+  static const CurrentWeather currentWeather1 = CurrentWeather(
     conditions: [
       WeatherCondition(
         description: 'scattered clouds',
@@ -33,7 +33,7 @@ abstract class Mocks {
     windSpeed: 3.13,
   );
 
-  static const currentWeather2 = CurrentWeather(
+  static const CurrentWeather currentWeather2 = CurrentWeather(
     conditions: [
       WeatherCondition(
         description: 'clear sky',
@@ -60,7 +60,7 @@ abstract class Mocks {
     howManyHours: 24,
   );
 
-  static const geocodingPropositions = [
+  static const List<GeocodingProposition> geocodingPropositions = [
     GeocodingProposition(
       country: 'PL',
       latitude: 51.9739233,
@@ -77,7 +77,7 @@ abstract class Mocks {
     ),
   ];
 
-  static const locations = [
+  static const List<NamedLocation> locations = [
     NamedLocation(
       id: '0',
       latitude: 52.4095,
@@ -94,28 +94,32 @@ abstract class Mocks {
     ),
   ];
 
-  static final locationWeatherData = LocationWeatherData(
+  static final LocationWeatherData locationWeatherData1 = LocationWeatherData(
     locationName: 'Poznań',
-    weatherData: WeatherData(
-      currentWeather: currentWeather,
-      dailyForecast: dailyForecast,
-      hourlyForecast: hourlyForecast,
-      latitude: 52.4095,
-      longitude: 16.9319,
-      timezoneOffset: 3600,
-    ),
+    weatherData: weatherData1,
   );
 
-  static final locationWeatherData2 = LocationWeatherData(
+  static final LocationWeatherData locationWeatherData2 = LocationWeatherData(
     locationName: 'Malaga',
-    weatherData: WeatherData(
-      currentWeather: currentWeather2,
-      dailyForecast: dailyForecast,
-      hourlyForecast: hourlyForecast,
-      latitude: 36.7202,
-      longitude: -4.4203,
-      timezoneOffset: 3600,
-    ),
+    weatherData: weatherData2,
+  );
+
+  static final WeatherData weatherData1 = WeatherData(
+    currentWeather: currentWeather1,
+    dailyForecast: dailyForecast,
+    hourlyForecast: hourlyForecast,
+    latitude: 52.4095,
+    longitude: 16.9319,
+    timezoneOffset: 3600,
+  );
+
+  static final WeatherData weatherData2 = WeatherData(
+    currentWeather: currentWeather2,
+    dailyForecast: dailyForecast,
+    hourlyForecast: hourlyForecast,
+    latitude: 36.7202,
+    longitude: -4.4203,
+    timezoneOffset: 3600,
   );
 
   static List<HourlyForecast> _prepareHourlyForecast({

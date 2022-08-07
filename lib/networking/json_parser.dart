@@ -7,18 +7,26 @@ abstract class JsonParser {
 
   static List<T> parseListResponse<T>(dynamic json) {
     if (json is! List) throw UnimplementedError();
-    final Iterable<Map<String, dynamic>?> jsonIterable = _mapJsonToIterable(json);
+    final Iterable<Map<String, dynamic>> jsonIterable = _mapJsonToIterable(json);
 
     return jsonIterable
         .map(
           (element) {
             final FromJsonFactory? fromJsonFactory = fromJsonFactories[T];
-            if (element == null || fromJsonFactory == null) return null;
+            if (fromJsonFactory == null) return null;
             return fromJsonFactory(element) as T;
           },
         )
         .whereNotNull()
         .toList();
+  }
+
+  static T parseSingleObjectResponse<T>(dynamic json) {
+    try {
+      return fromJsonFactories[T]?.call(json as Map<String, dynamic>) as T;
+    } catch (_) {
+      throw UnimplementedError();
+    }
   }
 
   static Iterable<Map<String, dynamic>> _mapJsonToIterable(List json) {

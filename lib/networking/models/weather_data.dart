@@ -1,3 +1,4 @@
+import 'package:app/networking/from_json_factory.dart';
 import 'package:app/networking/models/current_weather.dart';
 import 'package:app/networking/models/daily_forecast.dart';
 import 'package:app/networking/models/hourly_forecast.dart';
@@ -9,6 +10,8 @@ part 'weather_data.g.dart';
   createToJson: false,
 )
 class WeatherData {
+  static const FromJsonFactory<WeatherData> fromJsonFactory = _$WeatherDataFromJson;
+
   @JsonKey(name: 'current')
   final CurrentWeather? currentWeather;
   @JsonKey(name: 'daily')
