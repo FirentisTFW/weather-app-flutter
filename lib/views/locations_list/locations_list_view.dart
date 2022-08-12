@@ -31,7 +31,7 @@ class _LocationsListViewState extends ConsumerState<LocationsListView> {
   }
 
   void _getLocations() {
-    ref.read(locationsListProvider.notifier).getLocations();
+    ref.read(locationsListProvider.notifier).getLocationsIfNotAvailable();
   }
 
   void _setUpListener() {

@@ -18,7 +18,7 @@ class NetworkWeatherRepository with ApiHelpers implements WeatherRepository {
   Future<WeatherData> getCurrentWeatherAndForecast({
     required NamedLocation location,
   }) async {
-    final response = await dio.get(
+    final Response response = await dio.get(
       Endpoints.weather.weatherAndForecast,
       queryParameters: {
         ApiHelpers.parameters.latitude: location.latitude,

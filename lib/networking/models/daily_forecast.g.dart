@@ -11,7 +11,7 @@ DailyForecast _$DailyForecastFromJson(Map<String, dynamic> json) =>
       conditions: (json['weather'] as List<dynamic>?)
           ?.map((e) => WeatherCondition.fromJson(e as Map<String, dynamic>))
           .toList(),
-      date: json['date'] as int?,
+      date: json['dt'] as int?,
       humidity: json['humidity'] as int?,
       pressure: json['pressure'] as int?,
       sunrise: json['sunrise'] as int?,

@@ -1,11 +1,12 @@
 import 'package:copy_with_extension/copy_with_extension.dart';
+import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
 part 'named_location.g.dart';
 
 @CopyWith()
 @HiveType(typeId: 0)
-class NamedLocation {
+class NamedLocation extends Equatable {
   @HiveField(0)
   final String id;
   @HiveField(1)
@@ -28,4 +29,13 @@ class NamedLocation {
   String get latitudeDisplay => latitude.toStringAsFixed(4);
 
   String get longitudeDisplay => longitude.toStringAsFixed(4);
+
+  @override
+  List<Object?> get props => [
+        id,
+        latitude,
+        longitude,
+        name,
+        showOnHomeScreen,
+      ];
 }

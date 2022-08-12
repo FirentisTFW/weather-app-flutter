@@ -10,6 +10,7 @@ part 'daily_forecast.g.dart';
 class DailyForecast {
   @JsonKey(name: 'weather')
   final List<WeatherCondition>? conditions;
+  @JsonKey(name: 'dt')
   final int? date;
   final int? humidity;
   final int? pressure;

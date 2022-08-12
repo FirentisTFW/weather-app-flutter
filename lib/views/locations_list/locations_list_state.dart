@@ -15,8 +15,6 @@ class LocationsListInitial extends LocationsListState {
 class LocationsListFetchSuccess extends LocationsListState {
   final List<NamedLocation> locations;
 
-  int get selectedLocationsCount => locations.where((location) => location.showOnHomeScreen).length;
-
   const LocationsListFetchSuccess({
     required this.locations,
   });

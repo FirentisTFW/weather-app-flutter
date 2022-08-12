@@ -20,10 +20,7 @@ final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>(
     ref.listen(
       locationsListProvider,
       (previous, current) {
-        if (previous != current &&
-            previous is! LocationsListInitial &&
-            current is LocationsListFetchSuccess &&
-            current.selectedLocationsCount > 1) {
+        if (previous is! LocationsListInitial && current is LocationsListFetchSuccess) {
           homeNotifier.fetchLocationsWeatherData();
         }
       },

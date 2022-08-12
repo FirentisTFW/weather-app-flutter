@@ -27,6 +27,10 @@ class LocationsListNotifier extends StateNotifier<LocationsListState> {
     );
   }
 
+  Future<void> getLocationsIfNotAvailable() async {
+    if (state is! LocationsListFetchSuccess) getLocations();
+  }
+
   Future<void> deleteLocation(String locationId) async {
     await storage.deleteLocation(locationId);
     getLocations();
