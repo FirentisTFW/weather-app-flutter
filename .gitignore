@@ -46,3 +46,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .vscode/settings.json
+
+# Project files
+lib/networking/api_key.dart

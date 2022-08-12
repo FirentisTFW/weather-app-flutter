@@ -1,7 +1,10 @@
+// NOTEL this file is not in version control
+import 'package:app/networking/api_key.dart';
+
 abstract class ApiConstants {
   ApiConstants._();
 
-  static const String apiKey = 'MY_API_KEY';
+  static const String apiKey = ApiKey.key;
   static const String baseUrl = 'https://api.openweathermap.org/';
   static const Duration timeoutDuration = Duration(
     seconds: 30,
