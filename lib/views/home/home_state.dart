@@ -44,3 +44,7 @@ class HomeFetchFailure extends HomeState {
         error,
       ];
 }
+
+class HomeMissingLocations extends HomeState {
+  const HomeMissingLocations();
+}

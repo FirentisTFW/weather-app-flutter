@@ -55,9 +55,11 @@ class _HomeViewState extends ConsumerState<HomeView> {
     final Widget child;
 
     if (state is HomeFetchFailure) {
-      child = _buildErrorBody(context, state.error);
+      child = _buildErrorBody(state.error);
     } else if (state is HomeFetchSucces) {
-      child = _buildLoadedBody(context, state.weatherData);
+      child = _buildLoadedBody(state.weatherData);
+    } else if (state is HomeMissingLocations) {
+      child = _buildMissingLocationsBody();
     } else {
       child = const AppProgressIndicator();
     }
@@ -68,7 +70,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     );
   }
 
-  Widget _buildErrorBody(BuildContext context, dynamic error) {
+  Widget _buildErrorBody(dynamic error) {
     return ErrorView(
       message: AppErrorFactory.provideMessage(context, error),
       onButtonPressed: () {
@@ -78,12 +80,12 @@ class _HomeViewState extends ConsumerState<HomeView> {
     );
   }
 
-  Widget _buildLoadedBody(BuildContext context, CollectionOf2<LocationWeatherData> weatherData) {
+  Widget _buildLoadedBody(CollectionOf2<LocationWeatherData> weatherData) {
     return SingleChildScrollView(
       padding: AppDimensions.defaultPaddingAll,
       child: Column(
         children: [
-          _buildButtons(context),
+          _buildButtons(),
           _buildLocationtWeatherForecastCells(weatherData),
           _buildComparisonCells(weatherData),
         ].separatedBy(
@@ -95,18 +97,18 @@ class _HomeViewState extends ConsumerState<HomeView> {
     );
   }
 
-  Widget _buildButtons(BuildContext context) {
+  Widget _buildButtons() {
     // TODO Add layout buttons (horizontal/vertical alignment)
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildSettingsIcon(context),
-        _buildLocationsButton(context),
+        _buildSettingsIcon(),
+        _buildLocationsButton(),
       ],
     );
   }
 
-  Widget _buildSettingsIcon(BuildContext context) {
+  Widget _buildSettingsIcon() {
     return GestureDetector(
       onTap: () => Navigator.pushNamed(context, Routing.settings),
       child: const Icon(
@@ -116,7 +118,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     );
   }
 
-  Widget _buildLocationsButton(BuildContext context) {
+  Widget _buildLocationsButton() {
     return AdaptiveButton(
       height: 40.0,
       onPressed: () => Navigator.pushNamed(context, Routing.locationsList),
@@ -186,6 +188,23 @@ class _HomeViewState extends ConsumerState<HomeView> {
         height: 8.0,
       ),
       shrinkWrap: true,
+    );
+  }
+
+  Widget _buildMissingLocationsBody() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          S.of(context).homeMissingLocations,
+          style: AppTextStyles.information(),
+        ),
+        _buildLocationsButton(),
+      ].separatedBy(
+        const SizedBox(
+          height: 8.0,
+        ),
+      ),
     );
   }
 }

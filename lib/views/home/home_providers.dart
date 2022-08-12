@@ -7,13 +7,29 @@ import 'package:app/providers/storage_providers.dart';
 import 'package:app/repositories/weather/weather_repository.dart';
 import 'package:app/storage/common_storage.dart';
 import 'package:app/views/home/home_state.dart';
+import 'package:app/views/locations_list/location_list_providers.dart';
+import 'package:app/views/locations_list/locations_list_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>(
-  (ref) => HomeNotifier(
-    storage: ref.watch(storageProvider),
-    weatherRepository: ref.read(weatherRepositoryProvider),
-  ),
+  (ref) {
+    final HomeNotifier homeNotifier = HomeNotifier(
+      storage: ref.watch(storageProvider),
+      weatherRepository: ref.watch(weatherRepositoryProvider),
+    );
+    ref.listen(
+      locationsListProvider,
+      (previous, current) {
+        if (previous != current &&
+            previous is! LocationsListInitial &&
+            current is LocationsListFetchSuccess &&
+            current.selectedLocationsCount > 1) {
+          homeNotifier.fetchLocationsWeatherData();
+        }
+      },
+    );
+    return homeNotifier;
+  },
 );
 
 class HomeNotifier extends StateNotifier<HomeState> {
@@ -32,7 +48,11 @@ class HomeNotifier extends StateNotifier<HomeState> {
 
     try {
       final List<NamedLocation> homeLocations = await storage.getSelectedLocations();
-      // TODO Check if there are two selected locations. If not, emit state to show dialog
+
+      if (homeLocations.length < 2) {
+        state = const HomeMissingLocations();
+        return Future.value();
+      }
 
       late final WeatherData firstLocationData;
       late final WeatherData secondLocationData;

@@ -66,6 +66,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "fridayShort": MessageLookupByLibrary.simpleMessage("Fri"),
         "homeManageLocationsButton":
             MessageLookupByLibrary.simpleMessage("Manage locations"),
+        "homeMissingLocations": MessageLookupByLibrary.simpleMessage(
+            "You need to select two locations to compare."),
         "latitudeShortDisplay": m3,
         "locationCellCheckbox":
             MessageLookupByLibrary.simpleMessage("Show on\nhome screen"),

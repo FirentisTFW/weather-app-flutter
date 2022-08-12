@@ -40,5 +40,6 @@
   "yes": "Yes",
   "cancel": "Cancel",
   "deleteLocationDialogTitle": "Delete location",
-  "deleteLocationDialogMessage": "Are you sure you want to delete {locationName} from locations list?"
+  "deleteLocationDialogMessage": "Are you sure you want to delete {locationName} from locations list?",
+  "homeMissingLocations": "You need to select two locations to compare."
 }

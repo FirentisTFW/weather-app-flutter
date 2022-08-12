@@ -469,6 +469,16 @@ class S {
       args: [locationName],
     );
   }
+
+  /// `You need to select two locations to compare.`
+  String get homeMissingLocations {
+    return Intl.message(
+      'You need to select two locations to compare.',
+      name: 'homeMissingLocations',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

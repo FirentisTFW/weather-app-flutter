@@ -4,5 +4,5 @@ TODO:
 2. Add unit tests for providers
 3. Settings page - units etc.
 4. Layout change - home screen (columns/rows)
-5. Custom app errors
-6. Dio interceptors
+5. Custom app errors (optional)
+6. Error interceptor (optional)
