@@ -1,0 +1,4 @@
+enum TimeFormat {
+  twelveHour,
+  twentyFourHour,
+}

@@ -181,7 +181,6 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
       separatorBuilder: (_, __) => const SizedBox(
         height: 8.0,
       ),
-      shrinkWrap: true,
     );
   }
 
