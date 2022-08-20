@@ -13,10 +13,6 @@ class SettingsInitial extends SettingsState {
   const SettingsInitial();
 }
 
-class SettingsFetchInProgress extends SettingsState {
-  const SettingsFetchInProgress();
-}
-
 class SettingsFetchSuccess extends SettingsState {
   final TemperatureUnit temperatureUnit;
   final TimeFormat timeFormat;

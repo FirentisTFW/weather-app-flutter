@@ -1,4 +1,6 @@
 import 'package:app/build_config/environment.dart';
+import 'package:app/data/enums/temperature_unit.dart';
+import 'package:app/data/enums/time_format.dart';
 import 'package:app/data/models/named_location.dart';
 import 'package:app/providers/config_providers.dart';
 import 'package:app/views/weather_app.dart';
@@ -14,6 +16,8 @@ Future<void> mainCommon(Environment environment) async {
   final dir = await getApplicationDocumentsDirectory();
   Hive.init(dir.path);
   Hive.registerAdapter(NamedLocationAdapter());
+  Hive.registerAdapter(TemperatureUnitAdapter());
+  Hive.registerAdapter(TimeFormatAdapter());
 
   environmentProvider = Provider((ref) => environment);
 

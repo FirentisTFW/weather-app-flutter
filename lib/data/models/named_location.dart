@@ -1,3 +1,4 @@
+import 'package:app/storage/hive_type_ids.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
@@ -5,7 +6,7 @@ import 'package:hive/hive.dart';
 part 'named_location.g.dart';
 
 @CopyWith()
-@HiveType(typeId: 0)
+@HiveType(typeId: HiveTypeIds.namedLocation)
 class NamedLocation extends Equatable {
   @HiveField(0)
   final String id;

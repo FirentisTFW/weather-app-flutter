@@ -1,5 +1,8 @@
+import 'package:app/data/enums/temperature_unit.dart';
+import 'package:app/data/enums/time_format.dart';
 import 'package:app/data/models/named_location.dart';
 import 'package:app/storage/storage.dart';
+import 'package:app/storage/storage_constants.dart';
 import 'package:app/storage/storage_keys.dart';
 import 'package:hive/hive.dart';
 
@@ -10,8 +13,11 @@ class CommonStorage {
         storageKey: StorageKeys.locationsBoxKey,
       );
 
+  Future<Box> get settingsBox async => storage.getBox(
+        storageKey: StorageKeys.settingsBoxKey,
+      );
+
   Future<void> addLocation(NamedLocation location) async {
-    // TODO Consider try-catch and supplying custom local storage error messages that could be shown to the user
     final List<NamedLocation> existingLocations = await getLocations();
     await (await locationsBox).put(
       StorageKeys.locationsListKey,
@@ -42,9 +48,19 @@ class CommonStorage {
   }
 
   Future<List<NamedLocation>> getLocations() async {
-    // TODO Consider try-catch and supplying custom local storage error messages that could be shown to the user
     final list = (await locationsBox).get(StorageKeys.locationsListKey) ?? [];
     return (list as List).cast<NamedLocation>();
+  }
+
+  Future<TemperatureUnit> getTemperatureUnit() async {
+    final temperatureUnit =
+        (await settingsBox).get(StorageKeys.temperatureUnitKey) ?? StorageConstants.defaultTemperatureUnit;
+    return temperatureUnit as TemperatureUnit;
+  }
+
+  Future<TimeFormat> getTimeFormat() async {
+    final timeFormat = (await settingsBox).get(StorageKeys.timeFormatKey) ?? StorageConstants.defaultTimeFormat;
+    return timeFormat as TimeFormat;
   }
 
   Future<void> selectLocation(String locationId) async {
@@ -52,6 +68,14 @@ class CommonStorage {
       locationId: locationId,
       showOnHomeScreen: true,
     );
+  }
+
+  Future<void> setTemperatureUnit(TemperatureUnit unit) async {
+    await (await settingsBox).put(StorageKeys.temperatureUnitKey, unit);
+  }
+
+  Future<void> setTimeFormat(TimeFormat format) async {
+    await (await settingsBox).put(StorageKeys.timeFormatKey, format);
   }
 
   Future<void> unselectLocation(String locationId) async {

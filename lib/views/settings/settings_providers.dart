@@ -21,13 +21,17 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
         );
 
   Future<void> getSettings() async {
-    state = const SettingsFetchInProgress();
+    late final TemperatureUnit temperatureUnit;
+    late final TimeFormat timeFormat;
 
-    // TODO Get real values from storage and remove mocks
+    await Future.wait([
+      storage.getTemperatureUnit().then((value) => temperatureUnit = value),
+      storage.getTimeFormat().then((value) => timeFormat = value),
+    ]);
 
-    state = const SettingsFetchSuccess(
-      temperatureUnit: TemperatureUnit.celsius,
-      timeFormat: TimeFormat.twentyFourHour,
+    state = SettingsFetchSuccess(
+      temperatureUnit: temperatureUnit,
+      timeFormat: timeFormat,
     );
   }
 
@@ -35,7 +39,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     final SettingsState entryState = state;
     if (entryState is! SettingsFetchSuccess) return Future.value();
 
-    // TODO Save changes to storage
+    await storage.setTemperatureUnit(newValue);
 
     state = SettingsFetchSuccess(
       temperatureUnit: newValue,
@@ -47,7 +51,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     final SettingsState entryState = state;
     if (entryState is! SettingsFetchSuccess) return Future.value();
 
-    // TODO Save changes to storage
+    await storage.setTimeFormat(newValue);
 
     state = SettingsFetchSuccess(
       temperatureUnit: entryState.temperatureUnit,
