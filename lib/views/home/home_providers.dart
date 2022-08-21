@@ -1,4 +1,5 @@
 import 'package:app/commons/collections.dart';
+import 'package:app/data/enums/temperature_unit.dart';
 import 'package:app/data/models/location_weather_data.dart';
 import 'package:app/data/models/named_location.dart';
 import 'package:app/networking/models/weather_data.dart';
@@ -9,6 +10,8 @@ import 'package:app/storage/common_storage.dart';
 import 'package:app/views/home/home_state.dart';
 import 'package:app/views/locations_list/location_list_providers.dart';
 import 'package:app/views/locations_list/locations_list_state.dart';
+import 'package:app/views/settings/settings_providers.dart';
+import 'package:app/views/settings/settings_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>(
@@ -21,6 +24,14 @@ final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>(
       locationsListProvider,
       (previous, current) {
         if (previous is! LocationsListInitial && current is LocationsListFetchSuccess) {
+          homeNotifier.fetchLocationsWeatherData();
+        }
+      },
+    );
+    ref.listen(
+      settingsProvider,
+      (previous, current) {
+        if (previous is SettingsFetchSuccess && current is SettingsFetchSuccess && previous != current) {
           homeNotifier.fetchLocationsWeatherData();
         }
       },
@@ -45,6 +56,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
 
     try {
       final List<NamedLocation> homeLocations = await storage.getSelectedLocations();
+      final TemperatureUnit temperatureUnit = await storage.getTemperatureUnit();
 
       if (homeLocations.length < 2) {
         state = const HomeMissingLocations();
@@ -58,11 +70,13 @@ class HomeNotifier extends StateNotifier<HomeState> {
         weatherRepository
             .getCurrentWeatherAndForecast(
               location: homeLocations.first,
+              temperatureUnit: temperatureUnit,
             )
             .then((value) => firstLocationData = value),
         weatherRepository
             .getCurrentWeatherAndForecast(
               location: homeLocations[1],
+              temperatureUnit: temperatureUnit,
             )
             .then((value) => secondLocationData = value),
       ]);

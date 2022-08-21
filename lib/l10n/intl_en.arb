@@ -41,5 +41,8 @@
   "cancel": "Cancel",
   "deleteLocationDialogTitle": "Delete location",
   "deleteLocationDialogMessage": "Are you sure you want to delete {locationName} from locations list?",
-  "homeMissingLocations": "You need to select two locations to compare."
+  "homeMissingLocations": "You need to select two locations to compare.",
+  "settingsTemperatureUnitLabel": "Temperature unit",
+  "settingsTimeFormatLabel": "Time format",
+  "comparisonInKeyword": "in"
 }

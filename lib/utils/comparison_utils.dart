@@ -47,7 +47,7 @@ abstract class ComparisonUtils {
     return [
       differenceDisplay,
       comparisonKeyword,
-      'in',
+      S.of(context).comparisonInKeyword,
       data.item1.locationName,
     ].join(' ');
   }

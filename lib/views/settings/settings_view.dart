@@ -1,10 +1,12 @@
 import 'package:app/data/enums/temperature_unit.dart';
 import 'package:app/data/enums/time_format.dart';
 import 'package:app/extensions/extensions.dart';
+import 'package:app/generated/l10n.dart';
 import 'package:app/styles/app_animations.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/universal_widgets/app_progress_indicator.dart';
+import 'package:app/utils/settings_utils.dart';
 import 'package:app/views/settings/settings_providers.dart';
 import 'package:app/views/settings/settings_state.dart';
 import 'package:app/views/settings/widgets/setting_cell.dart';
@@ -70,12 +72,8 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
   Widget _buildTemperatureSetting(SettingsFetchSuccess state) {
     return SettingCell<TemperatureUnit>(
       initialValue: state.temperatureUnit,
-      label: 'Temperature unit',
-      // TODO Get values from repository or something
-      values: const [
-        TemperatureUnit.celsius,
-        TemperatureUnit.fahrenheit,
-      ],
+      label: S.of(context).settingsTemperatureUnitLabel,
+      values: SettingsUtils.provideAvailableTemperatureUnits(),
       onChanged: (value) {
         if (value != null) {
           ref.read(settingsProvider.notifier).changeTemperatureUnit(value);
@@ -87,12 +85,8 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
   Widget _buildTimeFormatSetting(SettingsFetchSuccess state) {
     return SettingCell<TimeFormat>(
       initialValue: state.timeFormat,
-      label: 'Time format',
-      // TODO Get values from repository or something
-      values: const [
-        TimeFormat.twelveHour,
-        TimeFormat.twentyFourHour,
-      ],
+      label: S.of(context).settingsTimeFormatLabel,
+      values: SettingsUtils.provideAvailableTimeFormats(),
       onChanged: (value) {
         if (value != null) {
           ref.read(settingsProvider.notifier).changeTimeFormat(value);

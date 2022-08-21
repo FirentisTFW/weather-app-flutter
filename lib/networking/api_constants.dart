@@ -23,5 +23,6 @@ class _Parameters {
 }
 
 class _ParameterValues {
+  final String unitsImperial = 'imperial';
   final String unitsMetric = 'metric';
 }

@@ -1,5 +1,5 @@
+import 'package:app/data/enums/temperature_unit.dart';
 import 'package:app/data/models/named_location.dart';
-import 'package:app/networking/api_constants.dart';
 import 'package:app/networking/api_helpers_mixin.dart';
 import 'package:app/networking/endpoints.dart';
 import 'package:app/networking/json_parser.dart';
@@ -17,13 +17,14 @@ class NetworkWeatherRepository with ApiHelpers implements WeatherRepository {
   @override
   Future<WeatherData> getCurrentWeatherAndForecast({
     required NamedLocation location,
+    required TemperatureUnit temperatureUnit,
   }) async {
     final Response response = await dio.get(
       Endpoints.weather.weatherAndForecast,
       queryParameters: {
         ApiHelpers.parameters.latitude: location.latitude,
         ApiHelpers.parameters.longitude: location.longitude,
-        ApiHelpers.parameters.units: ApiConstants.parameterValues.unitsMetric,
+        ApiHelpers.parameters.units: temperatureUnit.apiParameterValue,
       },
     );
     return JsonParser.parseSingleObjectResponse<WeatherData>(response.data);

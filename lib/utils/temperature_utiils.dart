@@ -5,10 +5,10 @@ import 'package:flutter/widgets.dart';
 abstract class TemperatureUtils {
   const TemperatureUtils._();
 
-  static const _degreeSymbol = '°';
-  static const _separator = '/';
+  static const String _degreeSymbol = '°';
+  static const String _separator = '/';
   // TODO Let user decide which unit he/she wants to use - get it from Storage
-  static const _unit = 'C';
+  static const String _unit = 'C';
 
   static String formatTemperature(int temperature) {
     return [

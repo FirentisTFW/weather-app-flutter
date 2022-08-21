@@ -479,6 +479,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Temperature unit`
+  String get settingsTemperatureUnitLabel {
+    return Intl.message(
+      'Temperature unit',
+      name: 'settingsTemperatureUnitLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time format`
+  String get settingsTimeFormatLabel {
+    return Intl.message(
+      'Time format',
+      name: 'settingsTimeFormatLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `in`
+  String get comparisonInKeyword {
+    return Intl.message(
+      'in',
+      name: 'comparisonInKeyword',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

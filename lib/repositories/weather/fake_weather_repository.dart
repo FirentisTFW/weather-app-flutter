@@ -1,4 +1,5 @@
 import 'package:app/commons/mocks.dart';
+import 'package:app/data/enums/temperature_unit.dart';
 import 'package:app/data/models/named_location.dart';
 import 'package:app/networking/models/weather_data.dart';
 import 'package:app/repositories/weather/weather_repository.dart';
@@ -9,6 +10,7 @@ class FakeWeatherRepository implements WeatherRepository {
   @override
   Future<WeatherData> getCurrentWeatherAndForecast({
     required NamedLocation location,
+    required TemperatureUnit temperatureUnit,
   }) async {
     await _simulateDelay();
 

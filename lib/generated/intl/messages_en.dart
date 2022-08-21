@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Day length"),
         "comparisonDayTemperature":
             MessageLookupByLibrary.simpleMessage("Day temperature"),
+        "comparisonInKeyword": MessageLookupByLibrary.simpleMessage("in"),
         "comparisonNightTemperature":
             MessageLookupByLibrary.simpleMessage("Night temperature"),
         "comparisonSunrise": MessageLookupByLibrary.simpleMessage("Sunrise"),
@@ -79,6 +80,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "mondayShort": MessageLookupByLibrary.simpleMessage("Mon"),
         "ok": MessageLookupByLibrary.simpleMessage("Ok"),
         "saturdayShort": MessageLookupByLibrary.simpleMessage("Sat"),
+        "settingsTemperatureUnitLabel":
+            MessageLookupByLibrary.simpleMessage("Temperature unit"),
+        "settingsTimeFormatLabel":
+            MessageLookupByLibrary.simpleMessage("Time format"),
         "sundayShort": MessageLookupByLibrary.simpleMessage("Sun"),
         "temperatureComparisonKeywordNegative":
             MessageLookupByLibrary.simpleMessage("cooler"),
