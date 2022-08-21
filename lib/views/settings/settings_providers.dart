@@ -1,37 +1,31 @@
 import 'package:app/data/enums/temperature_unit.dart';
 import 'package:app/data/enums/time_format.dart';
+import 'package:app/data/models/user_settings.dart';
+import 'package:app/managers/settings_manager.dart';
 import 'package:app/providers/storage_providers.dart';
-import 'package:app/storage/common_storage.dart';
 import 'package:app/views/settings/settings_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final settingsProvider = StateNotifierProvider<SettingsNotifier, SettingsState>(
   (ref) => SettingsNotifier(
-    storage: ref.read(storageProvider),
+    settingsManager: SettingsManager(ref.watch(storageProvider)),
   ),
 );
 
 class SettingsNotifier extends StateNotifier<SettingsState> {
-  final CommonStorage storage;
+  final SettingsManager settingsManager;
 
   SettingsNotifier({
-    required this.storage,
+    required this.settingsManager,
   }) : super(
           const SettingsInitial(),
         );
 
   Future<void> getSettings() async {
-    late final TemperatureUnit temperatureUnit;
-    late final TimeFormat timeFormat;
-
-    await Future.wait([
-      storage.getTemperatureUnit().then((value) => temperatureUnit = value),
-      storage.getTimeFormat().then((value) => timeFormat = value),
-    ]);
+    final UserSettings userSettings = await settingsManager.provideUserSettings();
 
     state = SettingsFetchSuccess(
-      temperatureUnit: temperatureUnit,
-      timeFormat: timeFormat,
+      userSettings: userSettings,
     );
   }
 
@@ -39,11 +33,12 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     final SettingsState entryState = state;
     if (entryState is! SettingsFetchSuccess) return Future.value();
 
-    await storage.setTemperatureUnit(newValue);
+    await settingsManager.setTemperatureUnit(newValue);
 
     state = SettingsFetchSuccess(
-      temperatureUnit: newValue,
-      timeFormat: entryState.timeFormat,
+      userSettings: entryState.userSettings.copyWith(
+        temperatureUnit: newValue,
+      ),
     );
   }
 
@@ -51,11 +46,12 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     final SettingsState entryState = state;
     if (entryState is! SettingsFetchSuccess) return Future.value();
 
-    await storage.setTimeFormat(newValue);
+    await settingsManager.setTimeFormat(newValue);
 
     state = SettingsFetchSuccess(
-      temperatureUnit: entryState.temperatureUnit,
-      timeFormat: newValue,
+      userSettings: entryState.userSettings.copyWith(
+        timeFormat: newValue,
+      ),
     );
   }
 }

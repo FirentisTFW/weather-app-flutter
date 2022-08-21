@@ -1,8 +1,8 @@
 TODO:
 
-1. Implement editing selected location (only name?)
-2. Add unit tests for providers
-3. Settings page - units etc.
+1. Proper units on home view (C/F)
+2. Implement editing selected location (only name?)
+3. Add unit tests for providers
 4. Layout change - home screen (columns/rows)
 5. Custom app errors (optional)
 6. Error interceptor (optional)

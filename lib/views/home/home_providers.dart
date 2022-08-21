@@ -1,7 +1,8 @@
 import 'package:app/commons/collections.dart';
-import 'package:app/data/enums/temperature_unit.dart';
 import 'package:app/data/models/location_weather_data.dart';
 import 'package:app/data/models/named_location.dart';
+import 'package:app/data/models/user_settings.dart';
+import 'package:app/managers/settings_manager.dart';
 import 'package:app/networking/models/weather_data.dart';
 import 'package:app/providers/network_providers.dart';
 import 'package:app/providers/storage_providers.dart';
@@ -17,6 +18,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>(
   (ref) {
     final HomeNotifier homeNotifier = HomeNotifier(
+      settingsManager: SettingsManager(ref.watch(storageProvider)),
       storage: ref.watch(storageProvider),
       weatherRepository: ref.watch(weatherRepositoryProvider),
     );
@@ -41,10 +43,12 @@ final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>(
 );
 
 class HomeNotifier extends StateNotifier<HomeState> {
+  final SettingsManager settingsManager;
   final CommonStorage storage;
   final WeatherRepository weatherRepository;
 
   HomeNotifier({
+    required this.settingsManager,
     required this.storage,
     required this.weatherRepository,
   }) : super(
@@ -56,7 +60,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
 
     try {
       final List<NamedLocation> homeLocations = await storage.getSelectedLocations();
-      final TemperatureUnit temperatureUnit = await storage.getTemperatureUnit();
+      final UserSettings userSettings = await settingsManager.provideUserSettings();
 
       if (homeLocations.length < 2) {
         state = const HomeMissingLocations();
@@ -70,18 +74,19 @@ class HomeNotifier extends StateNotifier<HomeState> {
         weatherRepository
             .getCurrentWeatherAndForecast(
               location: homeLocations.first,
-              temperatureUnit: temperatureUnit,
+              temperatureUnit: userSettings.temperatureUnit,
             )
             .then((value) => firstLocationData = value),
         weatherRepository
             .getCurrentWeatherAndForecast(
               location: homeLocations[1],
-              temperatureUnit: temperatureUnit,
+              temperatureUnit: userSettings.temperatureUnit,
             )
             .then((value) => secondLocationData = value),
       ]);
 
       state = HomeFetchSucces(
+        userSettings: userSettings,
         weatherData: CollectionOf2(
           LocationWeatherData(
             locationName: homeLocations.first.name,

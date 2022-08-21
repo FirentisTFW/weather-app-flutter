@@ -71,7 +71,7 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
 
   Widget _buildTemperatureSetting(SettingsFetchSuccess state) {
     return SettingCell<TemperatureUnit>(
-      initialValue: state.temperatureUnit,
+      initialValue: state.userSettings.temperatureUnit,
       label: S.of(context).settingsTemperatureUnitLabel,
       values: SettingsUtils.provideAvailableTemperatureUnits(),
       onChanged: (value) {
@@ -84,7 +84,7 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
 
   Widget _buildTimeFormatSetting(SettingsFetchSuccess state) {
     return SettingCell<TimeFormat>(
-      initialValue: state.timeFormat,
+      initialValue: state.userSettings.timeFormat,
       label: S.of(context).settingsTimeFormatLabel,
       values: SettingsUtils.provideAvailableTimeFormats(),
       onChanged: (value) {

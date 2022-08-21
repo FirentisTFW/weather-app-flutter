@@ -1,5 +1,6 @@
 import 'package:app/commons/collections.dart';
 import 'package:app/data/models/location_weather_data.dart';
+import 'package:app/data/models/user_settings.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class HomeState extends Equatable {
@@ -18,15 +19,18 @@ class HomeFetchInProgress extends HomeState {
 }
 
 class HomeFetchSucces extends HomeState {
+  final UserSettings userSettings;
   final CollectionOf2<LocationWeatherData> weatherData;
 
   const HomeFetchSucces({
+    required this.userSettings,
     required this.weatherData,
   });
 
   @override
   List<Object?> get props => [
         ...super.props,
+        userSettings,
         weatherData,
       ];
 }

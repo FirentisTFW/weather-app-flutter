@@ -1,5 +1,4 @@
-import 'package:app/data/enums/temperature_unit.dart';
-import 'package:app/data/enums/time_format.dart';
+import 'package:app/data/models/user_settings.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class SettingsState extends Equatable {
@@ -14,18 +13,15 @@ class SettingsInitial extends SettingsState {
 }
 
 class SettingsFetchSuccess extends SettingsState {
-  final TemperatureUnit temperatureUnit;
-  final TimeFormat timeFormat;
+  final UserSettings userSettings;
 
   const SettingsFetchSuccess({
-    required this.temperatureUnit,
-    required this.timeFormat,
+    required this.userSettings,
   });
 
   @override
   List<Object?> get props => [
         ...super.props,
-        temperatureUnit,
-        timeFormat,
+        userSettings,
       ];
 }

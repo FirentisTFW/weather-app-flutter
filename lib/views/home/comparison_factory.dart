@@ -29,7 +29,7 @@ abstract class ComparisonFactory {
         case ComparisonObject.sunset:
           return _prepareDataForSunset(weatherData);
       }
-    } catch (error) {
+    } catch (_) {
       return null;
     }
   }
@@ -124,7 +124,7 @@ abstract class ComparisonFactory {
   static CollectionOf2<LocationSingleData> _prepareDataForSunrise(
     CollectionOf2<LocationWeatherData> weatherData,
   ) {
-    const int milisecondsInSecond = 1000;
+    const int millisecondsInSecond = 1000;
 
     final int firstSunrise = weatherData.item1.currentWeather!.sunrise!;
     final int secondSunrise = weatherData.item2.currentWeather!.sunrise!;
@@ -133,13 +133,13 @@ abstract class ComparisonFactory {
       LocationSingleData(
         data: firstSunrise,
         dataDisplay:
-            DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(firstSunrise * milisecondsInSecond)),
+            DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(firstSunrise * millisecondsInSecond)),
         locationName: weatherData.item1.locationName,
       ),
       LocationSingleData(
         data: secondSunrise,
         dataDisplay:
-            DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(secondSunrise * milisecondsInSecond)),
+            DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(secondSunrise * millisecondsInSecond)),
         locationName: weatherData.item2.locationName,
       ),
     );
