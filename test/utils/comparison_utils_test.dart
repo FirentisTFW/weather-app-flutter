@@ -1,12 +1,16 @@
 import 'package:app/commons/app_locales.dart';
 import 'package:app/commons/collections.dart';
+import 'package:app/constants.dart';
 import 'package:app/data/enums/comparison_object.dart';
+import 'package:app/data/enums/temperature_unit.dart';
+import 'package:app/data/enums/time_format.dart';
 import 'package:app/data/models/location_single_data.dart';
 import 'package:app/generated/l10n.dart';
 import 'package:app/utils/comparison_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/intl.dart';
 
 import '../helpers/widget_test_helpers.dart';
 
@@ -44,6 +48,7 @@ void main() {
                 locationName: 'Malaga',
               ),
             ),
+            temperatureUnit: TemperatureUnit.celsius,
           );
           expect(result, '10°C cooler in Poznań');
         });
@@ -65,6 +70,7 @@ void main() {
                 locationName: 'Malaga',
               ),
             ),
+            temperatureUnit: TemperatureUnit.celsius,
           );
           expect(result, '1°C warmer in Poznań');
         });
@@ -90,6 +96,7 @@ void main() {
                   locationName: 'Malaga',
                 ),
               ),
+              temperatureUnit: TemperatureUnit.celsius,
             );
             expect(result, '26 minutes sooner in Poznań');
           });
@@ -111,6 +118,7 @@ void main() {
                   locationName: 'Malaga',
                 ),
               ),
+              temperatureUnit: TemperatureUnit.celsius,
             );
             expect(result, '26 minutes later in Poznań');
           });
@@ -135,6 +143,7 @@ void main() {
                   locationName: 'Malaga',
                 ),
               ),
+              temperatureUnit: TemperatureUnit.celsius,
             );
             expect(result, '1 hour 58 minutes shorter in Poznań');
           });
@@ -156,10 +165,22 @@ void main() {
                   locationName: 'Malaga',
                 ),
               ),
+              temperatureUnit: TemperatureUnit.celsius,
             );
             expect(result, '1 hour 58 minutes longer in Poznań');
           });
         });
+      });
+    });
+    group('provideDateFormat -', () {
+      test('12h format', () {
+        final DateFormat result = ComparisonUtils.provideDateFormat(TimeFormat.twelveHour);
+        expect(result, Constants.dateFormat12h);
+      });
+
+      test('24h format', () {
+        final DateFormat result = ComparisonUtils.provideDateFormat(TimeFormat.twentyFourHour);
+        expect(result, Constants.dateFormat24h);
       });
     });
   });

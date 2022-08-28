@@ -34,6 +34,7 @@ final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>(
       settingsProvider,
       (previous, current) {
         if (previous is SettingsFetchSuccess && current is SettingsFetchSuccess && previous != current) {
+          // TODO Consider fetching again only if temperature format has changed, otherwise just rebuild widget tree
           homeNotifier.fetchLocationsWeatherData();
         }
       },

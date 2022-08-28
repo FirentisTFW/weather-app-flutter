@@ -1,5 +1,6 @@
 import 'package:app/commons/collections.dart';
 import 'package:app/data/enums/comparison_object.dart';
+import 'package:app/data/enums/temperature_unit.dart';
 import 'package:app/data/models/location_single_data.dart';
 import 'package:app/extensions/list_extensions.dart';
 import 'package:app/styles/app_colors.dart';
@@ -11,10 +12,12 @@ import 'package:flutter/material.dart';
 class ComparisonCell extends StatelessWidget {
   final ComparisonObject comparisonObject;
   final CollectionOf2<LocationSingleData> data;
+  final TemperatureUnit temperatureUnit;
 
   const ComparisonCell({
     required this.comparisonObject,
     required this.data,
+    required this.temperatureUnit,
   });
 
   @override
@@ -54,7 +57,7 @@ class ComparisonCell extends StatelessWidget {
         _buildLocationData(data.item1),
         _buildLocationData(
           data.item2,
-          dataFirst: true,
+          isFirstItem: false,
         ),
       ],
     );
@@ -62,10 +65,10 @@ class ComparisonCell extends StatelessWidget {
 
   Widget _buildLocationData(
     LocationSingleData data, {
-    bool dataFirst = false,
+    bool isFirstItem = true,
   }) {
     return Row(
-      textDirection: dataFirst ? TextDirection.rtl : TextDirection.ltr,
+      textDirection: isFirstItem ? TextDirection.ltr : TextDirection.rtl,
       children: <Widget>[
         Text(
           data.locationName,
@@ -97,6 +100,7 @@ class ComparisonCell extends StatelessWidget {
         context,
         comparisonObject: comparisonObject,
         data: data,
+        temperatureUnit: temperatureUnit,
       ),
       style: AppTextStyles.text(),
     );

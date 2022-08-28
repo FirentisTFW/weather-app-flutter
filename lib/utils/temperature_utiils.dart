@@ -1,3 +1,4 @@
+import 'package:app/data/enums/temperature_unit.dart';
 import 'package:app/data/models/difference.dart';
 import 'package:app/generated/l10n.dart';
 import 'package:flutter/widgets.dart';
@@ -10,11 +11,15 @@ abstract class TemperatureUtils {
   // TODO Let user decide which unit he/she wants to use - get it from Storage
   static const String _unit = 'C';
 
-  static String formatTemperature(int temperature) {
+  static String formatTemperature(
+    BuildContext context, {
+    required int temperature,
+    required TemperatureUnit unit,
+  }) {
     return [
       temperature,
       _degreeSymbol,
-      _unit,
+      unit.getUnitDisplay(context),
     ].join();
   }
 

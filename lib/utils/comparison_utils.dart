@@ -1,11 +1,15 @@
 import 'package:app/commons/collections.dart';
+import 'package:app/constants.dart';
 import 'package:app/data/enums/comparison_object.dart';
+import 'package:app/data/enums/temperature_unit.dart';
+import 'package:app/data/enums/time_format.dart';
 import 'package:app/data/models/difference.dart';
 import 'package:app/data/models/location_single_data.dart';
 import 'package:app/generated/l10n.dart';
 import 'package:app/utils/temperature_utiils.dart';
 import 'package:app/utils/time_utils.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 abstract class ComparisonUtils {
   const ComparisonUtils._();
@@ -25,11 +29,16 @@ abstract class ComparisonUtils {
     BuildContext context, {
     required ComparisonObject comparisonObject,
     required CollectionOf2<LocationSingleData> data,
+    required TemperatureUnit temperatureUnit,
   }) {
     final Difference? difference = _calculateDataDifference(comparisonObject, data);
     if (difference == null) return '';
 
-    final String differenceDisplay = _provideDifferenceDisplay(difference);
+    final String differenceDisplay = _provideDifferenceDisplay(
+      context,
+      difference: difference,
+      temperatureUnit: temperatureUnit,
+    );
 
     final String comparisonKeyword;
     if (difference is SecondsDifference) {
@@ -79,6 +88,17 @@ abstract class ComparisonUtils {
     }
   }
 
+  static DateFormat provideDateFormat(
+    TimeFormat timeFormat,
+  ) {
+    switch (timeFormat) {
+      case TimeFormat.twelveHour:
+        return Constants.dateFormat12h;
+      case TimeFormat.twentyFourHour:
+        return Constants.dateFormat24h;
+    }
+  }
+
   static Difference? _calculateDataDifference(
     ComparisonObject comparisonObject,
     CollectionOf2<LocationSingleData> data,
@@ -101,14 +121,22 @@ abstract class ComparisonUtils {
     }
   }
 
-  static String _provideDifferenceDisplay(Difference difference) {
+  static String _provideDifferenceDisplay(
+    BuildContext context, {
+    required Difference difference,
+    required TemperatureUnit temperatureUnit,
+  }) {
     if (difference is SecondsDifference) {
       return TimeUtils.provideTimeDisplayFromSeconds(
         secondsDifference: difference.data.abs(),
         useFullDescription: true,
       );
     } else if (difference is TemperatureDifference) {
-      return TemperatureUtils.formatTemperature(difference.data.abs().round());
+      return TemperatureUtils.formatTemperature(
+        context,
+        temperature: difference.data.abs().round(),
+        unit: temperatureUnit,
+      );
     }
     return '';
   }

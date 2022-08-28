@@ -1,33 +1,58 @@
 import 'package:app/commons/collections.dart';
 import 'package:app/data/enums/comparison_object.dart';
+import 'package:app/data/enums/temperature_unit.dart';
+import 'package:app/data/enums/time_format.dart';
 import 'package:app/data/models/location_single_data.dart';
 import 'package:app/data/models/location_weather_data.dart';
 import 'package:app/networking/models/current_weather.dart';
+import 'package:app/utils/comparison_utils.dart';
 import 'package:app/utils/temperature_utiils.dart';
 import 'package:app/utils/time_utils.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 abstract class ComparisonFactory {
   const ComparisonFactory._();
 
-  static CollectionOf2<LocationSingleData>? prepareWeatherDataForComparison({
+  static CollectionOf2<LocationSingleData>? prepareWeatherDataForComparison(
+    BuildContext context, {
     required ComparisonObject comparisonObject,
+    required TemperatureUnit temperatureUnit,
+    required TimeFormat timeFormat,
     required CollectionOf2<LocationWeatherData> weatherData,
   }) {
     try {
       switch (comparisonObject) {
         case ComparisonObject.currentTemperature:
-          return _prepareDataForCurrentTemperature(weatherData);
+          return _prepareDataForCurrentTemperature(
+            context,
+            weatherData: weatherData,
+            unit: temperatureUnit,
+          );
         case ComparisonObject.dayLength:
           return _prepareDataForDayLength(weatherData);
         case ComparisonObject.dayTemperature:
-          return _prepareDataForDayTemperature(weatherData);
+          return _prepareDataForDayTemperature(
+            context,
+            weatherData: weatherData,
+            unit: temperatureUnit,
+          );
         case ComparisonObject.nightTemperature:
-          return _prepareDataForNightTemperature(weatherData);
+          return _prepareDataForNightTemperature(
+            context,
+            weatherData: weatherData,
+            unit: temperatureUnit,
+          );
         case ComparisonObject.sunrise:
-          return _prepareDataForSunrise(weatherData);
+          return _prepareDataForSunrise(
+            format: timeFormat,
+            weatherData: weatherData,
+          );
         case ComparisonObject.sunset:
-          return _prepareDataForSunset(weatherData);
+          return _prepareDataForSunset(
+            format: timeFormat,
+            weatherData: weatherData,
+          );
       }
     } catch (_) {
       return null;
@@ -35,22 +60,18 @@ abstract class ComparisonFactory {
   }
 
   static CollectionOf2<LocationSingleData> _prepareDataForCurrentTemperature(
-    CollectionOf2<LocationWeatherData> weatherData,
-  ) {
+    BuildContext context, {
+    required CollectionOf2<LocationWeatherData> weatherData,
+    required TemperatureUnit unit,
+  }) {
     final double firstTemperature = weatherData.item1.currentWeather!.temperature!;
     final double secondTemperature = weatherData.item2.currentWeather!.temperature!;
 
-    return CollectionOf2(
-      LocationSingleData(
-        data: firstTemperature,
-        dataDisplay: TemperatureUtils.formatTemperature(firstTemperature.round()),
-        locationName: weatherData.item1.locationName,
-      ),
-      LocationSingleData(
-        data: secondTemperature,
-        dataDisplay: TemperatureUtils.formatTemperature(secondTemperature.round()),
-        locationName: weatherData.item2.locationName,
-      ),
+    return _prepareDataForTemperature(
+      context,
+      locationNames: CollectionOf2(weatherData.item1.locationName, weatherData.item2.locationName),
+      temperatures: CollectionOf2(firstTemperature, secondTemperature),
+      unit: unit,
     );
   }
 
@@ -82,88 +103,114 @@ abstract class ComparisonFactory {
   }
 
   static CollectionOf2<LocationSingleData>? _prepareDataForDayTemperature(
-    CollectionOf2<LocationWeatherData> weatherData,
-  ) {
+    BuildContext context, {
+    required CollectionOf2<LocationWeatherData> weatherData,
+    required TemperatureUnit unit,
+  }) {
     final double firstTemperature = weatherData.item1.dailyForecast!.first.temperature!.day!;
     final double secondTemperature = weatherData.item2.dailyForecast!.first.temperature!.day!;
 
-    return CollectionOf2(
-      LocationSingleData(
-        data: firstTemperature,
-        dataDisplay: TemperatureUtils.formatTemperature(firstTemperature.round()),
-        locationName: weatherData.item1.locationName,
-      ),
-      LocationSingleData(
-        data: secondTemperature,
-        dataDisplay: TemperatureUtils.formatTemperature(secondTemperature.round()),
-        locationName: weatherData.item2.locationName,
-      ),
+    return _prepareDataForTemperature(
+      context,
+      locationNames: CollectionOf2(weatherData.item1.locationName, weatherData.item2.locationName),
+      temperatures: CollectionOf2(firstTemperature, secondTemperature),
+      unit: unit,
     );
   }
 
   static CollectionOf2<LocationSingleData>? _prepareDataForNightTemperature(
-    CollectionOf2<LocationWeatherData> weatherData,
-  ) {
+    BuildContext context, {
+    required CollectionOf2<LocationWeatherData> weatherData,
+    required TemperatureUnit unit,
+  }) {
     final double firstTemperature = weatherData.item1.dailyForecast!.first.temperature!.night!;
     final double secondTemperature = weatherData.item2.dailyForecast!.first.temperature!.night!;
 
-    return CollectionOf2(
-      LocationSingleData(
-        data: firstTemperature,
-        dataDisplay: TemperatureUtils.formatTemperature(firstTemperature.round()),
-        locationName: weatherData.item1.locationName,
-      ),
-      LocationSingleData(
-        data: secondTemperature,
-        dataDisplay: TemperatureUtils.formatTemperature(secondTemperature.round()),
-        locationName: weatherData.item2.locationName,
-      ),
+    return _prepareDataForTemperature(
+      context,
+      locationNames: CollectionOf2(weatherData.item1.locationName, weatherData.item2.locationName),
+      temperatures: CollectionOf2(firstTemperature, secondTemperature),
+      unit: unit,
     );
   }
 
-  static CollectionOf2<LocationSingleData> _prepareDataForSunrise(
-    CollectionOf2<LocationWeatherData> weatherData,
-  ) {
-    const int millisecondsInSecond = 1000;
-
+  static CollectionOf2<LocationSingleData> _prepareDataForSunrise({
+    required TimeFormat format,
+    required CollectionOf2<LocationWeatherData> weatherData,
+  }) {
     final int firstSunrise = weatherData.item1.currentWeather!.sunrise!;
     final int secondSunrise = weatherData.item2.currentWeather!.sunrise!;
 
+    return _prepareDataForTimeStamp(
+      format: format,
+      locationNames: CollectionOf2(weatherData.item1.locationName, weatherData.item2.locationName),
+      timeStampsInSeconds: CollectionOf2(firstSunrise, secondSunrise),
+    );
+  }
+
+  static CollectionOf2<LocationSingleData> _prepareDataForSunset({
+    required TimeFormat format,
+    required CollectionOf2<LocationWeatherData> weatherData,
+  }) {
+    final int firstSunset = weatherData.item1.currentWeather!.sunset!;
+    final int secondSunset = weatherData.item2.currentWeather!.sunset!;
+
+    return _prepareDataForTimeStamp(
+      format: format,
+      locationNames: CollectionOf2(weatherData.item1.locationName, weatherData.item2.locationName),
+      timeStampsInSeconds: CollectionOf2(firstSunset, secondSunset),
+    );
+  }
+
+  static CollectionOf2<LocationSingleData> _prepareDataForTemperature(
+    BuildContext context, {
+    required CollectionOf2<String> locationNames,
+    required CollectionOf2<double> temperatures,
+    required TemperatureUnit unit,
+  }) {
     return CollectionOf2(
       LocationSingleData(
-        data: firstSunrise,
-        dataDisplay:
-            DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(firstSunrise * millisecondsInSecond)),
-        locationName: weatherData.item1.locationName,
+        data: temperatures.item1,
+        dataDisplay: TemperatureUtils.formatTemperature(
+          context,
+          temperature: temperatures.item1.round(),
+          unit: unit,
+        ),
+        locationName: locationNames.item1,
       ),
       LocationSingleData(
-        data: secondSunrise,
-        dataDisplay:
-            DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(secondSunrise * millisecondsInSecond)),
-        locationName: weatherData.item2.locationName,
+        data: temperatures.item2,
+        dataDisplay: TemperatureUtils.formatTemperature(
+          context,
+          temperature: temperatures.item2.round(),
+          unit: unit,
+        ),
+        locationName: locationNames.item2,
       ),
     );
   }
 
-  static CollectionOf2<LocationSingleData> _prepareDataForSunset(
-    CollectionOf2<LocationWeatherData> weatherData,
-  ) {
-    const int milisecondsInSecond = 1000;
+  static CollectionOf2<LocationSingleData> _prepareDataForTimeStamp({
+    required TimeFormat format,
+    required CollectionOf2<String> locationNames,
+    required CollectionOf2<int> timeStampsInSeconds,
+  }) {
+    const int millisecondsInSecond = 1000;
 
-    final int firstSunset = weatherData.item1.currentWeather!.sunset!;
-    final int secondSunset = weatherData.item2.currentWeather!.sunset!;
+    final DateFormat timeFormat = ComparisonUtils.provideDateFormat(format);
 
     return CollectionOf2(
       LocationSingleData(
-        data: firstSunset,
-        dataDisplay: DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(firstSunset * milisecondsInSecond)),
-        locationName: weatherData.item1.locationName,
+        data: timeStampsInSeconds.item1,
+        dataDisplay:
+            timeFormat.format(DateTime.fromMillisecondsSinceEpoch(timeStampsInSeconds.item1 * millisecondsInSecond)),
+        locationName: locationNames.item1,
       ),
       LocationSingleData(
-        data: secondSunset,
+        data: timeStampsInSeconds.item2,
         dataDisplay:
-            DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(secondSunset * milisecondsInSecond)),
-        locationName: weatherData.item2.locationName,
+            timeFormat.format(DateTime.fromMillisecondsSinceEpoch(timeStampsInSeconds.item2 * millisecondsInSecond)),
+        locationName: locationNames.item2,
       ),
     );
   }

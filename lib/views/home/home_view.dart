@@ -57,7 +57,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     if (state is HomeFetchFailure) {
       child = _buildErrorBody(state.error);
     } else if (state is HomeFetchSucces) {
-      child = _buildLoadedBody(state.weatherData);
+      child = _buildLoadedBody(state);
     } else if (state is HomeMissingLocations) {
       child = _buildMissingLocationsBody();
     } else {
@@ -80,14 +80,14 @@ class _HomeViewState extends ConsumerState<HomeView> {
     );
   }
 
-  Widget _buildLoadedBody(CollectionOf2<LocationWeatherData> weatherData) {
+  Widget _buildLoadedBody(HomeFetchSucces state) {
     return SingleChildScrollView(
       padding: AppDimensions.defaultPaddingAll,
       child: Column(
         children: [
           _buildButtons(),
-          _buildLocationtWeatherForecastCells(weatherData),
-          _buildComparisonCells(weatherData),
+          _buildLocationtWeatherForecastCells(state),
+          _buildComparisonCells(state),
         ].separatedBy(
           const SizedBox(
             height: 24.0,
@@ -134,14 +134,14 @@ class _HomeViewState extends ConsumerState<HomeView> {
     );
   }
 
-  Widget _buildLocationtWeatherForecastCells(CollectionOf2<LocationWeatherData> weatherData) {
+  Widget _buildLocationtWeatherForecastCells(HomeFetchSucces state) {
     return Row(
       children: <Widget>[
         Expanded(
-          child: _buildLocationWeatherForecastCell(weatherData.item1),
+          child: _buildLocationWeatherForecastCell(state.weatherData.item1),
         ),
         Expanded(
-          child: _buildLocationWeatherForecastCell(weatherData.item2),
+          child: _buildLocationWeatherForecastCell(state.weatherData.item2),
         ),
       ].separatedBy(
         const SizedBox(
@@ -165,13 +165,16 @@ class _HomeViewState extends ConsumerState<HomeView> {
     );
   }
 
-  Widget _buildComparisonCells(CollectionOf2<LocationWeatherData> weatherData) {
+  Widget _buildComparisonCells(HomeFetchSucces state) {
     return ListView.separated(
       itemBuilder: (_, index) {
         final ComparisonObject comparisonObject = ComparisonUtils.provideComparisonObjectForIndex(index);
         final CollectionOf2<LocationSingleData>? comparisonData = ComparisonFactory.prepareWeatherDataForComparison(
+          context,
           comparisonObject: comparisonObject,
-          weatherData: weatherData,
+          temperatureUnit: state.userSettings.temperatureUnit,
+          timeFormat: state.userSettings.timeFormat,
+          weatherData: state.weatherData,
         );
         if (comparisonData == null) {
           return const SizedBox.shrink();
@@ -179,6 +182,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
         return ComparisonCell(
           comparisonObject: comparisonObject,
           data: comparisonData,
+          temperatureUnit: state.userSettings.temperatureUnit,
         );
       },
       itemCount: ComparisonUtils.comparisonObjectCount,
