@@ -1,20 +1,26 @@
+import 'package:app/data/models/named_location.dart';
 import 'package:app/networking/models/geocoding_proposition.dart';
 import 'package:app/providers/network_providers.dart';
+import 'package:app/providers/storage_providers.dart';
 import 'package:app/repositories/geocoding/geocoding_repository.dart';
-import 'package:app/views/add_location/geocoding_fetch_state.dart';
+import 'package:app/storage/common_storage.dart';
+import 'package:app/views/geocoding/geocoding_fetch_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final geocodingProvider = StateNotifierProvider<GeocodingNotifier, GeocodingFetchState>(
   (ref) => GeocodingNotifier(
     geocodingRepository: ref.watch(geocodingRepositoryProvider),
+    storage: ref.watch(storageProvider),
   ),
 );
 
 class GeocodingNotifier extends StateNotifier<GeocodingFetchState> {
   final GeocodingRepository geocodingRepository;
+  final CommonStorage storage;
 
   GeocodingNotifier({
     required this.geocodingRepository,
+    required this.storage,
   }) : super(
           const GeocodingFetchInitial(),
         );
@@ -38,4 +44,6 @@ class GeocodingNotifier extends StateNotifier<GeocodingFetchState> {
       );
     }
   }
+
+  Future<void> addLocation(NamedLocation location) => storage.addLocation(location);
 }

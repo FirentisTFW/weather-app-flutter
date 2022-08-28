@@ -8,7 +8,7 @@ import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/styles/app_text_styles.dart';
 import 'package:app/universal_widgets/app_progress_indicator.dart';
-import 'package:app/views/add_location/add_location_arguments.dart';
+import 'package:app/views/geocoding/geocoding_arguments.dart';
 import 'package:app/views/locations_list/location_list_providers.dart';
 import 'package:app/views/locations_list/locations_list_state.dart';
 import 'package:app/views/locations_list/widgets/location_cell.dart';
@@ -57,9 +57,9 @@ class _LocationsListViewState extends ConsumerState<LocationsListView> {
       appBar: LocationsListAppBar(
         onAddIconPressed: () => Navigator.pushNamed(
           context,
-          Routing.addLocation,
-          arguments: AddLocationArguments(
-            onLocationAdded: _getLocations,
+          Routing.geocoding,
+          arguments: GeocodingArguments(
+            onLocationAdded: _refreshLocations,
           ),
         ),
       ),
@@ -153,5 +153,9 @@ class _LocationsListViewState extends ConsumerState<LocationsListView> {
     } else {
       ref.read(locationsListProvider.notifier).unselectLocation(location.id);
     }
+  }
+
+  void _refreshLocations() {
+    ref.read(locationsListProvider.notifier).getLocations();
   }
 }

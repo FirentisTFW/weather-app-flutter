@@ -5,7 +5,6 @@ import 'package:app/extensions/list_extensions.dart';
 import 'package:app/generated/l10n.dart';
 import 'package:app/modals/dialog_factory.dart';
 import 'package:app/networking/models/geocoding_proposition.dart';
-import 'package:app/providers/storage_providers.dart';
 import 'package:app/styles/app_animations.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_decorations.dart';
@@ -15,25 +14,25 @@ import 'package:app/universal_widgets/adaptive_button.dart';
 import 'package:app/universal_widgets/app_progress_indicator.dart';
 import 'package:app/universal_widgets/app_text_field.dart';
 import 'package:app/universal_widgets/error_view.dart';
-import 'package:app/views/add_location/add_location_arguments.dart';
-import 'package:app/views/add_location/add_location_providers.dart';
-import 'package:app/views/add_location/geocoding_fetch_state.dart';
-import 'package:app/views/add_location/widgets/geocoding_proposition_cell.dart';
+import 'package:app/views/geocoding/geocoding_arguments.dart';
+import 'package:app/views/geocoding/geocoding_fetch_state.dart';
+import 'package:app/views/geocoding/geocoding_providers.dart';
+import 'package:app/views/geocoding/widgets/geocoding_proposition_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AddLocationView extends ConsumerStatefulWidget {
-  final AddLocationArguments arguments;
+class GeocodingView extends ConsumerStatefulWidget {
+  final GeocodingArguments arguments;
 
-  const AddLocationView({
+  const GeocodingView({
     required this.arguments,
   });
 
   @override
-  ConsumerState<AddLocationView> createState() => _AddLocationViewState();
+  ConsumerState<GeocodingView> createState() => _GeocodingViewState();
 }
 
-class _AddLocationViewState extends ConsumerState<AddLocationView> {
+class _GeocodingViewState extends ConsumerState<GeocodingView> {
   late final TextFieldInfo _locationNameTextFieldInfo;
 
   @override
@@ -185,7 +184,7 @@ class _AddLocationViewState extends ConsumerState<AddLocationView> {
   }
 
   void _addLocation(GeocodingProposition geocodingProposition) {
-    ref.read(storageProvider).addLocation(geocodingProposition.mapToNamedLocation()).then(
+    ref.read(geocodingProvider.notifier).addLocation(geocodingProposition.mapToNamedLocation()).then(
       (_) {
         widget.arguments.onLocationAdded();
         DialogFactory.showSimpleDialog(

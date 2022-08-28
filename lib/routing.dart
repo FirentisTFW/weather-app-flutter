@@ -1,5 +1,5 @@
-import 'package:app/views/add_location/add_location_arguments.dart';
-import 'package:app/views/add_location/add_location_view.dart';
+import 'package:app/views/geocoding/geocoding_arguments.dart';
+import 'package:app/views/geocoding/geocoding_view.dart';
 import 'package:app/views/locations_list/locations_list_view.dart';
 import 'package:app/views/settings/settings_view.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 abstract class Routing {
   const Routing._();
 
-  static const String addLocation = 'add_location';
+  static const String geocoding = 'geocoding';
   static const String locationsList = 'locations_list';
   static const String settings = 'settings';
 
@@ -18,9 +18,9 @@ abstract class Routing {
     final dynamic arguments = routeSettings.arguments;
 
     switch (routeName) {
-      case addLocation:
-        child = AddLocationView(
-          arguments: arguments as AddLocationArguments,
+      case geocoding:
+        child = GeocodingView(
+          arguments: arguments as GeocodingArguments,
         );
         break;
       case locationsList:

@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 
-class AddLocationArguments {
+class GeocodingArguments {
   final VoidCallback onLocationAdded;
 
-  const AddLocationArguments({
+  const GeocodingArguments({
     required this.onLocationAdded,
   });
 }
