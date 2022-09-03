@@ -41,6 +41,9 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
+# Signing related
+android/app/key/weather-app.jks
+
 # Android Studio will place build artifacts here
 /android/app/debug
 /android/app/profile
