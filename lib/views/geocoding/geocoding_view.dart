@@ -137,9 +137,9 @@ class _GeocodingViewState extends ConsumerState<GeocodingView> {
   Widget _buildErrorBody(BuildContext context, dynamic error) {
     return ErrorView(
       message: AppErrorFactory.provideMessage(context, error),
-      onButtonPressed: () {
-        // TODO Implement - refresh page
-      },
+      onButtonPressed: () => ref.read(geocodingProvider.notifier).getGeocodingPropositions(
+            query: _locationNameTextFieldInfo.text,
+          ),
       title: AppErrorFactory.provideTitle(context, error),
     );
   }
