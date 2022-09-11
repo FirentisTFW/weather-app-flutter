@@ -1,4 +1,4 @@
-// NOTEL this file is not in version control
+// NOTE: this file is not in version control
 import 'package:app/networking/api_key.dart';
 
 abstract class ApiConstants {
