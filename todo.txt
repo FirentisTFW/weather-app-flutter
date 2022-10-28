@@ -5,3 +5,4 @@ TODO:
 3. Layout change - home screen (columns/rows)
 4. Custom app errors (optional)
 5. Error interceptor (optional)
+6. Move storage related functions from common storage to repository

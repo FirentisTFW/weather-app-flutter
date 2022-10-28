@@ -20,3 +20,13 @@ WeatherData _$WeatherDataFromJson(Map<String, dynamic> json) => WeatherData(
       longitude: (json['lon'] as num?)?.toDouble(),
       timezoneOffset: json['timezone_offset'] as int?,
     );
+
+Map<String, dynamic> _$WeatherDataToJson(WeatherData instance) =>
+    <String, dynamic>{
+      'current': instance.currentWeather,
+      'daily': instance.dailyForecast,
+      'hourly': instance.hourlyForecast,
+      'lat': instance.latitude,
+      'lon': instance.longitude,
+      'timezone_offset': instance.timezoneOffset,
+    };

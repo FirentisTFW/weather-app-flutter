@@ -35,6 +35,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
   @override
   void initState() {
     super.initState();
+    _fetchLocationsWeatherData();
+  }
+
+  void _fetchLocationsWeatherData() {
     ref.read(homeProvider.notifier).fetchLocationsWeatherData();
   }
 
@@ -73,9 +77,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
   Widget _buildErrorBody(dynamic error) {
     return ErrorView(
       message: AppErrorFactory.provideMessage(context, error),
-      onButtonPressed: () {
-        // TODO Implement - refresh page
-      },
+      onButtonPressed: _fetchLocationsWeatherData,
       title: AppErrorFactory.provideTitle(context, error),
     );
   }

@@ -15,3 +15,11 @@ HourlyForecast _$HourlyForecastFromJson(Map<String, dynamic> json) =>
       temperature: (json['temp'] as num?)?.toDouble(),
       time: json['dt'] as int?,
     );
+
+Map<String, dynamic> _$HourlyForecastToJson(HourlyForecast instance) =>
+    <String, dynamic>{
+      'weather': instance.conditions,
+      'feels_like': instance.feelsLike,
+      'temp': instance.temperature,
+      'dt': instance.time,
+    };
