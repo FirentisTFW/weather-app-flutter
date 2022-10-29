@@ -8,8 +8,6 @@ abstract class TemperatureUtils {
 
   static const String _degreeSymbol = '°';
   static const String _separator = '/';
-  // TODO Let user decide which unit he/she wants to use - get it from Storage
-  static const String _unit = 'C';
 
   static String formatTemperature(
     BuildContext context, {
@@ -30,9 +28,11 @@ abstract class TemperatureUtils {
     return S.of(context).temperatureComparisonKeywordPositive;
   }
 
-  static String provideDayAndNightTemperature({
+  static String provideDayAndNightTemperature(
+    BuildContext context, {
     required double? day,
     required double? night,
+    required TemperatureUnit unit,
   }) {
     if (day == null || night == null) {
       return '';
@@ -45,7 +45,7 @@ abstract class TemperatureUtils {
       _separator,
       nightTemperature,
       _degreeSymbol,
-      _unit,
+      unit.getUnitDisplay(context),
     ].join();
   }
 }

@@ -61,7 +61,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
   FutureOr<void> fetchLocationsWeatherData() async {
     state = const HomeFetchInProgress();
     final List<NamedLocation> homeLocations = await storage.getSelectedLocations();
-    final UserSettings userSettings = await settingsManager.provideUserSettings();
+    final UserSettings userSettings = await settingsManager.getUserSettings();
 
     if (homeLocations.length < 2) {
       state = const HomeMissingLocations();
@@ -117,7 +117,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
   }) async {
     try {
       final List<LocationWeatherData>? data = await storage.getCachedWeatherAndForecastForSelectedLocations();
-      if (data == null) throw Exception();
+      if (data == null || data.length < 2) throw Exception();
       state = HomeFetchSucces(
         userSettings: userSettings,
         weatherData: CollectionOf2(

@@ -8,7 +8,7 @@ class SettingsManager {
 
   const SettingsManager(this.storage);
 
-  Future<UserSettings> provideUserSettings() async {
+  Future<UserSettings> getUserSettings() async {
     late final TemperatureUnit temperatureUnit;
     late final TimeFormat timeFormat;
 

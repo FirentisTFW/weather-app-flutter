@@ -1,3 +1,4 @@
+import 'package:app/data/enums/temperature_unit.dart';
 import 'package:app/networking/endpoints.dart';
 import 'package:app/networking/models/daily_forecast.dart';
 import 'package:app/networking/models/forecast_temperature.dart';
@@ -9,9 +10,11 @@ import 'package:flutter/material.dart';
 
 class SimpleDailyForecastCell extends StatelessWidget {
   final DailyForecast forecast;
+  final TemperatureUnit temperatureUnit;
 
   const SimpleDailyForecastCell({
     required this.forecast,
+    required this.temperatureUnit,
   });
 
   @override
@@ -24,7 +27,7 @@ class SimpleDailyForecastCell extends StatelessWidget {
         ),
         _buildDayOfTheWeek(context),
         const Spacer(),
-        _buildTemperature(),
+        _buildTemperature(context),
         const SizedBox(
           width: 6.0,
         ),
@@ -33,7 +36,7 @@ class SimpleDailyForecastCell extends StatelessWidget {
   }
 
   Widget _builWeatherIcon() {
-    const iconSize = 40.0;
+    const double iconSize = 40.0;
     final String? iconId = forecast.conditions?.first.icon;
     return AppCachedNetworkImage(
       height: iconSize,
@@ -56,11 +59,13 @@ class SimpleDailyForecastCell extends StatelessWidget {
     );
   }
 
-  Widget _buildTemperature() {
+  Widget _buildTemperature(BuildContext context) {
     final ForecastTemperature? temperature = forecast.temperature;
     final String temperatureDisplay = TemperatureUtils.provideDayAndNightTemperature(
+      context,
       day: temperature?.day,
       night: temperature?.night,
+      unit: temperatureUnit,
     );
     return Text(
       temperatureDisplay,

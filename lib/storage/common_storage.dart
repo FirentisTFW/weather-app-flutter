@@ -24,7 +24,7 @@ class CommonStorage {
   Future<void> addLocation(NamedLocation location) async {
     final List<NamedLocation> existingLocations = await getLocations();
     await (await locationsBox).put(
-      StorageKeys.locationsList,
+      StorageKeys.locationList,
       [
         ...existingLocations,
         location,
@@ -37,23 +37,23 @@ class CommonStorage {
     final List<NamedLocation> updatedLocations =
         existingLocations.where((location) => location.id != locationId).toList();
     await (await locationsBox).put(
-      StorageKeys.locationsList,
+      StorageKeys.locationList,
       updatedLocations,
     );
   }
 
   Future<List<LocationWeatherData>?> getCachedWeatherAndForecastForSelectedLocations() async {
-    final String? firstLocationJson = await storage.getString(StorageKeys.cachedWeatherAndForecast1);
-    final String? secondLocationJson = await storage.getString(StorageKeys.cachedWeatherAndForecast2);
-    if (firstLocationJson == null || secondLocationJson == null) return null;
+    final String? locationJson1 = await storage.getString(StorageKeys.cachedWeatherAndForecast1);
+    final String? locationJson2 = await storage.getString(StorageKeys.cachedWeatherAndForecast2);
+    if (locationJson1 == null || locationJson2 == null) return null;
     return [
-      LocationWeatherData.fromJson(jsonDecode(firstLocationJson) as Map<String, dynamic>),
-      LocationWeatherData.fromJson(jsonDecode(secondLocationJson) as Map<String, dynamic>),
+      LocationWeatherData.fromJson(jsonDecode(locationJson1) as Map<String, dynamic>),
+      LocationWeatherData.fromJson(jsonDecode(locationJson2) as Map<String, dynamic>),
     ];
   }
 
   Future<List<NamedLocation>> getLocations() async {
-    final list = (await locationsBox).get(StorageKeys.locationsList) ?? [];
+    final list = (await locationsBox).get(StorageKeys.locationList) ?? [];
     return (list as List).cast<NamedLocation>();
   }
 
@@ -132,7 +132,7 @@ class CommonStorage {
         ],
       );
     await (await locationsBox).put(
-      StorageKeys.locationsList,
+      StorageKeys.locationList,
       updatedLocations,
     );
   }
