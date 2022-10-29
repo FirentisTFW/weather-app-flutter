@@ -6,9 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'weather_data.g.dart';
 
-@JsonSerializable(
-  createToJson: false,
-)
+@JsonSerializable()
 class WeatherData {
   static const FromJsonFactory<WeatherData> fromJsonFactory = _$WeatherDataFromJson;
 
@@ -34,4 +32,6 @@ class WeatherData {
   });
 
   factory WeatherData.fromJson(Map<String, dynamic> json) => _$WeatherDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$WeatherDataToJson(this);
 }

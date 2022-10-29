@@ -1,5 +1,6 @@
 import 'package:app/commons/collections.dart';
 import 'package:app/data/enums/comparison_object.dart';
+import 'package:app/data/enums/temperature_unit.dart';
 import 'package:app/data/models/location_single_data.dart';
 import 'package:app/data/models/location_weather_data.dart';
 import 'package:app/errors/app_error_factory.dart';
@@ -35,6 +36,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
   @override
   void initState() {
     super.initState();
+    _fetchLocationsWeatherData();
+  }
+
+  void _fetchLocationsWeatherData() {
     ref.read(homeProvider.notifier).fetchLocationsWeatherData();
   }
 
@@ -73,9 +78,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
   Widget _buildErrorBody(dynamic error) {
     return ErrorView(
       message: AppErrorFactory.provideMessage(context, error),
-      onButtonPressed: () {
-        // TODO Implement - refresh page
-      },
+      onButtonPressed: _fetchLocationsWeatherData,
       title: AppErrorFactory.provideTitle(context, error),
     );
   }
@@ -138,10 +141,16 @@ class _HomeViewState extends ConsumerState<HomeView> {
     return Row(
       children: <Widget>[
         Expanded(
-          child: _buildLocationWeatherForecastCell(state.weatherData.item1),
+          child: _buildLocationWeatherForecastCell(
+            temperatureUnit: state.userSettings.temperatureUnit,
+            weatherData: state.weatherData.item1,
+          ),
         ),
         Expanded(
-          child: _buildLocationWeatherForecastCell(state.weatherData.item2),
+          child: _buildLocationWeatherForecastCell(
+            temperatureUnit: state.userSettings.temperatureUnit,
+            weatherData: state.weatherData.item2,
+          ),
         ),
       ].separatedBy(
         const SizedBox(
@@ -151,7 +160,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
     );
   }
 
-  Widget _buildLocationWeatherForecastCell(LocationWeatherData weatherData) {
+  Widget _buildLocationWeatherForecastCell({
+    required TemperatureUnit temperatureUnit,
+    required LocationWeatherData weatherData,
+  }) {
     final CurrentWeather? currentWeather = weatherData.currentWeather;
     final List<DailyForecast>? forecast = weatherData.dailyForecast;
 
@@ -162,6 +174,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
       currentWeather: currentWeather,
       forecast: forecast,
       locationName: weatherData.locationName,
+      temperatureUnit: temperatureUnit,
     );
   }
 

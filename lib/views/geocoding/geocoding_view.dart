@@ -99,9 +99,7 @@ class _GeocodingViewState extends ConsumerState<GeocodingView> {
         border: Border.all(),
         borderRadius: BorderRadius.circular(8.0),
       ),
-      onPressed: () => ref.read(geocodingProvider.notifier).getGeocodingPropositions(
-            query: _locationNameTextFieldInfo.text,
-          ),
+      onPressed: _getGeocodingPropositionsBasedOnQuery,
       child: Text(
         S.of(context).addLocationSearchButton,
         style: AppTextStyles.actionButton().copyWith(
@@ -137,9 +135,7 @@ class _GeocodingViewState extends ConsumerState<GeocodingView> {
   Widget _buildErrorBody(BuildContext context, dynamic error) {
     return ErrorView(
       message: AppErrorFactory.provideMessage(context, error),
-      onButtonPressed: () => ref.read(geocodingProvider.notifier).getGeocodingPropositions(
-            query: _locationNameTextFieldInfo.text,
-          ),
+      onButtonPressed: _getGeocodingPropositionsBasedOnQuery,
       title: AppErrorFactory.provideTitle(context, error),
     );
   }
@@ -195,4 +191,8 @@ class _GeocodingViewState extends ConsumerState<GeocodingView> {
       },
     );
   }
+
+  void _getGeocodingPropositionsBasedOnQuery() => ref.read(geocodingProvider.notifier).getGeocodingPropositions(
+        query: _locationNameTextFieldInfo.text,
+      );
 }

@@ -95,6 +95,7 @@ class _LocationsListViewState extends ConsumerState<LocationsListView> {
           onDeletePressed: () => _onDeleteLocationPressed(location),
           onEditPressed: () {
             // TODO Implement
+            DialogFactory.showUnavailableDialog(context);
           },
           onSelectPressed: (isSelected) => _onSelectLocationPressed(
             isSelected: isSelected,

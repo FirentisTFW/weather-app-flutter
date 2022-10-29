@@ -22,7 +22,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
         );
 
   Future<void> getSettings() async {
-    final UserSettings userSettings = await settingsManager.provideUserSettings();
+    final UserSettings userSettings = await settingsManager.getUserSettings();
 
     state = SettingsFetchSuccess(
       userSettings: userSettings,
