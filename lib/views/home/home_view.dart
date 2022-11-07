@@ -6,6 +6,7 @@ import 'package:app/data/models/location_weather_data.dart';
 import 'package:app/errors/app_error_factory.dart';
 import 'package:app/extensions/list_extensions.dart';
 import 'package:app/generated/l10n.dart';
+import 'package:app/modals/snackbar_factory.dart';
 import 'package:app/networking/models/current_weather.dart';
 import 'package:app/networking/models/daily_forecast.dart';
 import 'package:app/routing.dart';
@@ -45,6 +46,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    _setUpHomeProviderListener();
+
     return Scaffold(
       backgroundColor: AppColors.lightYellow,
       body: SafeArea(
@@ -52,6 +55,26 @@ class _HomeViewState extends ConsumerState<HomeView> {
           child: _buildBody(),
         ),
       ),
+    );
+  }
+
+  void _setUpHomeProviderListener() {
+    ref.listen(
+      homeProvider,
+      (_, next) {
+        if (next is HomeFetchCachedSucces) {
+          _showCachedDataSnackbar();
+        }
+      },
+    );
+  }
+
+  void _showCachedDataSnackbar() {
+    SnackbarFactory.showSnackbarWithButton(
+      context,
+      message: S.of(context).homeCachedDataSnackbarMessage,
+      buttonTitle: S.of(context).refresh,
+      onButtonPressed: _fetchLocationsWeatherData,
     );
   }
 
@@ -84,16 +107,19 @@ class _HomeViewState extends ConsumerState<HomeView> {
   }
 
   Widget _buildLoadedBody(HomeFetchSucces state) {
-    return SingleChildScrollView(
-      padding: AppDimensions.defaultPaddingAll,
-      child: Column(
-        children: [
-          _buildButtons(),
-          _buildLocationtWeatherForecastCells(state),
-          _buildComparisonCells(state),
-        ].separatedBy(
-          const SizedBox(
-            height: 24.0,
+    return RefreshIndicator(
+      onRefresh: () async => _fetchLocationsWeatherData(),
+      child: SingleChildScrollView(
+        padding: AppDimensions.defaultPaddingAll,
+        child: Column(
+          children: [
+            _buildButtons(),
+            _buildLocationtWeatherForecastCells(state),
+            _buildComparisonCells(state),
+          ].separatedBy(
+            const SizedBox(
+              height: 24.0,
+            ),
           ),
         ),
       ),

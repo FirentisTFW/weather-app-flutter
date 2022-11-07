@@ -509,6 +509,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Refresh`
+  String get refresh {
+    return Intl.message(
+      'Refresh',
+      name: 'refresh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You are currently viewing cached data. Check your network connection and refresh the page.`
+  String get homeCachedDataSnackbarMessage {
+    return Intl.message(
+      'You are currently viewing cached data. Check your network connection and refresh the page.',
+      name: 'homeCachedDataSnackbarMessage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

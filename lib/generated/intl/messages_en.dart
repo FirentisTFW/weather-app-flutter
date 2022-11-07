@@ -65,6 +65,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteLocationDialogTitle":
             MessageLookupByLibrary.simpleMessage("Delete location"),
         "fridayShort": MessageLookupByLibrary.simpleMessage("Fri"),
+        "homeCachedDataSnackbarMessage": MessageLookupByLibrary.simpleMessage(
+            "You are currently viewing cached data. Check your network connection and refresh the page."),
         "homeManageLocationsButton":
             MessageLookupByLibrary.simpleMessage("Manage locations"),
         "homeMissingLocations": MessageLookupByLibrary.simpleMessage(
@@ -79,6 +81,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "longitudeShortDisplay": m4,
         "mondayShort": MessageLookupByLibrary.simpleMessage("Mon"),
         "ok": MessageLookupByLibrary.simpleMessage("Ok"),
+        "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
         "saturdayShort": MessageLookupByLibrary.simpleMessage("Sat"),
         "settingsTemperatureUnitLabel":
             MessageLookupByLibrary.simpleMessage("Temperature unit"),

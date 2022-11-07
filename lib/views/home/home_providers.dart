@@ -97,7 +97,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
         ),
       );
 
-      state = HomeFetchSucces(
+      state = HomeFetchNetworkSucces(
         userSettings: userSettings,
         weatherData: locationsWeatherData,
       );
@@ -118,7 +118,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
     try {
       final List<LocationWeatherData>? data = await storage.getCachedWeatherAndForecastForSelectedLocations();
       if (data == null || data.length < 2) throw Exception();
-      state = HomeFetchSucces(
+      state = HomeFetchCachedSucces(
         userSettings: userSettings,
         weatherData: CollectionOf2(
           data.first,

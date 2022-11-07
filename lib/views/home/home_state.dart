@@ -18,7 +18,7 @@ class HomeFetchInProgress extends HomeState {
   const HomeFetchInProgress();
 }
 
-class HomeFetchSucces extends HomeState {
+abstract class HomeFetchSucces extends HomeState {
   final UserSettings userSettings;
   final CollectionOf2<LocationWeatherData> weatherData;
 
@@ -33,6 +33,27 @@ class HomeFetchSucces extends HomeState {
         userSettings,
         weatherData,
       ];
+}
+
+class HomeFetchNetworkSucces extends HomeFetchSucces {
+  const HomeFetchNetworkSucces({
+    required UserSettings userSettings,
+    required CollectionOf2<LocationWeatherData> weatherData,
+  }) : super(
+          userSettings: userSettings,
+          weatherData: weatherData,
+        );
+}
+
+// TODO Reconsider naming (fetched for cached?)
+class HomeFetchCachedSucces extends HomeFetchSucces {
+  const HomeFetchCachedSucces({
+    required UserSettings userSettings,
+    required CollectionOf2<LocationWeatherData> weatherData,
+  }) : super(
+          userSettings: userSettings,
+          weatherData: weatherData,
+        );
 }
 
 class HomeFetchFailure extends HomeState {
