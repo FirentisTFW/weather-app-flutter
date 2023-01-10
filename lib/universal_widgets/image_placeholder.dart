@@ -6,6 +6,6 @@ class ImagePlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO Implement
-    return const SizedBox();
+    return const SizedBox.shrink();
   }
 }

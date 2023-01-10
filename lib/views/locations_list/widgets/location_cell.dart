@@ -6,6 +6,7 @@ import 'package:app/styles/app_decorations.dart';
 import 'package:app/styles/app_text_styles.dart';
 import 'package:app/universal_widgets/adaptive_button.dart';
 import 'package:app/universal_widgets/app_checkbox.dart';
+import 'package:app/universal_widgets/space.dart';
 import 'package:flutter/material.dart';
 
 class LocationCell extends StatefulWidget {
@@ -74,9 +75,7 @@ class _LocationCellState extends State<LocationCell> {
           _buildSeparator(),
           _buildCoordinatesAndCheckbox(context),
         ].separatedBy(
-          const SizedBox(
-            height: 8.0,
-          ),
+          const Space.vertical(8.0),
         ),
       ),
     );
@@ -110,9 +109,7 @@ class _LocationCellState extends State<LocationCell> {
           size: 26.0,
         ),
       ),
-      const SizedBox(
-        width: 16.0,
-      ),
+      const Space.horizontal(16.0),
       GestureDetector(
         onTap: widget.onEditPressed,
         child: const Icon(
@@ -157,9 +154,7 @@ class _LocationCellState extends State<LocationCell> {
           style: AppTextStyles.text(),
         ),
       ].separatedBy(
-        const SizedBox(
-          height: 6.0,
-        ),
+        const Space.vertical(6.0),
       ),
     );
   }
@@ -183,9 +178,7 @@ class _LocationCellState extends State<LocationCell> {
           ),
         ),
       ].separatedBy(
-        const SizedBox(
-          height: 4.0,
-        ),
+        const Space.vertical(4.0),
       ),
     );
   }

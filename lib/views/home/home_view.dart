@@ -17,6 +17,7 @@ import 'package:app/styles/app_text_styles.dart';
 import 'package:app/universal_widgets/adaptive_button.dart';
 import 'package:app/universal_widgets/app_progress_indicator.dart';
 import 'package:app/universal_widgets/error_view.dart';
+import 'package:app/universal_widgets/space.dart';
 import 'package:app/utils/comparison_utils.dart';
 import 'package:app/views/home/comparison_factory.dart';
 import 'package:app/views/home/home_providers.dart';
@@ -117,9 +118,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
             _buildLocationtWeatherForecastCells(state),
             _buildComparisonCells(state),
           ].separatedBy(
-            const SizedBox(
-              height: 24.0,
-            ),
+            const Space.vertical(24.0),
           ),
         ),
       ),
@@ -179,9 +178,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
           ),
         ),
       ].separatedBy(
-        const SizedBox(
-          width: 10.0,
-        ),
+        const Space.horizontal(10.0),
       ),
     );
   }
@@ -227,9 +224,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
       itemCount: ComparisonUtils.comparisonObjectCount,
       padding: EdgeInsets.zero,
       physics: const NeverScrollableScrollPhysics(),
-      separatorBuilder: (_, __) => const SizedBox(
-        height: 8.0,
-      ),
+      separatorBuilder: (_, __) => const Space.vertical(8.0),
       shrinkWrap: true,
     );
   }
@@ -244,9 +239,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
         ),
         _buildLocationsButton(),
       ].separatedBy(
-        const SizedBox(
-          height: 8.0,
-        ),
+        const Space.vertical(8.0),
       ),
     );
   }

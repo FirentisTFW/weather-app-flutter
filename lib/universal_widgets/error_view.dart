@@ -2,6 +2,7 @@ import 'package:app/generated/l10n.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/styles/app_text_styles.dart';
 import 'package:app/universal_widgets/action_button.dart';
+import 'package:app/universal_widgets/space.dart';
 import 'package:flutter/material.dart';
 
 class ErrorView extends StatelessWidget {
@@ -27,9 +28,7 @@ class ErrorView extends StatelessWidget {
           children: [
             const Spacer(),
             _buildTitle(),
-            const SizedBox(
-              height: 30.0,
-            ),
+            const Space.vertical(30.0),
             _buildMessage(),
             const Spacer(),
             _buildButton(context),

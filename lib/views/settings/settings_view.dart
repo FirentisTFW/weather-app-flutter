@@ -6,6 +6,7 @@ import 'package:app/styles/app_animations.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/universal_widgets/app_progress_indicator.dart';
+import 'package:app/universal_widgets/space.dart';
 import 'package:app/utils/settings_utils.dart';
 import 'package:app/views/settings/settings_providers.dart';
 import 'package:app/views/settings/settings_state.dart';
@@ -61,9 +62,7 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
           _buildTemperatureSetting(state),
           _buildTimeFormatSetting(state),
         ].separatedBy(
-          const SizedBox(
-            height: 10.0,
-          ),
+          const Space.vertical(10.0),
         ),
       ),
     );

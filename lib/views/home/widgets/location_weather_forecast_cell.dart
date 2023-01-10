@@ -9,6 +9,7 @@ import 'package:app/styles/app_dimensions.dart';
 import 'package:app/styles/app_text_styles.dart';
 import 'package:app/universal_widgets/adaptive_button.dart';
 import 'package:app/universal_widgets/app_cached_network_image.dart';
+import 'package:app/universal_widgets/space.dart';
 import 'package:app/views/home/widgets/simple_daily_forecast_cell.dart';
 import 'package:flutter/material.dart';
 
@@ -55,9 +56,7 @@ class LocationWeatherForecastCell extends StatelessWidget {
               child: _buildForecast(),
             ),
           ].separatedBy(
-            const SizedBox(
-              height: 8.0,
-            ),
+            const Space.vertical(8.0),
           ),
         ),
         Positioned(
@@ -89,9 +88,7 @@ class LocationWeatherForecastCell extends StatelessWidget {
     return Row(
       children: [
         _buildCurrentWeatherIcon(),
-        const SizedBox(
-          width: 4.0,
-        ),
+        const Space.horizontal(4.0),
         Flexible(
           child: Text(
             currentWeather.conditions?.first.title ?? '',
@@ -133,9 +130,7 @@ class LocationWeatherForecastCell extends StatelessWidget {
       ),
       itemCount: forecast.length, // TODO Consider showing only 3 days by default
       padding: EdgeInsets.zero,
-      separatorBuilder: (_, __) => const SizedBox(
-        height: 4.0,
-      ),
+      separatorBuilder: (_, __) => const Space.vertical(4.0),
     );
   }
 }

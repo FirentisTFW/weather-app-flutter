@@ -5,6 +5,7 @@ import 'package:app/styles/app_decorations.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/styles/app_text_styles.dart';
 import 'package:app/universal_widgets/adaptive_button.dart';
+import 'package:app/universal_widgets/space.dart';
 import 'package:flutter/material.dart';
 
 class GeocodingPropositionCell extends StatelessWidget {
@@ -44,9 +45,7 @@ class GeocodingPropositionCell extends StatelessWidget {
                   style: AppTextStyles.text(),
                 ),
               ].separatedBy(
-                const SizedBox(
-                  height: 6.0,
-                ),
+                const Space.vertical(6.0),
               ),
             ),
             Column(
@@ -56,9 +55,7 @@ class GeocodingPropositionCell extends StatelessWidget {
                 Text(S.of(context).latitudeShortDisplay(geocodingProposition.latitudeDisplay)),
                 Text(S.of(context).longitudeShortDisplay(geocodingProposition.longitudeDisplay)),
               ].separatedBy(
-                const SizedBox(
-                  height: 6.0,
-                ),
+                const Space.vertical(6.0),
               ),
             ),
           ],

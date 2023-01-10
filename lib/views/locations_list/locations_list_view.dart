@@ -8,6 +8,7 @@ import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_dimensions.dart';
 import 'package:app/styles/app_text_styles.dart';
 import 'package:app/universal_widgets/app_progress_indicator.dart';
+import 'package:app/universal_widgets/space.dart';
 import 'package:app/views/geocoding/geocoding_arguments.dart';
 import 'package:app/views/locations_list/location_list_providers.dart';
 import 'package:app/views/locations_list/locations_list_state.dart';
@@ -105,9 +106,7 @@ class _LocationsListViewState extends ConsumerState<LocationsListView> {
       },
       itemCount: state.locations.length,
       padding: AppDimensions.defaultPaddingAll,
-      separatorBuilder: (_, __) => const SizedBox(
-        height: 10.0,
-      ),
+      separatorBuilder: (_, __) => const Space.vertical(10.0),
     );
   }
 

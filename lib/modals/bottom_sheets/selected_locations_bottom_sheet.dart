@@ -2,6 +2,7 @@ import 'package:app/data/models/named_location.dart';
 import 'package:app/extensions/extensions.dart';
 import 'package:app/modals/bottom_sheets/basic_bottom_sheet.dart';
 import 'package:app/styles/app_text_styles.dart';
+import 'package:app/universal_widgets/space.dart';
 import 'package:app/views/locations_list/widgets/location_cell.dart';
 import 'package:flutter/material.dart';
 
@@ -25,9 +26,7 @@ class SelectedLocationsBottomSheet {
             _buildDescription(),
             _buildListItems(),
           ].separatedBy(
-            const SizedBox(
-              height: 20.0,
-            ),
+            const Space.vertical(20.0),
           ),
         ),
       ),
@@ -56,9 +55,7 @@ class SelectedLocationsBottomSheet {
         vertical: 10.0,
       ),
       shrinkWrap: true,
-      separatorBuilder: (_, __) => const SizedBox(
-        height: 10.0,
-      ),
+      separatorBuilder: (_, __) => const Space.vertical(10.0),
     );
   }
 }

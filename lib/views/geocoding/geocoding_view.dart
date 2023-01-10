@@ -14,6 +14,7 @@ import 'package:app/universal_widgets/adaptive_button.dart';
 import 'package:app/universal_widgets/app_progress_indicator.dart';
 import 'package:app/universal_widgets/app_text_field.dart';
 import 'package:app/universal_widgets/error_view.dart';
+import 'package:app/universal_widgets/space.dart';
 import 'package:app/views/geocoding/geocoding_arguments.dart';
 import 'package:app/views/geocoding/geocoding_fetch_state.dart';
 import 'package:app/views/geocoding/geocoding_providers.dart';
@@ -61,9 +62,7 @@ class _GeocodingViewState extends ConsumerState<GeocodingView> {
                 child: _buildLocationsSection(),
               ),
             ].separatedBy(
-              const SizedBox(
-                height: 40.0,
-              ),
+              const Space.vertical(40.0),
             ),
           ),
         ),
@@ -84,9 +83,7 @@ class _GeocodingViewState extends ConsumerState<GeocodingView> {
           ),
           _buildSearchButton(),
         ].separatedBy(
-          const SizedBox(
-            width: 10.0,
-          ),
+          const Space.horizontal(10.0),
         ),
       ),
     );
@@ -173,9 +170,7 @@ class _GeocodingViewState extends ConsumerState<GeocodingView> {
       },
       itemCount: state.locationPropositions.length,
       padding: AppDimensions.defaultPaddingAll,
-      separatorBuilder: (_, __) => const SizedBox(
-        height: 8.0,
-      ),
+      separatorBuilder: (_, __) => const Space.vertical(8.0),
     );
   }
 

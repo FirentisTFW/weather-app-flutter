@@ -4,6 +4,7 @@ import 'package:app/networking/models/daily_forecast.dart';
 import 'package:app/networking/models/forecast_temperature.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/universal_widgets/app_cached_network_image.dart';
+import 'package:app/universal_widgets/space.dart';
 import 'package:app/utils/date_utils.dart' as du;
 import 'package:app/utils/temperature_utiils.dart';
 import 'package:flutter/material.dart';
@@ -22,15 +23,11 @@ class SimpleDailyForecastCell extends StatelessWidget {
     return Row(
       children: [
         _builWeatherIcon(),
-        const SizedBox(
-          width: 4.0,
-        ),
+        const Space.horizontal(4.0),
         _buildDayOfTheWeek(context),
         const Spacer(),
         _buildTemperature(context),
-        const SizedBox(
-          width: 6.0,
-        ),
+        const Space.horizontal(6.0),
       ],
     );
   }

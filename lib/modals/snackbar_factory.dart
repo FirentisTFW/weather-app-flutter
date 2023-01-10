@@ -1,5 +1,6 @@
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_text_styles.dart';
+import 'package:app/universal_widgets/space.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,9 +23,7 @@ abstract class SnackbarFactory {
               style: AppTextStyles.information(),
             ),
           ),
-          const SizedBox(
-            width: 8.0,
-          ),
+          const Space.horizontal(8.0),
           GestureDetector(
             onTap: onButtonPressed,
             child: Text(

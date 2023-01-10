@@ -6,6 +6,7 @@ import 'package:app/extensions/list_extensions.dart';
 import 'package:app/styles/app_colors.dart';
 import 'package:app/styles/app_decorations.dart';
 import 'package:app/styles/app_text_styles.dart';
+import 'package:app/universal_widgets/space.dart';
 import 'package:app/utils/comparison_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -35,9 +36,7 @@ class ComparisonCell extends StatelessWidget {
           _buildSeparator(),
           _buildComparisonText(context),
         ].separatedBy(
-          const SizedBox(
-            height: 6.0,
-          ),
+          const Space.vertical(6.0),
         ),
       ),
     );
@@ -79,9 +78,7 @@ class ComparisonCell extends StatelessWidget {
           style: AppTextStyles.header(),
         ),
       ].separatedBy(
-        const SizedBox(
-          width: 4.0,
-        ),
+        const Space.horizontal(4.0),
       ),
     );
   }
