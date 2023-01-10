@@ -9,9 +9,9 @@ abstract class TimeUtils {
     required int secondsDifference,
     bool useFullDescription = false,
   }) {
-    const secondsInMinute = 60;
-    const minutesInHour = 60;
-    const secondsInHour = 3600;
+    const int secondsInMinute = 60;
+    const int minutesInHour = 60;
+    const int secondsInHour = 3600;
 
     final int hours = (secondsDifference / secondsInHour).floor();
     final int minutes = (secondsDifference / secondsInMinute).floor() % minutesInHour;

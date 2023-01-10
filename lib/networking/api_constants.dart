@@ -2,7 +2,7 @@
 import 'package:app/networking/api_key.dart';
 
 abstract class ApiConstants {
-  ApiConstants._();
+  const ApiConstants._();
 
   static const String apiKey = ApiKey.key;
   static const String baseUrl = 'https://api.openweathermap.org/';

@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:app/commons/collections.dart';
 import 'package:app/data/models/location_weather_data.dart';
 import 'package:app/data/models/named_location.dart';
 import 'package:app/data/models/user_settings.dart';
 import 'package:app/managers/settings_manager.dart';
 import 'package:app/networking/models/weather_data.dart';
-import 'package:app/providers/network_providers.dart';
+import 'package:app/providers/network_repository_providers.dart';
 import 'package:app/providers/storage_providers.dart';
 import 'package:app/repositories/weather/weather_repository.dart';
 import 'package:app/storage/common_storage.dart';
@@ -20,7 +22,7 @@ final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>(
     final HomeNotifier homeNotifier = HomeNotifier(
       settingsManager: SettingsManager(ref.watch(storageProvider)),
       storage: ref.watch(storageProvider),
-      weatherRepository: ref.watch(weatherRepositoryProvider),
+      weatherRepository: ref.watch(networkWeatherRepositoryProvider),
     );
     ref.listen(
       locationsListProvider,
@@ -56,18 +58,16 @@ class HomeNotifier extends StateNotifier<HomeState> {
           const HomeInitial(),
         );
 
-  Future<void> fetchLocationsWeatherData() async {
+  FutureOr<void> fetchLocationsWeatherData() async {
     state = const HomeFetchInProgress();
+    final List<NamedLocation> homeLocations = await storage.getSelectedLocations();
+    final UserSettings userSettings = await settingsManager.getUserSettings();
 
+    if (homeLocations.length < 2) {
+      state = const HomeMissingLocations();
+      return;
+    }
     try {
-      final List<NamedLocation> homeLocations = await storage.getSelectedLocations();
-      final UserSettings userSettings = await settingsManager.provideUserSettings();
-
-      if (homeLocations.length < 2) {
-        state = const HomeMissingLocations();
-        return Future.value();
-      }
-
       late final WeatherData firstLocationData;
       late final WeatherData secondLocationData;
 
@@ -86,17 +86,43 @@ class HomeNotifier extends StateNotifier<HomeState> {
             .then((value) => secondLocationData = value),
       ]);
 
-      state = HomeFetchSucces(
+      final CollectionOf2<LocationWeatherData> locationsWeatherData = CollectionOf2(
+        LocationWeatherData.fromWeatherData(
+          locationName: homeLocations.first.name,
+          weatherData: firstLocationData,
+        ),
+        LocationWeatherData.fromWeatherData(
+          locationName: homeLocations[1].name,
+          weatherData: secondLocationData,
+        ),
+      );
+
+      state = HomeFetchNetworkSucces(
+        userSettings: userSettings,
+        weatherData: locationsWeatherData,
+      );
+      _cacheFetchedLocations(locationsWeatherData);
+    } catch (_) {
+      _loadCachedLocationsWeatherData(
+        userSettings: userSettings,
+      );
+    }
+  }
+
+  Future<void> _cacheFetchedLocations(CollectionOf2<LocationWeatherData> locationsWeatherData) =>
+      storage.setCachedWeatherAndForecastForSelectedLocations(locationsWeatherData);
+
+  Future<void> _loadCachedLocationsWeatherData({
+    required UserSettings userSettings,
+  }) async {
+    try {
+      final List<LocationWeatherData>? data = await storage.getCachedWeatherAndForecastForSelectedLocations();
+      if (data == null || data.length < 2) throw Exception();
+      state = HomeFetchCachedSucces(
         userSettings: userSettings,
         weatherData: CollectionOf2(
-          LocationWeatherData(
-            locationName: homeLocations.first.name,
-            weatherData: firstLocationData,
-          ),
-          LocationWeatherData(
-            locationName: homeLocations[1].name,
-            weatherData: secondLocationData,
-          ),
+          data.first,
+          data[1],
         ),
       );
     } catch (error) {

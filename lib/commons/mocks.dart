@@ -94,12 +94,12 @@ abstract class Mocks {
     ),
   ];
 
-  static final LocationWeatherData locationWeatherData1 = LocationWeatherData(
+  static final LocationWeatherData locationWeatherData1 = LocationWeatherData.fromWeatherData(
     locationName: 'Poznań',
     weatherData: weatherData1,
   );
 
-  static final LocationWeatherData locationWeatherData2 = LocationWeatherData(
+  static final LocationWeatherData locationWeatherData2 = LocationWeatherData.fromWeatherData(
     locationName: 'Malaga',
     weatherData: weatherData2,
   );

@@ -23,3 +23,17 @@ DailyForecast _$DailyForecastFromJson(Map<String, dynamic> json) =>
       windDegree: (json['wind_deg'] as num?)?.toDouble(),
       windSpeed: (json['wind_speed'] as num?)?.toDouble(),
     );
+
+Map<String, dynamic> _$DailyForecastToJson(DailyForecast instance) =>
+    <String, dynamic>{
+      'weather': instance.conditions,
+      'dt': instance.date,
+      'humidity': instance.humidity,
+      'pressure': instance.pressure,
+      'sunrise': instance.sunrise,
+      'sunset': instance.sunset,
+      'temp': instance.temperature,
+      'uvi': instance.uvIndex,
+      'wind_deg': instance.windDegree,
+      'wind_speed': instance.windSpeed,
+    };

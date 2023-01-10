@@ -1,6 +1,6 @@
 import 'package:app/data/models/named_location.dart';
 import 'package:app/networking/models/geocoding_proposition.dart';
-import 'package:app/providers/network_providers.dart';
+import 'package:app/providers/network_repository_providers.dart';
 import 'package:app/providers/storage_providers.dart';
 import 'package:app/repositories/geocoding/geocoding_repository.dart';
 import 'package:app/storage/common_storage.dart';
@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final geocodingProvider = StateNotifierProvider<GeocodingNotifier, GeocodingFetchState>(
   (ref) => GeocodingNotifier(
-    geocodingRepository: ref.watch(geocodingRepositoryProvider),
+    geocodingRepository: ref.watch(networkGeocodingRepositoryProvider),
     storage: ref.watch(storageProvider),
   ),
 );

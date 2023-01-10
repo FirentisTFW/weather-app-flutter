@@ -1,3 +1,4 @@
+import 'package:app/data/enums/temperature_unit.dart';
 import 'package:app/extensions/list_extensions.dart';
 import 'package:app/networking/endpoints.dart';
 import 'package:app/networking/models/current_weather.dart';
@@ -15,11 +16,13 @@ class LocationWeatherForecastCell extends StatelessWidget {
   final CurrentWeather currentWeather;
   final List<DailyForecast> forecast;
   final String locationName;
+  final TemperatureUnit temperatureUnit;
 
   const LocationWeatherForecastCell({
     required this.currentWeather,
     required this.forecast,
     required this.locationName,
+    required this.temperatureUnit,
   });
 
   @override
@@ -126,6 +129,7 @@ class LocationWeatherForecastCell extends StatelessWidget {
     return ListView.separated(
       itemBuilder: (_, index) => SimpleDailyForecastCell(
         forecast: forecast[index],
+        temperatureUnit: temperatureUnit,
       ),
       itemCount: forecast.length, // TODO Consider showing only 3 days by default
       padding: EdgeInsets.zero,

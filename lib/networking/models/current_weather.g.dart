@@ -21,3 +21,17 @@ CurrentWeather _$CurrentWeatherFromJson(Map<String, dynamic> json) =>
       windDegree: (json['wind_deg'] as num?)?.toDouble(),
       windSpeed: (json['wind_speed'] as num?)?.toDouble(),
     );
+
+Map<String, dynamic> _$CurrentWeatherToJson(CurrentWeather instance) =>
+    <String, dynamic>{
+      'weather': instance.conditions,
+      'humidity': instance.humidity,
+      'feels_like': instance.feelsLike,
+      'pressure': instance.pressure,
+      'sunrise': instance.sunrise,
+      'sunset': instance.sunset,
+      'temp': instance.temperature,
+      'uvi': instance.uvIndex,
+      'wind_deg': instance.windDegree,
+      'wind_speed': instance.windSpeed,
+    };

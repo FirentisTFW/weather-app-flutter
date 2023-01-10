@@ -11,7 +11,7 @@ import 'package:app/repositories/weather/weather_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final Provider<Dio> dioProvider = Provider<Dio>(
+final Provider<Dio> _dioProvider = Provider<Dio>(
   (ref) => Dio(
     BaseOptions(
       baseUrl: ApiConstants.baseUrl,
@@ -27,7 +27,7 @@ final Provider<Dio> dioProvider = Provider<Dio>(
     ),
 );
 
-final Provider<GeocodingRepository> geocodingRepositoryProvider = Provider<GeocodingRepository>(
+final Provider<GeocodingRepository> networkGeocodingRepositoryProvider = Provider<GeocodingRepository>(
   (ref) {
     final Environment environment = ref.watch(environmentProvider);
 
@@ -36,13 +36,13 @@ final Provider<GeocodingRepository> geocodingRepositoryProvider = Provider<Geoco
         return const FakeGeocodingRepository();
       case Environment.prod:
         return NetworkGeocodingRepository(
-          dio: ref.watch(dioProvider),
+          dio: ref.watch(_dioProvider),
         );
     }
   },
 );
 
-final Provider<WeatherRepository> weatherRepositoryProvider = Provider<WeatherRepository>(
+final Provider<WeatherRepository> networkWeatherRepositoryProvider = Provider<WeatherRepository>(
   (ref) {
     final Environment environment = ref.watch(environmentProvider);
 
@@ -51,7 +51,7 @@ final Provider<WeatherRepository> weatherRepositoryProvider = Provider<WeatherRe
         return const FakeWeatherRepository();
       case Environment.prod:
         return NetworkWeatherRepository(
-          dio: ref.watch(dioProvider),
+          dio: ref.watch(_dioProvider),
         );
     }
   },
