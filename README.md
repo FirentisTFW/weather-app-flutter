@@ -1,5 +1,7 @@
 # Weather App
 
+*NOTE: The project is currently suspended.*
+
 App that allows a user to compare the weather in two different locations. Based on `Open Weather` API.
 
 Main app features:
